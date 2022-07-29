@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import App from '../App';
 import AppState from '../state/appState';
@@ -10,4 +11,8 @@ const store = new AppState(initialData);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-root.render(<App store={store} />);
+root.render(
+  <Router>
+    <App store={store} />
+  </Router>
+);

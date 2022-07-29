@@ -28,8 +28,8 @@ connect(process.env.MONGO_URL, {}, (err) => {
 
 app.use('/api/blogs', blogRouter());
 
-app.get('/', async (req, res) => {
-  const { initialMarkup, initialData } = await serverRender();
+app.get('*', async (req, res) => {
+  const { initialMarkup, initialData } = await serverRender(req);
 
   res.render('index', {
     initialData,
