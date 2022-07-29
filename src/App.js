@@ -1,7 +1,7 @@
 import React from 'react';
 
-function App() {
+const App = (props) => {
   return <div>React, Ejs and Nodejs</div>;
-}
+};
 
 export default App;
