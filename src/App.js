@@ -1,21 +1,9 @@
-import React, { useState } from 'react';
-import deb from 'debug';
-import { Routes, Route } from 'react-router-dom';
+import express from 'express';
 
-import BlogList from './components/blogs/BlogList';
-import NewBlog from './components/blogs/NewBlog';
+const app = express();
 
-const debug = deb('app:App');
+app.get('*', (req, res) => {
+  res.send("Nice Tooling Set Up, Let's Go.");
+});
 
-const App = (props) => {
-  const [state, setState] = useState(props.store.getState());
-
-  return (
-    <Routes>
-      <Route path="/" element={<BlogList blogs={state.blogs} />} />
-      <Route path="/new-blog" element={<NewBlog />} />
-    </Routes>
-  );
-};
-
-export default App;
+app.listen(3000, () => console.log(`Server is running on port ${3000}`));

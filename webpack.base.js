@@ -1,14 +1,5 @@
-const path = require('path');
-
-const config = {
-  entry: path.join(__dirname, 'src', 'renderer', 'domRender.js'),
-
-  output: {
-    path: path.resolve(__dirname, 'public'),
-    filename: 'bundle.js',
-  },
+module.exports = {
   mode: process.env.NODE_ENV || 'development',
-
   module: {
     rules: [
       {
@@ -29,5 +20,3 @@ const config = {
     ],
   },
 };
-
-module.exports = config;
