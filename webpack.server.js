@@ -6,7 +6,7 @@ const webpackBase = require('./webpack.base');
 
 const config = {
   target: 'node',
-  entry: join(__dirname, 'src', 'app.js'),
+  entry: join(__dirname, 'src', 'index.js'),
 
   output: {
     filename: 'bundle.js',
