@@ -20,7 +20,7 @@ function LoginPage() {
   };
 
   return (
-    <form className="input-form">
+    <form className="login-form auth-form-container">
       <h2>Login</h2>
 
       <InputContainer>
@@ -29,7 +29,7 @@ function LoginPage() {
           type="text"
           name="username"
           id="username"
-          placeholder="Email"
+          placeholder="Enter Your Email"
           value={formEntries.email}
           onChange={handleFormChange}
         />
@@ -40,7 +40,7 @@ function LoginPage() {
           type="text"
           name="password"
           id="password"
-          placeholder="Password"
+          placeholder="Enter Your Password"
           value={formEntries.password}
           onChange={handleFormChange}
         />

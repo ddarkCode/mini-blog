@@ -134,6 +134,7 @@ a {
 ul {
   list-style: none;
 }
+/*Navigation Section*/
 nav {
   background-color: #ffc017;
   color: #000;
@@ -182,6 +183,8 @@ nav {
   border-bottom: 2px solid #000;
 }
 
+/*HomePage Section*/
+
 .homePage {
   background-color: #ffc017;
   border-top: 1px solid #000;
@@ -192,6 +195,7 @@ nav {
   justify-content: center;
   width: 100%;
   height: 80vh;
+  border-bottom: 1px solid #000;
 }
 
 .homePage h1 {
@@ -222,8 +226,9 @@ nav {
   background-color: #000;
 }
 
+/*Footer Section*/
+
 footer {
-  border-top: 1px solid #000;
   background-color: #ffc017;
   color: #000;
   display: flex;
@@ -233,7 +238,9 @@ footer {
   width: 100%;
 }
 
-form {
+/*Auth Form Section*/
+
+.auth-form-container {
   background-color: #fff;
   color: #000;
   display: flex;
@@ -245,7 +252,7 @@ form {
   width: 40vw;
 }
 
-form h2 {
+.auth-form-container h2 {
   font-size: 36px;
   font-weight: 900;
   margin-bottom: 30px;
@@ -253,7 +260,7 @@ form h2 {
   width: 80%;
 }
 
-form .input-container {
+.auth-form-container .input-container {
   margin-right: auto;
   display: flex;
   flex-direction: column;
@@ -263,15 +270,14 @@ form .input-container {
   color: #999999;
 }
 
-form div label {
+.auth-form-container div label {
   margin-right: auto;
   font-size: 18px;
   font-weight: 100;
   margin-bottom: 10px;
 }
 
-form div input {
-  /* display: block; */
+.auth-form-container div input {
   width: 100%;
   height: 50px;
   border: 1px inset;
@@ -283,15 +289,15 @@ form div input {
   padding-left: 10px;
 }
 
-form div input:focus {
+.auth-form-container div input:focus {
   outline: none;
 }
 
-form div input::placeholder {
+.auth-form-container div input::placeholder {
   color: #999999;
 }
 
-form button {
+.auth-form-container button {
   width: 80%;
   height: 50px;
   background: #999999;
@@ -302,6 +308,146 @@ form button {
   margin-top: 15px;
 }
 
-.input-form {
+.login-form {
   height: 70vh;
 }
+
+/*BlogList Section*/
+
+.bloglist-container {
+  margin: 20px 40px;
+  display: flex;
+  flex-wrap: wrap;
+  height: max-content;
+  justify-content: space-between;
+}
+
+.blog-container {
+  background-color: #2e494a;
+  color: #fff;
+  margin: 10px 0;
+  width: 30%;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.blog-container h3 {
+  font-weight: 700;
+  font-size: 24px;
+  margin: 5px 0;
+  margin-bottom: 10px;
+}
+
+.blog-container .author,
+.date {
+  font-style: italic;
+}
+
+.blog-container .post {
+  margin: 10px 0;
+}
+
+.blog-container a {
+  background-color: #56c870;
+  color: #fff;
+  display: block;
+  width: 100px;
+  height: 50px;
+  padding-top: 15px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.blog-container a:hover {
+  background-color: #fff;
+  color: #56c870;
+  font-weight: 500;
+}
+
+/*Single Blog Page */
+
+.single-blog-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 80vh;
+}
+
+.single-blog-page h2 {
+  font-weight: 700;
+  margin: 20px 0;
+}
+
+.single-blog-page .post {
+  margin: 20px 40px;
+  line-height: 1.5em;
+}
+
+.single-blog-page a {
+  background-color: #5c5a54;
+  color: #fff;
+  height: 40px;
+  width: 150px;
+  text-align: center;
+  padding-top: 10px;
+  border-radius: 10px;
+}
+
+/*Write a New Blog*/
+.write {
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.write h2 {
+  font-weight: 700;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.write div {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+
+.write div label {
+  font-weight: 500;
+  font-size: 1.1em;
+  margin: 0 auto;
+  margin-bottom: 7px;
+}
+
+.write div input {
+  height: 40px;
+  width: 350px;
+  border-radius: 10px;
+  padding-left: 10px;
+}
+
+.write div textarea {
+  height: 250px;
+  width: 350px;
+  border-radius: 10px;
+  padding-left: 10px;
+}
+.write div textarea:focus {
+  outline: none;
+}
+.write button {
+  background-color: #ffc017;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+  height: 40px;
+  margin-bottom: 20px;
+  width: 200px;
+}
+
+/*  */

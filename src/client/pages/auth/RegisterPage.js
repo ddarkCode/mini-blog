@@ -22,7 +22,7 @@ function RegisterPage() {
   };
 
   return (
-    <form>
+    <form className="auth-form-container">
       <h2>Create your account</h2>
       <InputContainer>
         <label htmlFor="firstName">First Name</label>
@@ -30,7 +30,7 @@ function RegisterPage() {
           type="text"
           name="firstName"
           id="firstName"
-          placeholder="First Name"
+          placeholder="Enter Your First Name"
           value={formEntries.firstName}
           onChange={handleFormChange}
         />
@@ -41,7 +41,7 @@ function RegisterPage() {
           type="text"
           name="lastName"
           id="lastName"
-          placeholder="Last Name"
+          placeholder="Enter Your Last Name"
           value={formEntries.lastName}
           onChange={handleFormChange}
         />
@@ -52,7 +52,7 @@ function RegisterPage() {
           type="email"
           name="username"
           id="username"
-          placeholder="Email"
+          placeholder="Enter Your Email"
           value={formEntries.email}
           onChange={handleFormChange}
         />
@@ -63,7 +63,7 @@ function RegisterPage() {
           type="password"
           name="password"
           id="password"
-          placeholder="Password"
+          placeholder="Enter Your Password"
           value={formEntries.password}
           onChange={handleFormChange}
         />
