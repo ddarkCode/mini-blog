@@ -154,48 +154,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "@babel/runtime/helpers/slicedToArray");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "@babel/runtime/helpers/defineProperty");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Blog__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Blog */ "./src/client/components/blogs/Blog.js");
 
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 
-function BlogList() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([{
-    title: 'Mentoring Opportunities',
-    date: new Date(),
-    author: 'John Doe',
-    id: '1',
-    post: "Are you a problem solver or a domain expert in a certain language/stack or field?\n            Pass this knowledge on to those starting their career journey or switching from one field to another.\n            The ALC gives you the opportunity to participate as a mentor where you can guide\n            and unblock learners through their learning journey."
-  }, {
-    title: 'Mentoring Opportunities',
-    date: new Date(),
-    author: 'John Doe',
-    id: '2',
-    post: "Are you a problem solver or a domain expert in a certain language/stack or field?\n            Pass this knowledge on to those starting their career journey or switching from one field to another.\n            The ALC gives you the opportunity to participate as a mentor where you can guide\n            and unblock learners through their learning journey."
-  }, {
-    title: 'Mentoring Opportunities',
-    date: new Date(),
-    author: 'John Doe',
-    id: '4',
-    post: "Are you a problem solver or a domain expert in a certain language/stack or field?\n            Pass this knowledge on to those starting their career journey or switching from one field to another.\n            The ALC gives you the opportunity to participate as a mentor where you can guide\n            and unblock learners through their learning journey."
-  }, {
-    title: 'Mentoring Opportunities',
-    date: new Date(),
-    author: 'John Doe',
-    id: '5',
-    post: "Are you a problem solver or a domain expert in a certain language/stack or field?\n            Pass this knowledge on to those starting their career journey or switching from one field to another.\n            The ALC gives you the opportunity to participate as a mentor where you can guide\n            and unblock learners through their learning journey."
-  }]),
-      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
-      blogs = _useState2[0],
-      setBlogs = _useState2[1];
 
+
+function BlogList(_ref) {
+  var blogs = _ref.blogs;
+  var blogsToRender = blogs ? blogs.map(function (blog) {
+    return _objectSpread(_objectSpread({}, blog), {}, {
+      date: new Date(blog.date)
+    });
+  }) : [];
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "bloglist-container"
-  }, blogs.map(function (blog) {
+  }, blogsToRender.map(function (blog) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_Blog__WEBPACK_IMPORTED_MODULE_2__["default"], {
       key: blog.id,
       blog: blog
@@ -552,16 +534,44 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_blogs_BlogList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/blogs/BlogList */ "./src/client/components/blogs/BlogList.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "react-redux");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_blogs_BlogList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/blogs/BlogList */ "./src/client/components/blogs/BlogList.js");
+/* harmony import */ var _redux_blogs_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../redux/blogs/actions */ "./src/client/redux/blogs/actions.js");
 
 
 
-function BlogListPage() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_blogs_BlogList__WEBPACK_IMPORTED_MODULE_1__["default"], null);
+
+
+function BlogListPage(_ref) {
+  var getALlBlogs = _ref.getALlBlogs,
+      blogs = _ref.blogs;
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    getALlBlogs();
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_blogs_BlogList__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    blogs: blogs
+  });
+}
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    blogs: state.blogs
+  };
+};
+
+var mapDispatchToProps = {
+  getALlBlogs: _redux_blogs_actions__WEBPACK_IMPORTED_MODULE_3__.getALlBlogs
+};
+
+function loadData(_ref2) {
+  var dispatch = _ref2.dispatch;
+  return dispatch((0,_redux_blogs_actions__WEBPACK_IMPORTED_MODULE_3__.getALlBlogs)());
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  component: BlogListPage
+  component: (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mapStateToProps, mapDispatchToProps)(BlogListPage),
+  loadData: loadData
 });
 
 /***/ }),
@@ -664,24 +674,157 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "react-redux");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "react-router-dom");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "react-router-dom");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
-
-var HomePage = function HomePage(props) {
+var HomePage = function HomePage() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "homePage"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Stay curious."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Discover stories, thinking, and expertise from writers on any topic."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Stay curious."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Discover stories, thinking, and expertise from writers on any topic."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
     to: "/blogs"
   }, "Starting reading"));
 };
 
+var loadData = function loadData() {
+  return console.log('Hello Home Page');
+};
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  component: HomePage
+  component: HomePage,
+  loadData: loadData
+});
+
+/***/ }),
+
+/***/ "./src/client/redux/blogs/actions.js":
+/*!*******************************************!*\
+  !*** ./src/client/redux/blogs/actions.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getALlBlogs": () => (/* binding */ getALlBlogs)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants */ "./src/client/redux/blogs/constants.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "axios");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+var getALlBlogs = function getALlBlogs() {
+  return /*#__PURE__*/function () {
+    var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(dispatch) {
+      var _yield$axios$get, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_3___default().get('http://localhost:3000/api/blogs');
+
+            case 2:
+              _yield$axios$get = _context.sent;
+              data = _yield$axios$get.data;
+              dispatch({
+                type: _constants__WEBPACK_IMPORTED_MODULE_2__.FETCH_ALL_BLOGS,
+                payload: data
+              });
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+};
+
+/***/ }),
+
+/***/ "./src/client/redux/blogs/constants.js":
+/*!*********************************************!*\
+  !*** ./src/client/redux/blogs/constants.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "FETCH_ALL_BLOGS": () => (/* binding */ FETCH_ALL_BLOGS)
+/* harmony export */ });
+var FETCH_ALL_BLOGS = 'GET_ALL_BLOGS';
+
+/***/ }),
+
+/***/ "./src/client/redux/blogs/index.js":
+/*!*****************************************!*\
+  !*** ./src/client/redux/blogs/index.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants */ "./src/client/redux/blogs/constants.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _constants__WEBPACK_IMPORTED_MODULE_0__.FETCH_ALL_BLOGS:
+      return action.payload;
+
+    default:
+      return state;
+  }
+});
+
+/***/ }),
+
+/***/ "./src/client/redux/index.js":
+/*!***********************************!*\
+  !*** ./src/client/redux/index.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "reducers": () => (/* binding */ reducers)
+/* harmony export */ });
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "redux");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux-thunk */ "redux-thunk");
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(redux_thunk__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _blogs_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./blogs/index */ "./src/client/redux/blogs/index.js");
+
+
+
+var reducers = (0,redux__WEBPACK_IMPORTED_MODULE_0__.combineReducers)({
+  blogs: _blogs_index__WEBPACK_IMPORTED_MODULE_2__["default"]
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
+  var initialState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  return (0,redux__WEBPACK_IMPORTED_MODULE_0__.createStore)(reducers, initialState, (0,redux__WEBPACK_IMPORTED_MODULE_0__.applyMiddleware)((redux_thunk__WEBPACK_IMPORTED_MODULE_1___default())));
 });
 
 /***/ }),
@@ -697,6 +840,31 @@ module.exports = {
   MONGO_URL: process.env.MONGO_URL,
   host: process.env.HOST || 'localhost'
 };
+
+/***/ }),
+
+/***/ "./src/server/helpers/createStore.js":
+/*!*******************************************!*\
+  !*** ./src/server/helpers/createStore.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "redux");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux-thunk */ "redux-thunk");
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(redux_thunk__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _client_redux_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../client/redux/index */ "./src/client/redux/index.js");
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
+  return (0,redux__WEBPACK_IMPORTED_MODULE_0__.createStore)(_client_redux_index__WEBPACK_IMPORTED_MODULE_2__.reducers, {}, (0,redux__WEBPACK_IMPORTED_MODULE_0__.applyMiddleware)((redux_thunk__WEBPACK_IMPORTED_MODULE_1___default())));
+});
 
 /***/ }),
 
@@ -719,19 +887,90 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react_router_config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-config */ "react-router-config");
 /* harmony import */ var react_router_config__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_router_config__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _client_Routes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../client/Routes */ "./src/client/Routes.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "react-redux");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var serialize_javascript__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! serialize-javascript */ "serialize-javascript");
+/* harmony import */ var serialize_javascript__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(serialize_javascript__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _client_Routes__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../client/Routes */ "./src/client/Routes.js");
 
 
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (req) {
-  var content = (0,react_dom_server__WEBPACK_IMPORTED_MODULE_1__.renderToString)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.StaticRouter, {
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (req, store) {
+  var content = (0,react_dom_server__WEBPACK_IMPORTED_MODULE_1__.renderToString)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_redux__WEBPACK_IMPORTED_MODULE_4__.Provider, {
+    store: store
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.StaticRouter, {
     location: req.url,
     context: {}
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, (0,react_router_config__WEBPACK_IMPORTED_MODULE_3__.renderRoutes)(_client_Routes__WEBPACK_IMPORTED_MODULE_4__["default"]))));
-  return "\n  <!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <link rel=\"stylesheet\" href=\"/styles.css\">\n\n  </head>\n  <body>\n    <div id=\"root\">".concat(content, "</div>\n\n\n    <script src=\"/bundle.js\"></script>\n  </body>\n</html>\n");
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, (0,react_router_config__WEBPACK_IMPORTED_MODULE_3__.renderRoutes)(_client_Routes__WEBPACK_IMPORTED_MODULE_6__["default"])))));
+  return "\n  <!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <link rel=\"stylesheet\" href=\"/styles.css\">\n\n  </head>\n  <body>\n    <div id=\"root\">".concat(content, "</div>\n\n    <script>\n       window.INITIAL_STATE = ").concat(serialize_javascript__WEBPACK_IMPORTED_MODULE_5___default()(store.getState()), "\n    </script>\n\n    <script src=\"/bundle.js\"></script>\n  </body>\n</html>\n");
 });
+
+/***/ }),
+
+/***/ "./src/server/routes/blogRoutes.js":
+/*!*****************************************!*\
+  !*** ./src/server/routes/blogRoutes.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ "express");
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);
+
+var blogs = [{
+  title: 'Mentoring Opportunities',
+  date: new Date(),
+  author: 'John Doe',
+  id: '1',
+  post: "Are you a problem solver or a domain expert in a certain language/stack or field?\n            Pass this knowledge on to those starting their career journey or switching from one field to another.\n            The ALC gives you the opportunity to participate as a mentor where you can guide\n            and unblock learners through their learning journey."
+}, {
+  title: 'Mentoring Opportunities',
+  date: new Date(),
+  author: 'John Doe',
+  id: '2',
+  post: "Are you a problem solver or a domain expert in a certain language/stack or field?\n            Pass this knowledge on to those starting their career journey or switching from one field to another.\n            The ALC gives you the opportunity to participate as a mentor where you can guide\n            and unblock learners through their learning journey."
+}, {
+  title: 'Mentoring Opportunities',
+  date: new Date(),
+  author: 'John Doe',
+  id: '4',
+  post: "Are you a problem solver or a domain expert in a certain language/stack or field?\n            Pass this knowledge on to those starting their career journey or switching from one field to another.\n            The ALC gives you the opportunity to participate as a mentor where you can guide\n            and unblock learners through their learning journey."
+}, {
+  title: 'Mentoring Opportunities',
+  date: new Date(),
+  author: 'John Doe',
+  id: '5',
+  post: "Are you a problem solver or a domain expert in a certain language/stack or field?\n            Pass this knowledge on to those starting their career journey or switching from one field to another.\n            The ALC gives you the opportunity to participate as a mentor where you can guide\n            and unblock learners through their learning journey."
+}];
+
+var router = function router() {
+  var blogRoutes = (0,express__WEBPACK_IMPORTED_MODULE_0__.Router)();
+  blogRoutes.route('/').get(function (req, res) {
+    return res.json(blogs);
+  });
+  return blogRoutes;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
+
+/***/ }),
+
+/***/ "@babel/runtime/helpers/asyncToGenerator":
+/*!**********************************************************!*\
+  !*** external "@babel/runtime/helpers/asyncToGenerator" ***!
+  \**********************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("@babel/runtime/helpers/asyncToGenerator");
 
 /***/ }),
 
@@ -765,6 +1004,28 @@ module.exports = require("@babel/runtime/helpers/extends");
 
 "use strict";
 module.exports = require("@babel/runtime/helpers/slicedToArray");
+
+/***/ }),
+
+/***/ "@babel/runtime/regenerator":
+/*!*********************************************!*\
+  !*** external "@babel/runtime/regenerator" ***!
+  \*********************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("@babel/runtime/regenerator");
+
+/***/ }),
+
+/***/ "axios":
+/*!************************!*\
+  !*** external "axios" ***!
+  \************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("axios");
 
 /***/ }),
 
@@ -865,6 +1126,39 @@ module.exports = require("react-router-config");
 "use strict";
 module.exports = require("react-router-dom");
 
+/***/ }),
+
+/***/ "redux":
+/*!************************!*\
+  !*** external "redux" ***!
+  \************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("redux");
+
+/***/ }),
+
+/***/ "redux-thunk":
+/*!******************************!*\
+  !*** external "redux-thunk" ***!
+  \******************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("redux-thunk");
+
+/***/ }),
+
+/***/ "serialize-javascript":
+/*!***************************************!*\
+  !*** external "serialize-javascript" ***!
+  \***************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("serialize-javascript");
+
 /***/ })
 
 /******/ 	});
@@ -951,14 +1245,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var morgan__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! morgan */ "morgan");
 /* harmony import */ var morgan__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(morgan__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./config */ "./src/config.js");
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_config__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _server_helpers_renderer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./server/helpers/renderer */ "./src/server/helpers/renderer.js");
+/* harmony import */ var react_router_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-config */ "react-router-config");
+/* harmony import */ var react_router_config__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_router_config__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./config */ "./src/config.js");
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_config__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _server_helpers_renderer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./server/helpers/renderer */ "./src/server/helpers/renderer.js");
+/* harmony import */ var _server_routes_blogRoutes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./server/routes/blogRoutes */ "./src/server/routes/blogRoutes.js");
+/* harmony import */ var _server_helpers_createStore__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./server/helpers/createStore */ "./src/server/helpers/createStore.js");
+/* harmony import */ var _client_Routes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./client/Routes */ "./src/client/Routes.js");
+
 
 
 
 
 dotenv__WEBPACK_IMPORTED_MODULE_0___default().config();
+
+
+
 
 
 var app = express__WEBPACK_IMPORTED_MODULE_1___default()();
@@ -969,12 +1272,20 @@ app.use(express__WEBPACK_IMPORTED_MODULE_1___default().urlencoded({
 }));
 app.use(express__WEBPACK_IMPORTED_MODULE_1___default().json());
 app.use(express__WEBPACK_IMPORTED_MODULE_1___default()["static"]('public'));
+app.use('/api/blogs', (0,_server_routes_blogRoutes__WEBPACK_IMPORTED_MODULE_7__["default"])());
 app.get('*', function (req, res) {
-  var content = (0,_server_helpers_renderer__WEBPACK_IMPORTED_MODULE_5__["default"])(req);
-  res.send(content);
+  var store = (0,_server_helpers_createStore__WEBPACK_IMPORTED_MODULE_8__["default"])();
+  var promises = (0,react_router_config__WEBPACK_IMPORTED_MODULE_4__.matchRoutes)(_client_Routes__WEBPACK_IMPORTED_MODULE_9__["default"], req.path).map(function (_ref) {
+    var route = _ref.route;
+    return route.loadData ? route.loadData(store) : null;
+  });
+  Promise.all(promises).then(function () {
+    var content = (0,_server_helpers_renderer__WEBPACK_IMPORTED_MODULE_6__["default"])(req, store);
+    res.send(content);
+  });
 });
-app.listen((_config__WEBPACK_IMPORTED_MODULE_4___default().port), (_config__WEBPACK_IMPORTED_MODULE_4___default().host), function () {
-  return debug("Server is running on port ".concat((_config__WEBPACK_IMPORTED_MODULE_4___default().port)));
+app.listen((_config__WEBPACK_IMPORTED_MODULE_5___default().port), (_config__WEBPACK_IMPORTED_MODULE_5___default().host), function () {
+  return debug("Server is running on port ".concat((_config__WEBPACK_IMPORTED_MODULE_5___default().port)));
 });
 })();
 

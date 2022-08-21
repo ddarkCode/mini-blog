@@ -1,8 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const HomePage = (props) => {
+const HomePage = () => {
   return (
     <div className="homePage">
       <h1>Stay curious.</h1>
@@ -14,6 +13,9 @@ const HomePage = (props) => {
   );
 };
 
+const loadData = () => console.log('Hello Home Page');
+
 export default {
   component: HomePage,
+  loadData,
 };
