@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+
+import { login } from '../../redux/auth/actions';
 
 import InputContainer from '../../components/input/InputContainer';
 import Input from '../../components/input/Input';
 
-function LoginPage() {
+function LoginPage({ login, history }) {
   const [formEntries, setFormEntries] = useState({
     username: '',
     password: '',
@@ -19,8 +22,14 @@ function LoginPage() {
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login(formEntries);
+    history.push('/blogs');
+  };
+
   return (
-    <form className="login-form auth-form-container">
+    <form className="login-form auth-form-container" onSubmit={handleSubmit}>
       <h2>Login</h2>
 
       <InputContainer>
@@ -50,6 +59,9 @@ function LoginPage() {
   );
 }
 
+const mapDispatchToProps = {
+  login,
+};
 export default {
-  component: LoginPage,
+  component: connect(null, mapDispatchToProps)(LoginPage),
 };

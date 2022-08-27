@@ -175,11 +175,12 @@ function BlogList(_ref) {
       date: new Date()
     });
   }) : [];
+  console.log(blogs);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "bloglist-container"
   }, blogsToRender.map(function (blog) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_Blog__WEBPACK_IMPORTED_MODULE_2__["default"], {
-      key: blog.id,
+      key: blog._id,
       blog: blog
     });
   }));
@@ -237,8 +238,8 @@ function Header(_ref) {
   var auth = _ref.auth;
   var loginOrLogout = auth ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
     href: "/api/auth/register"
-  }, "Logout") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    href: "/api/auth/logout"
+  }, "Logout") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+    to: "/login"
   }, "Login");
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "nav-container"
@@ -337,8 +338,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _components_input_InputContainer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/input/InputContainer */ "./src/client/components/input/InputContainer.js");
-/* harmony import */ var _components_input_Input__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/input/Input */ "./src/client/components/input/Input.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "react-redux");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _redux_auth_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../redux/auth/actions */ "./src/client/redux/auth/actions.js");
+/* harmony import */ var _components_input_InputContainer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/input/InputContainer */ "./src/client/components/input/InputContainer.js");
+/* harmony import */ var _components_input_Input__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/input/Input */ "./src/client/components/input/Input.js");
 
 
 
@@ -350,7 +354,12 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 
-function LoginPage() {
+
+
+function LoginPage(_ref) {
+  var login = _ref.login,
+      history = _ref.history;
+
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
     username: '',
     password: ''
@@ -368,20 +377,27 @@ function LoginPage() {
     });
   };
 
+  var handleSubmit = function handleSubmit(e) {
+    e.preventDefault();
+    login(formEntries);
+    history.push('/blogs');
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("form", {
-    className: "login-form auth-form-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("h2", null, "Login"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_InputContainer__WEBPACK_IMPORTED_MODULE_3__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("label", {
+    className: "login-form auth-form-container",
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("h2", null, "Login"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_InputContainer__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("label", {
     htmlFor: "username"
-  }, "Email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, "Email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_Input__WEBPACK_IMPORTED_MODULE_6__["default"], {
     type: "text",
     name: "username",
     id: "username",
     placeholder: "Enter Your Email",
     value: formEntries.email,
     onChange: handleFormChange
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_InputContainer__WEBPACK_IMPORTED_MODULE_3__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("label", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_InputContainer__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("label", {
     htmlFor: "password"
-  }, "Password"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, "Password"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_Input__WEBPACK_IMPORTED_MODULE_6__["default"], {
     type: "text",
     name: "password",
     id: "password",
@@ -393,8 +409,11 @@ function LoginPage() {
   }, "Login"));
 }
 
+var mapDispatchToProps = {
+  login: _redux_auth_actions__WEBPACK_IMPORTED_MODULE_4__.login
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  component: LoginPage
+  component: (0,react_redux__WEBPACK_IMPORTED_MODULE_3__.connect)(null, mapDispatchToProps)(LoginPage)
 });
 
 /***/ }),
@@ -729,6 +748,7 @@ var loadData = function loadData() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "login": () => (/* binding */ login),
 /* harmony export */   "register": () => (/* binding */ register)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
@@ -742,8 +762,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var register = function register(newUserDetails, history) {
-  console.log(newUserDetails);
+var register = function register(newUserDetails) {
   return /*#__PURE__*/function () {
     var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(dispatch) {
       var _yield$axios$post, data;
@@ -776,6 +795,40 @@ var register = function register(newUserDetails, history) {
     };
   }();
 };
+var login = function login(loginDetails) {
+  return /*#__PURE__*/function () {
+    var _ref2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(dispatch) {
+      var _yield$axios$post2, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_2___default().post('http://localhost:3000/api/auth/login', loginDetails);
+
+            case 2:
+              _yield$axios$post2 = _context2.sent;
+              data = _yield$axios$post2.data;
+              console.log(data);
+              dispatch({
+                type: _constants__WEBPACK_IMPORTED_MODULE_3__.LOGIN_IN_USER,
+                payload: data
+              });
+
+            case 6:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    return function (_x2) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+};
 
 /***/ }),
 
@@ -788,9 +841,11 @@ var register = function register(newUserDetails, history) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "LOGIN_IN_USER": () => (/* binding */ LOGIN_IN_USER),
 /* harmony export */   "REGISTER_USER": () => (/* binding */ REGISTER_USER)
 /* harmony export */ });
 var REGISTER_USER = 'REGISTER_USER';
+var LOGIN_IN_USER = 'LOGIN_IN_USER';
 
 /***/ }),
 
@@ -814,6 +869,9 @@ var authReducer = function authReducer() {
 
   switch (action.type) {
     case _constants__WEBPACK_IMPORTED_MODULE_0__.REGISTER_USER:
+      return action.payload;
+
+    case _constants__WEBPACK_IMPORTED_MODULE_0__.LOGIN_IN_USER:
       return action.payload;
 
     default:
@@ -1139,24 +1197,50 @@ var usersFilePath = (0,path__WEBPACK_IMPORTED_MODULE_2__.join)('src', 'db', 'use
 
 var routes = function routes() {
   var authRoutes = (0,express__WEBPACK_IMPORTED_MODULE_0__.Router)();
+  authRoutes.use(function (req, res, next) {
+    var users = JSON.parse((0,fs__WEBPACK_IMPORTED_MODULE_1__.readFileSync)(usersFilePath, 'utf-8'));
+    req.users = users;
+    next();
+  });
   authRoutes.route('/register').post(function (req, res) {
     try {
       var _req$body = req.body,
           username = _req$body.username,
           password = _req$body.password,
           fullname = _req$body.fullname;
+      var users = req.users;
       var newUser = new _model_User__WEBPACK_IMPORTED_MODULE_3__["default"]({
         username: username,
         password: password,
         fullname: fullname
       });
-      var users = JSON.parse((0,fs__WEBPACK_IMPORTED_MODULE_1__.readFileSync)(usersFilePath, 'utf-8'));
       users.push(newUser);
       (0,fs__WEBPACK_IMPORTED_MODULE_1__.writeFile)(usersFilePath, JSON.stringify(users), 'utf-8', function () {
         return res.json(newUser);
       });
     } catch (err) {
       console.log(err);
+    }
+  });
+  authRoutes.route('/login').post(function (req, res) {
+    try {
+      var _req$body2 = req.body,
+          username = _req$body2.username,
+          password = _req$body2.password;
+      var users = req.users;
+      var userDetails = users.find(function (user) {
+        return user.username === username && user.password === password;
+      });
+
+      if (!userDetails) {
+        return res.json({
+          message: 'Invalid username or password.'
+        });
+      }
+
+      return res.json(userDetails);
+    } catch (error) {
+      console.log(error);
     }
   });
   return authRoutes;

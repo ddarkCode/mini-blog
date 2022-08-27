@@ -6,7 +6,7 @@ function Header({ auth }) {
   const loginOrLogout = auth ? (
     <a href="/api/auth/register">Logout</a>
   ) : (
-    <a href="/api/auth/logout">Login</a>
+    <Link to="/login">Login</Link>
   );
   return (
     <nav>
