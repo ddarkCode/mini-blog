@@ -172,7 +172,7 @@ function BlogList(_ref) {
   var blogs = _ref.blogs;
   var blogsToRender = blogs ? blogs.map(function (blog) {
     return _objectSpread(_objectSpread({}, blog), {}, {
-      date: new Date(blog.date)
+      date: new Date()
     });
   }) : [];
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
@@ -227,10 +227,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "react-router-dom");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "react-redux");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_2__);
 
 
 
-function Header() {
+
+function Header(_ref) {
+  var auth = _ref.auth;
+  var loginOrLogout = auth ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
+    href: "/api/auth/register"
+  }, "Logout") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
+    href: "/api/auth/logout"
+  }, "Login");
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "nav-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -241,14 +250,19 @@ function Header() {
     to: "/blogs"
   }, "All blogs")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
     to: "/blogs/write/new-blog"
-  }, "Write")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
-    to: "/login"
-  }, "Login")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+  }, "Write")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, loginOrLogout), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, auth ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
     to: "/register"
   }, "Register")))));
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Header);
+var mapStateToProps = function mapStateToProps(_ref2) {
+  var auth = _ref2.auth;
+  return {
+    auth: auth
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapStateToProps)(Header));
 
 /***/ }),
 
@@ -402,8 +416,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _components_input_InputContainer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/input/InputContainer */ "./src/client/components/input/InputContainer.js");
-/* harmony import */ var _components_input_Input__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/input/Input */ "./src/client/components/input/Input.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "react-redux");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _components_input_InputContainer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/input/InputContainer */ "./src/client/components/input/InputContainer.js");
+/* harmony import */ var _components_input_Input__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/input/Input */ "./src/client/components/input/Input.js");
+/* harmony import */ var _redux_auth_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../redux/auth/actions */ "./src/client/redux/auth/actions.js");
 
 
 
@@ -415,10 +432,14 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 
-function RegisterPage() {
+
+
+function RegisterPage(_ref) {
+  var register = _ref.register,
+      history = _ref.history;
+
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
-    firstName: '',
-    lastName: '',
+    fullname: '',
     username: '',
     password: ''
   }),
@@ -435,38 +456,36 @@ function RegisterPage() {
     });
   };
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    register(formEntries, history);
+    history.push('/blogs');
+  }
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("form", {
-    className: "auth-form-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("h2", null, "Create your account"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_InputContainer__WEBPACK_IMPORTED_MODULE_3__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("label", {
-    htmlFor: "firstName"
-  }, "First Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    className: "auth-form-container",
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("h2", null, "Create your account"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_InputContainer__WEBPACK_IMPORTED_MODULE_4__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("label", {
+    htmlFor: "fullname"
+  }, "First Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_Input__WEBPACK_IMPORTED_MODULE_5__["default"], {
     type: "text",
-    name: "firstName",
-    id: "firstName",
-    placeholder: "Enter Your First Name",
+    name: "fullname",
+    id: "fullname",
+    placeholder: "Enter Your Full Name",
     value: formEntries.firstName,
     onChange: handleFormChange
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_InputContainer__WEBPACK_IMPORTED_MODULE_3__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("label", {
-    htmlFor: "lastName"
-  }, "Last Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    type: "text",
-    name: "lastName",
-    id: "lastName",
-    placeholder: "Enter Your Last Name",
-    value: formEntries.lastName,
-    onChange: handleFormChange
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_InputContainer__WEBPACK_IMPORTED_MODULE_3__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("label", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_InputContainer__WEBPACK_IMPORTED_MODULE_4__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("label", {
     htmlFor: "username"
-  }, "Email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, "Email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_Input__WEBPACK_IMPORTED_MODULE_5__["default"], {
     type: "email",
     name: "username",
     id: "username",
     placeholder: "Enter Your Email",
-    value: formEntries.email,
+    value: formEntries.username,
     onChange: handleFormChange
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_InputContainer__WEBPACK_IMPORTED_MODULE_3__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("label", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_InputContainer__WEBPACK_IMPORTED_MODULE_4__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("label", {
     htmlFor: "password"
-  }, "Password"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, "Password"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_components_input_Input__WEBPACK_IMPORTED_MODULE_5__["default"], {
     type: "password",
     name: "password",
     id: "password",
@@ -478,8 +497,11 @@ function RegisterPage() {
   }, "Register"));
 }
 
+var mapDispatchTOProps = {
+  register: _redux_auth_actions__WEBPACK_IMPORTED_MODULE_6__.register
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  component: RegisterPage
+  component: (0,react_redux__WEBPACK_IMPORTED_MODULE_3__.connect)(null, mapDispatchTOProps)(RegisterPage)
 });
 
 /***/ }),
@@ -698,6 +720,111 @@ var loadData = function loadData() {
 
 /***/ }),
 
+/***/ "./src/client/redux/auth/actions.js":
+/*!******************************************!*\
+  !*** ./src/client/redux/auth/actions.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "register": () => (/* binding */ register)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "axios");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./constants */ "./src/client/redux/auth/constants.js");
+
+
+
+
+var register = function register(newUserDetails, history) {
+  console.log(newUserDetails);
+  return /*#__PURE__*/function () {
+    var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(dispatch) {
+      var _yield$axios$post, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_2___default().post('http://localhost:3000/api/auth/register', newUserDetails);
+
+            case 2:
+              _yield$axios$post = _context.sent;
+              data = _yield$axios$post.data;
+              dispatch({
+                type: _constants__WEBPACK_IMPORTED_MODULE_3__.REGISTER_USER,
+                payload: data
+              });
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+};
+
+/***/ }),
+
+/***/ "./src/client/redux/auth/constants.js":
+/*!********************************************!*\
+  !*** ./src/client/redux/auth/constants.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "REGISTER_USER": () => (/* binding */ REGISTER_USER)
+/* harmony export */ });
+var REGISTER_USER = 'REGISTER_USER';
+
+/***/ }),
+
+/***/ "./src/client/redux/auth/index.js":
+/*!****************************************!*\
+  !*** ./src/client/redux/auth/index.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants */ "./src/client/redux/auth/constants.js");
+
+
+var authReducer = function authReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _constants__WEBPACK_IMPORTED_MODULE_0__.REGISTER_USER:
+      return action.payload;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (authReducer);
+
+/***/ }),
+
 /***/ "./src/client/redux/blogs/actions.js":
 /*!*******************************************!*\
   !*** ./src/client/redux/blogs/actions.js ***!
@@ -707,6 +834,7 @@ var loadData = function loadData() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addNewBlog": () => (/* binding */ addNewBlog),
 /* harmony export */   "getALlBlogs": () => (/* binding */ getALlBlogs)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
@@ -753,6 +881,39 @@ var getALlBlogs = function getALlBlogs() {
     };
   }();
 };
+var addNewBlog = function addNewBlog(blogToAdd) {
+  return /*#__PURE__*/function () {
+    var _ref2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(dispatch) {
+      var _yield$axios$post, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_3___default().post('http://localhost:3000/api/blogs', blogToAdd);
+
+            case 2:
+              _yield$axios$post = _context2.sent;
+              data = _yield$axios$post.data;
+              dispatch({
+                type: _constants__WEBPACK_IMPORTED_MODULE_2__.ADD_NEW_BLOG,
+                payload: data
+              });
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    return function (_x2) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+};
 
 /***/ }),
 
@@ -765,9 +926,11 @@ var getALlBlogs = function getALlBlogs() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ADD_NEW_BLOG": () => (/* binding */ ADD_NEW_BLOG),
 /* harmony export */   "FETCH_ALL_BLOGS": () => (/* binding */ FETCH_ALL_BLOGS)
 /* harmony export */ });
 var FETCH_ALL_BLOGS = 'GET_ALL_BLOGS';
+var ADD_NEW_BLOG = 'ADD_NEW_BLOG';
 
 /***/ }),
 
@@ -791,6 +954,9 @@ __webpack_require__.r(__webpack_exports__);
   switch (action.type) {
     case _constants__WEBPACK_IMPORTED_MODULE_0__.FETCH_ALL_BLOGS:
       return action.payload;
+
+    case _constants__WEBPACK_IMPORTED_MODULE_0__.ADD_NEW_BLOG:
+      return state;
 
     default:
       return state;
@@ -816,11 +982,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux-thunk */ "redux-thunk");
 /* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(redux_thunk__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _blogs_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./blogs/index */ "./src/client/redux/blogs/index.js");
+/* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth */ "./src/client/redux/auth/index.js");
+
 
 
 
 var reducers = (0,redux__WEBPACK_IMPORTED_MODULE_0__.combineReducers)({
-  blogs: _blogs_index__WEBPACK_IMPORTED_MODULE_2__["default"]
+  blogs: _blogs_index__WEBPACK_IMPORTED_MODULE_2__["default"],
+  auth: _auth__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
   var initialState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -911,6 +1080,92 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/server/model/User.js":
+/*!**********************************!*\
+  !*** ./src/server/model/User.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var _require = __webpack_require__(/*! mongoose */ "mongoose"),
+    Schema = _require.Schema,
+    model = _require.model;
+
+var userSchema = new Schema({
+  username: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  fullname: {
+    type: String,
+    required: true
+  }
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (model('User', userSchema));
+
+/***/ }),
+
+/***/ "./src/server/routes/authRoutes.js":
+/*!*****************************************!*\
+  !*** ./src/server/routes/authRoutes.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ "express");
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! fs */ "fs");
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _model_User__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../model/User */ "./src/server/model/User.js");
+
+
+
+
+var usersFilePath = (0,path__WEBPACK_IMPORTED_MODULE_2__.join)('src', 'db', 'users.json');
+
+var routes = function routes() {
+  var authRoutes = (0,express__WEBPACK_IMPORTED_MODULE_0__.Router)();
+  authRoutes.route('/register').post(function (req, res) {
+    try {
+      var _req$body = req.body,
+          username = _req$body.username,
+          password = _req$body.password,
+          fullname = _req$body.fullname;
+      var newUser = new _model_User__WEBPACK_IMPORTED_MODULE_3__["default"]({
+        username: username,
+        password: password,
+        fullname: fullname
+      });
+      var users = JSON.parse((0,fs__WEBPACK_IMPORTED_MODULE_1__.readFileSync)(usersFilePath, 'utf-8'));
+      users.push(newUser);
+      (0,fs__WEBPACK_IMPORTED_MODULE_1__.writeFile)(usersFilePath, JSON.stringify(users), 'utf-8', function () {
+        return res.json(newUser);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+  return authRoutes;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
+
+/***/ }),
+
 /***/ "./src/server/routes/blogRoutes.js":
 /*!*****************************************!*\
   !*** ./src/server/routes/blogRoutes.js ***!
@@ -922,39 +1177,61 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ "express");
-/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "@babel/runtime/helpers/defineProperty");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! express */ "express");
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! fs */ "fs");
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_2__);
 
-var blogs = [{
-  title: 'Mentoring Opportunities',
-  date: new Date(),
-  author: 'John Doe',
-  id: '1',
-  post: "Are you a problem solver or a domain expert in a certain language/stack or field?\n            Pass this knowledge on to those starting their career journey or switching from one field to another.\n            The ALC gives you the opportunity to participate as a mentor where you can guide\n            and unblock learners through their learning journey."
-}, {
-  title: 'Mentoring Opportunities',
-  date: new Date(),
-  author: 'John Doe',
-  id: '2',
-  post: "Are you a problem solver or a domain expert in a certain language/stack or field?\n            Pass this knowledge on to those starting their career journey or switching from one field to another.\n            The ALC gives you the opportunity to participate as a mentor where you can guide\n            and unblock learners through their learning journey."
-}, {
-  title: 'Mentoring Opportunities',
-  date: new Date(),
-  author: 'John Doe',
-  id: '4',
-  post: "Are you a problem solver or a domain expert in a certain language/stack or field?\n            Pass this knowledge on to those starting their career journey or switching from one field to another.\n            The ALC gives you the opportunity to participate as a mentor where you can guide\n            and unblock learners through their learning journey."
-}, {
-  title: 'Mentoring Opportunities',
-  date: new Date(),
-  author: 'John Doe',
-  id: '5',
-  post: "Are you a problem solver or a domain expert in a certain language/stack or field?\n            Pass this knowledge on to those starting their career journey or switching from one field to another.\n            The ALC gives you the opportunity to participate as a mentor where you can guide\n            and unblock learners through their learning journey."
-}];
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+
+
+
+var _require = __webpack_require__(/*! path */ "path"),
+    join = _require.join;
+
+var blogsFilePath = join('src', 'db', 'blogs.json');
 
 var router = function router() {
-  var blogRoutes = (0,express__WEBPACK_IMPORTED_MODULE_0__.Router)();
+  var blogRoutes = (0,express__WEBPACK_IMPORTED_MODULE_1__.Router)();
   blogRoutes.route('/').get(function (req, res) {
-    return res.json(blogs);
+    (0,fs__WEBPACK_IMPORTED_MODULE_2__.readFile)(blogsFilePath, 'utf8', function (err, blogs) {
+      if (err) {
+        return res.json(err);
+      }
+
+      var parsedBlogs = JSON.parse(blogs).map(function (blog) {
+        return _objectSpread(_objectSpread({}, blog), {}, {
+          post: blog.post.join(),
+          date: new Date()
+        });
+      });
+      return res.json(parsedBlogs);
+    });
+  }).post(function (req, res) {
+    var _req$body = req.body,
+        title = _req$body.title,
+        id = _req$body.id,
+        post = _req$body.post,
+        author = _req$body.author;
+    var newBlog = {
+      title: title,
+      id: id,
+      author: author,
+      post: post.split('.')
+    };
+    var parsedBlogs = JSON.parse((0,fs__WEBPACK_IMPORTED_MODULE_2__.readFileSync)(blogsFilePath, 'utf-8'));
+    parsedBlogs.push(newBlog);
+    (0,fs__WEBPACK_IMPORTED_MODULE_2__.writeFile)(blogsFilePath, JSON.stringify(parsedBlogs), function (err) {
+      res.json({
+        message: 'New Blog Added Successfully'
+      });
+    });
   });
   return blogRoutes;
 };
@@ -1062,6 +1339,17 @@ module.exports = require("express");
 
 /***/ }),
 
+/***/ "mongoose":
+/*!***************************!*\
+  !*** external "mongoose" ***!
+  \***************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("mongoose");
+
+/***/ }),
+
 /***/ "morgan":
 /*!*************************!*\
   !*** external "morgan" ***!
@@ -1159,6 +1447,28 @@ module.exports = require("redux-thunk");
 "use strict";
 module.exports = require("serialize-javascript");
 
+/***/ }),
+
+/***/ "fs":
+/*!*********************!*\
+  !*** external "fs" ***!
+  \*********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("fs");
+
+/***/ }),
+
+/***/ "path":
+/*!***********************!*\
+  !*** external "path" ***!
+  \***********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("path");
+
 /***/ })
 
 /******/ 	});
@@ -1250,15 +1560,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./config */ "./src/config.js");
 /* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_config__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _server_helpers_renderer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./server/helpers/renderer */ "./src/server/helpers/renderer.js");
-/* harmony import */ var _server_routes_blogRoutes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./server/routes/blogRoutes */ "./src/server/routes/blogRoutes.js");
-/* harmony import */ var _server_helpers_createStore__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./server/helpers/createStore */ "./src/server/helpers/createStore.js");
-/* harmony import */ var _client_Routes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./client/Routes */ "./src/client/Routes.js");
+/* harmony import */ var _server_helpers_createStore__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./server/helpers/createStore */ "./src/server/helpers/createStore.js");
+/* harmony import */ var _client_Routes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./client/Routes */ "./src/client/Routes.js");
+/* harmony import */ var _server_routes_blogRoutes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./server/routes/blogRoutes */ "./src/server/routes/blogRoutes.js");
+/* harmony import */ var _server_routes_authRoutes__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./server/routes/authRoutes */ "./src/server/routes/authRoutes.js");
 
 
 
 
 
 dotenv__WEBPACK_IMPORTED_MODULE_0___default().config();
+
 
 
 
@@ -1272,10 +1584,11 @@ app.use(express__WEBPACK_IMPORTED_MODULE_1___default().urlencoded({
 }));
 app.use(express__WEBPACK_IMPORTED_MODULE_1___default().json());
 app.use(express__WEBPACK_IMPORTED_MODULE_1___default()["static"]('public'));
-app.use('/api/blogs', (0,_server_routes_blogRoutes__WEBPACK_IMPORTED_MODULE_7__["default"])());
+app.use('/api/blogs', (0,_server_routes_blogRoutes__WEBPACK_IMPORTED_MODULE_9__["default"])());
+app.use('/api/auth', (0,_server_routes_authRoutes__WEBPACK_IMPORTED_MODULE_10__["default"])());
 app.get('*', function (req, res) {
-  var store = (0,_server_helpers_createStore__WEBPACK_IMPORTED_MODULE_8__["default"])();
-  var promises = (0,react_router_config__WEBPACK_IMPORTED_MODULE_4__.matchRoutes)(_client_Routes__WEBPACK_IMPORTED_MODULE_9__["default"], req.path).map(function (_ref) {
+  var store = (0,_server_helpers_createStore__WEBPACK_IMPORTED_MODULE_7__["default"])();
+  var promises = (0,react_router_config__WEBPACK_IMPORTED_MODULE_4__.matchRoutes)(_client_Routes__WEBPACK_IMPORTED_MODULE_8__["default"], req.path).map(function (_ref) {
     var route = _ref.route;
     return route.loadData ? route.loadData(store) : null;
   });

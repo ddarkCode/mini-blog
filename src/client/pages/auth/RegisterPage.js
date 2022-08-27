@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
 import InputContainer from '../../components/input/InputContainer';
 import Input from '../../components/input/Input';
+import { register } from '../../redux/auth/actions';
 
-function RegisterPage() {
+function RegisterPage({ register, history }) {
   const [formEntries, setFormEntries] = useState({
-    firstName: '',
-    lastName: '',
+    fullname: '',
     username: '',
     password: '',
   });
@@ -20,32 +21,27 @@ function RegisterPage() {
       };
     });
   };
+  function handleSubmit(e) {
+    e.preventDefault();
+    register(formEntries, history);
+    history.push('/blogs');
+  }
 
   return (
-    <form className="auth-form-container">
+    <form className="auth-form-container" onSubmit={handleSubmit}>
       <h2>Create your account</h2>
       <InputContainer>
-        <label htmlFor="firstName">First Name</label>
+        <label htmlFor="fullname">First Name</label>
         <Input
           type="text"
-          name="firstName"
-          id="firstName"
-          placeholder="Enter Your First Name"
+          name="fullname"
+          id="fullname"
+          placeholder="Enter Your Full Name"
           value={formEntries.firstName}
           onChange={handleFormChange}
         />
       </InputContainer>
-      <InputContainer>
-        <label htmlFor="lastName">Last Name</label>
-        <Input
-          type="text"
-          name="lastName"
-          id="lastName"
-          placeholder="Enter Your Last Name"
-          value={formEntries.lastName}
-          onChange={handleFormChange}
-        />
-      </InputContainer>
+
       <InputContainer>
         <label htmlFor="username">Email</label>
         <Input
@@ -53,7 +49,7 @@ function RegisterPage() {
           name="username"
           id="username"
           placeholder="Enter Your Email"
-          value={formEntries.email}
+          value={formEntries.username}
           onChange={handleFormChange}
         />
       </InputContainer>
@@ -73,6 +69,10 @@ function RegisterPage() {
   );
 }
 
+const mapDispatchTOProps = {
+  register,
+};
+
 export default {
-  component: RegisterPage,
+  component: connect(null, mapDispatchTOProps)(RegisterPage),
 };

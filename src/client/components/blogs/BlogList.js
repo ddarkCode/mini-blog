@@ -4,7 +4,7 @@ import Blog from './Blog';
 
 function BlogList({ blogs }) {
   const blogsToRender = blogs
-    ? blogs.map((blog) => ({ ...blog, date: new Date(blog.date) }))
+    ? blogs.map((blog) => ({ ...blog, date: new Date() }))
     : [];
 
   return (

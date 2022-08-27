@@ -8,9 +8,11 @@ dotenv.config();
 
 import config from './config';
 import renderer from './server/helpers/renderer';
-import blogRoutes from './server/routes/blogRoutes';
 import createStore from './server/helpers/createStore';
 import Routes from './client/Routes';
+
+import blogRoutes from './server/routes/blogRoutes';
+import authRoutes from './server/routes/authRoutes';
 
 const app = express();
 const debug = deb('app');
@@ -21,6 +23,7 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.use('/api/blogs', blogRoutes());
+app.use('/api/auth', authRoutes());
 
 app.get('*', (req, res) => {
   const store = createStore();

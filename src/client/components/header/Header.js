@@ -1,7 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-function Header() {
+function Header({ auth }) {
+  const loginOrLogout = auth ? (
+    <a href="/api/auth/register">Logout</a>
+  ) : (
+    <a href="/api/auth/logout">Login</a>
+  );
   return (
     <nav>
       <div className="nav-container">
@@ -16,16 +22,14 @@ function Header() {
           <li>
             <Link to="/blogs/write/new-blog">Write</Link>
           </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/register">Register</Link>
-          </li>
+          <li>{loginOrLogout}</li>
+          <li>{auth ? null : <Link to="/register">Register</Link>}</li>
         </ul>
       </div>
     </nav>
   );
 }
 
-export default Header;
+const mapStateToProps = ({ auth }) => ({ auth });
+
+export default connect(mapStateToProps)(Header);
