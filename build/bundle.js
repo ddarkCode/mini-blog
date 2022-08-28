@@ -1,4 +1,5 @@
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./src/client/App.js":
@@ -7,7 +8,6 @@
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -40,7 +40,6 @@ var App = function App(_ref) {
   \******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -101,7 +100,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
   \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -135,7 +133,7 @@ function Blog(_ref) {
   }, blog.author), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "post"
   }, blog.post.substring(0, 130), "..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
-    to: "/blogs/".concat(blog.id)
+    to: "/blogs/".concat(blog._id)
   }, "Read more"));
 }
 
@@ -149,7 +147,6 @@ function Blog(_ref) {
   \*************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -175,7 +172,6 @@ function BlogList(_ref) {
       date: new Date()
     });
   }) : [];
-  console.log(blogs);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "bloglist-container"
   }, blogsToRender.map(function (blog) {
@@ -196,7 +192,6 @@ function BlogList(_ref) {
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -219,7 +214,6 @@ function Footer() {
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -273,7 +267,6 @@ var mapStateToProps = function mapStateToProps(_ref2) {
   \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -301,7 +294,6 @@ function Input(props) {
   \*******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -327,7 +319,6 @@ function InputContainer(_ref) {
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -424,7 +415,6 @@ var mapDispatchToProps = {
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -531,7 +521,6 @@ var mapDispatchTOProps = {
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -568,7 +557,6 @@ function AddNewBlogPage() {
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -623,7 +611,6 @@ function loadData(_ref2) {
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -652,7 +639,6 @@ var BlogPage = function BlogPage(_ref) {
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -661,26 +647,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "react-router-dom");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "react-redux");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _redux_blogs_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../redux/blogs/actions */ "./src/client/redux/blogs/actions.js");
 
 
 
-function SingleBlogPage() {
-  var blog = {
-    title: 'Mentoring Opportunities',
-    date: new Date(),
-    author: 'John Doe',
-    id: '5',
-    post: "Are you a problem solver or a domain expert in a certain language/stack or field?\n        Pass this knowledge on to those starting their career journey or switching from one field to another.\n        The ALC gives you the opportunity to participate as a mentor where you can guide\n        and unblock learners through their learning journey."
-  };
+
+
+function SingleBlogPage(_ref) {
+  var getBlog = _ref.getBlog,
+      blog = _ref.blog;
+
+  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_1__.useParams)(),
+      blogId = _useParams.blogId;
+
+  global.globalBlogId = blogId;
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    getBlog(blogId);
+  }, []);
 
   function dateFormat(date) {
+    var dateToReturn = new Date(date);
     var options = {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
       day: 'numeric'
     };
-    return date.toLocaleDateString('en-US', options);
+    return dateToReturn.toLocaleDateString('en-US', options);
   }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -696,8 +691,25 @@ function SingleBlogPage() {
   }, "Back to all blogs"));
 }
 
+var mapStateToProps = function mapStateToProps(_ref2) {
+  var blog = _ref2.blog;
+  return {
+    blog: blog
+  };
+};
+
+var mapDispatchToProps = {
+  getBlog: _redux_blogs_actions__WEBPACK_IMPORTED_MODULE_3__.getBlog
+};
+
+function loadData(_ref3) {
+  var dispatch = _ref3.dispatch;
+  return dispatch((0,_redux_blogs_actions__WEBPACK_IMPORTED_MODULE_3__.getBlog)(globalBlogId));
+}
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  component: SingleBlogPage
+  component: (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapStateToProps, mapDispatchToProps)(SingleBlogPage),
+  loadData: loadData
 });
 
 /***/ }),
@@ -708,7 +720,6 @@ function SingleBlogPage() {
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -745,7 +756,6 @@ var loadData = function loadData() {
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "login": () => (/* binding */ login),
@@ -838,7 +848,6 @@ var login = function login(loginDetails) {
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "LOGIN_IN_USER": () => (/* binding */ LOGIN_IN_USER),
@@ -855,7 +864,6 @@ var LOGIN_IN_USER = 'LOGIN_IN_USER';
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -889,11 +897,11 @@ var authReducer = function authReducer() {
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "addNewBlog": () => (/* binding */ addNewBlog),
-/* harmony export */   "getALlBlogs": () => (/* binding */ getALlBlogs)
+/* harmony export */   "getALlBlogs": () => (/* binding */ getALlBlogs),
+/* harmony export */   "getBlog": () => (/* binding */ getBlog)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
@@ -971,6 +979,40 @@ var addNewBlog = function addNewBlog(blogToAdd) {
       return _ref2.apply(this, arguments);
     };
   }();
+}; //Single Blog Actions
+
+var getBlog = function getBlog(blogId) {
+  return /*#__PURE__*/function () {
+    var _ref3 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee3(dispatch) {
+      var _yield$axios$get2, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_3___default().get("http://localhost:3000/api/blogs/".concat(blogId));
+
+            case 2:
+              _yield$axios$get2 = _context3.sent;
+              data = _yield$axios$get2.data;
+              dispatch({
+                type: _constants__WEBPACK_IMPORTED_MODULE_2__.GET_SINGLE_BLOG,
+                payload: data
+              });
+
+            case 5:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }));
+
+    return function (_x3) {
+      return _ref3.apply(this, arguments);
+    };
+  }();
 };
 
 /***/ }),
@@ -981,14 +1023,16 @@ var addNewBlog = function addNewBlog(blogToAdd) {
   \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ADD_NEW_BLOG": () => (/* binding */ ADD_NEW_BLOG),
-/* harmony export */   "FETCH_ALL_BLOGS": () => (/* binding */ FETCH_ALL_BLOGS)
+/* harmony export */   "FETCH_ALL_BLOGS": () => (/* binding */ FETCH_ALL_BLOGS),
+/* harmony export */   "GET_SINGLE_BLOG": () => (/* binding */ GET_SINGLE_BLOG)
 /* harmony export */ });
 var FETCH_ALL_BLOGS = 'GET_ALL_BLOGS';
-var ADD_NEW_BLOG = 'ADD_NEW_BLOG';
+var ADD_NEW_BLOG = 'ADD_NEW_BLOG'; //Single Blog Constants
+
+var GET_SINGLE_BLOG = 'GET_SINGLE_BLOG';
 
 /***/ }),
 
@@ -998,28 +1042,44 @@ var ADD_NEW_BLOG = 'ADD_NEW_BLOG';
   \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "allBlogsReducer": () => (/* binding */ allBlogsReducer),
+/* harmony export */   "singleBlogReducer": () => (/* binding */ singleBlogReducer)
 /* harmony export */ });
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants */ "./src/client/redux/blogs/constants.js");
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "@babel/runtime/helpers/toConsumableArray");
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./src/client/redux/blogs/constants.js");
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
+
+var allBlogsReducer = function allBlogsReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case _constants__WEBPACK_IMPORTED_MODULE_0__.FETCH_ALL_BLOGS:
+    case _constants__WEBPACK_IMPORTED_MODULE_1__.FETCH_ALL_BLOGS:
       return action.payload;
 
-    case _constants__WEBPACK_IMPORTED_MODULE_0__.ADD_NEW_BLOG:
-      return state;
+    case _constants__WEBPACK_IMPORTED_MODULE_1__.ADD_NEW_BLOG:
+      return [].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(state), [action.payload.blog]);
 
     default:
       return state;
   }
-});
+}; //Single Blog Reducer
+
+var singleBlogReducer = function singleBlogReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _constants__WEBPACK_IMPORTED_MODULE_1__.GET_SINGLE_BLOG:
+      return action.payload;
+
+    default:
+      return state;
+  }
+};
 
 /***/ }),
 
@@ -1029,7 +1089,6 @@ __webpack_require__.r(__webpack_exports__);
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
@@ -1046,7 +1105,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var reducers = (0,redux__WEBPACK_IMPORTED_MODULE_0__.combineReducers)({
-  blogs: _blogs_index__WEBPACK_IMPORTED_MODULE_2__["default"],
+  blog: _blogs_index__WEBPACK_IMPORTED_MODULE_2__.singleBlogReducer,
+  blogs: _blogs_index__WEBPACK_IMPORTED_MODULE_2__.allBlogsReducer,
   auth: _auth__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
@@ -1056,27 +1116,12 @@ var reducers = (0,redux__WEBPACK_IMPORTED_MODULE_0__.combineReducers)({
 
 /***/ }),
 
-/***/ "./src/config.js":
-/*!***********************!*\
-  !*** ./src/config.js ***!
-  \***********************/
-/***/ ((module) => {
-
-module.exports = {
-  port: process.env.PORT || 3000,
-  MONGO_URL: process.env.MONGO_URL,
-  host: process.env.HOST || 'localhost'
-};
-
-/***/ }),
-
 /***/ "./src/server/helpers/createStore.js":
 /*!*******************************************!*\
   !*** ./src/server/helpers/createStore.js ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -1101,7 +1146,6 @@ __webpack_require__.r(__webpack_exports__);
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -1138,13 +1182,46 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/server/model/Blog.js":
+/*!**********************************!*\
+  !*** ./src/server/model/Blog.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mongoose */ "mongoose");
+/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mongoose__WEBPACK_IMPORTED_MODULE_0__);
+
+var blogSchema = new mongoose__WEBPACK_IMPORTED_MODULE_0__.Schema({
+  title: {
+    type: String
+  },
+  authorId: {
+    type: String
+  },
+  img_url: {
+    type: String,
+    "default": ''
+  },
+  body: {
+    type: String
+  }
+}, {
+  timestamps: true
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,mongoose__WEBPACK_IMPORTED_MODULE_0__.model)('Blog', blogSchema));
+
+/***/ }),
+
 /***/ "./src/server/model/User.js":
 /*!**********************************!*\
   !*** ./src/server/model/User.js ***!
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -1171,13 +1248,87 @@ var userSchema = new Schema({
 
 /***/ }),
 
+/***/ "./src/server/passport/passport.js":
+/*!*****************************************!*\
+  !*** ./src/server/passport/passport.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "passportConfig": () => (/* binding */ passportConfig)
+/* harmony export */ });
+/* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! passport */ "passport");
+/* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(passport__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _strategies_localStrategy__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./strategies/localStrategy */ "./src/server/passport/strategies/localStrategy.js");
+
+
+var passportConfig = function passportConfig(app) {
+  app.use(passport__WEBPACK_IMPORTED_MODULE_0___default().initialize());
+  app.use(passport__WEBPACK_IMPORTED_MODULE_0___default().session());
+  passport__WEBPACK_IMPORTED_MODULE_0___default().serializeUser(function (user, done) {
+    return done(null, user);
+  });
+  passport__WEBPACK_IMPORTED_MODULE_0___default().deserializeUser(function (user, done) {
+    return done(null, user);
+  });
+  (0,_strategies_localStrategy__WEBPACK_IMPORTED_MODULE_1__.localStrategy)();
+};
+
+/***/ }),
+
+/***/ "./src/server/passport/strategies/localStrategy.js":
+/*!*********************************************************!*\
+  !*** ./src/server/passport/strategies/localStrategy.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "localStrategy": () => (/* binding */ localStrategy)
+/* harmony export */ });
+/* harmony import */ var passport_local__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! passport-local */ "passport-local");
+/* harmony import */ var passport_local__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(passport_local__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! passport */ "passport");
+/* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(passport__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! fs */ "fs");
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+var usersFilePath = (0,path__WEBPACK_IMPORTED_MODULE_3__.join)('src', 'db', 'users.json');
+var localStrategy = function localStrategy() {
+  passport__WEBPACK_IMPORTED_MODULE_1___default().use(new passport_local__WEBPACK_IMPORTED_MODULE_0__.Strategy(function (username, password, done) {
+    try {
+      var usersInDb = (0,fs__WEBPACK_IMPORTED_MODULE_2__.readFileSync)(usersFilePath, 'utf-8');
+      var foundUser = JSON.parse(usersInDb).find(function (user) {
+        return user.username === username && user.password === password;
+      });
+      console.log("Passport Local Strategy FOund User: ".concat(JSON.stringify(foundUser)));
+
+      if (!foundUser) {
+        return done(null, false);
+      }
+
+      return done(null, foundUser);
+    } catch (err) {
+      console.log(err);
+      return done(err);
+    }
+  }));
+};
+
+/***/ }),
+
 /***/ "./src/server/routes/authRoutes.js":
 /*!*****************************************!*\
   !*** ./src/server/routes/authRoutes.js ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -1188,7 +1339,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! path */ "path");
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _model_User__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../model/User */ "./src/server/model/User.js");
+/* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! passport */ "passport");
+/* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(passport__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _model_User__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../model/User */ "./src/server/model/User.js");
+
 
 
 
@@ -1209,14 +1363,19 @@ var routes = function routes() {
           password = _req$body.password,
           fullname = _req$body.fullname;
       var users = req.users;
-      var newUser = new _model_User__WEBPACK_IMPORTED_MODULE_3__["default"]({
+      var newUser = new _model_User__WEBPACK_IMPORTED_MODULE_4__["default"]({
         username: username,
         password: password,
         fullname: fullname
       });
       users.push(newUser);
       (0,fs__WEBPACK_IMPORTED_MODULE_1__.writeFile)(usersFilePath, JSON.stringify(users), 'utf-8', function () {
-        return res.json(newUser);
+        // passport.authenticate('local')(req, res, () => {
+        //   res.redirect('/secrets');
+        // });
+        passport__WEBPACK_IMPORTED_MODULE_3___default().authenticate('local')(req, res, function () {
+          return res.json(newUser);
+        });
       });
     } catch (err) {
       console.log(err);
@@ -1256,7 +1415,6 @@ var routes = function routes() {
   \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -1267,6 +1425,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! fs */ "fs");
 /* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _model_Blog__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../model/Blog */ "./src/server/model/Blog.js");
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -1279,43 +1438,65 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 var _require = __webpack_require__(/*! path */ "path"),
     join = _require.join;
 
+
 var blogsFilePath = join('src', 'db', 'blogs.json');
 
 var router = function router() {
   var blogRoutes = (0,express__WEBPACK_IMPORTED_MODULE_1__.Router)();
-  blogRoutes.route('/').get(function (req, res) {
-    (0,fs__WEBPACK_IMPORTED_MODULE_2__.readFile)(blogsFilePath, 'utf8', function (err, blogs) {
-      if (err) {
-        return res.json(err);
-      }
-
-      var parsedBlogs = JSON.parse(blogs).map(function (blog) {
-        return _objectSpread(_objectSpread({}, blog), {}, {
-          post: blog.post.join(),
-          date: new Date()
+  blogRoutes;
+  blogRoutes.use(function (req, res, next) {
+    var blogs = (0,fs__WEBPACK_IMPORTED_MODULE_2__.readFileSync)(blogsFilePath, 'utf8');
+    var parsedBlogs = JSON.parse(blogs).map(function (blog) {
+      return _objectSpread(_objectSpread({}, blog), {}, {
+        post: blog.post.join(),
+        date: new Date()
+      });
+    });
+    req.blogs = parsedBlogs;
+    next();
+  }).route('/').get(function (req, res) {
+    try {
+      var blogs = req.blogs;
+      return res.json(blogs);
+    } catch (err) {
+      console.log(err);
+    }
+  }).post(function (req, res) {
+    try {
+      var _req$body = req.body,
+          title = _req$body.title,
+          id = _req$body.id,
+          post = _req$body.post,
+          author = _req$body.author;
+      var blogs = req.blogs;
+      var newBlog = new _model_Blog__WEBPACK_IMPORTED_MODULE_3__["default"]({
+        title: title,
+        id: id,
+        author: author,
+        post: post.split('.')
+      });
+      blogs.push(newBlog);
+      (0,fs__WEBPACK_IMPORTED_MODULE_2__.writeFile)(blogsFilePath, JSON.stringify(blogs), function () {
+        return res.json({
+          message: 'New Blog Added Successfully',
+          blog: newBlog
         });
       });
-      return res.json(parsedBlogs);
-    });
-  }).post(function (req, res) {
-    var _req$body = req.body,
-        title = _req$body.title,
-        id = _req$body.id,
-        post = _req$body.post,
-        author = _req$body.author;
-    var newBlog = {
-      title: title,
-      id: id,
-      author: author,
-      post: post.split('.')
-    };
-    var parsedBlogs = JSON.parse((0,fs__WEBPACK_IMPORTED_MODULE_2__.readFileSync)(blogsFilePath, 'utf-8'));
-    parsedBlogs.push(newBlog);
-    (0,fs__WEBPACK_IMPORTED_MODULE_2__.writeFile)(blogsFilePath, JSON.stringify(parsedBlogs), function (err) {
-      res.json({
-        message: 'New Blog Added Successfully'
+    } catch (err) {
+      console.log(err);
+    }
+  });
+  blogRoutes.route('/:blogId').get(function (req, res) {
+    try {
+      var blogId = req.params.blogId;
+      var blogs = req.blogs;
+      var requestedBlog = blogs.find(function (blog) {
+        return blog._id === +blogId;
       });
-    });
+      return res.json(requestedBlog);
+    } catch (err) {
+      console.log(err);
+    }
   });
   return blogRoutes;
 };
@@ -1330,7 +1511,6 @@ var router = function router() {
   \**********************************************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("@babel/runtime/helpers/asyncToGenerator");
 
 /***/ }),
@@ -1341,7 +1521,6 @@ module.exports = require("@babel/runtime/helpers/asyncToGenerator");
   \********************************************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("@babel/runtime/helpers/defineProperty");
 
 /***/ }),
@@ -1352,7 +1531,6 @@ module.exports = require("@babel/runtime/helpers/defineProperty");
   \*************************************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("@babel/runtime/helpers/extends");
 
 /***/ }),
@@ -1363,8 +1541,17 @@ module.exports = require("@babel/runtime/helpers/extends");
   \*******************************************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("@babel/runtime/helpers/slicedToArray");
+
+/***/ }),
+
+/***/ "@babel/runtime/helpers/toConsumableArray":
+/*!***********************************************************!*\
+  !*** external "@babel/runtime/helpers/toConsumableArray" ***!
+  \***********************************************************/
+/***/ ((module) => {
+
+module.exports = require("@babel/runtime/helpers/toConsumableArray");
 
 /***/ }),
 
@@ -1374,7 +1561,6 @@ module.exports = require("@babel/runtime/helpers/slicedToArray");
   \*********************************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("@babel/runtime/regenerator");
 
 /***/ }),
@@ -1385,7 +1571,6 @@ module.exports = require("@babel/runtime/regenerator");
   \************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("axios");
 
 /***/ }),
@@ -1396,7 +1581,6 @@ module.exports = require("axios");
   \************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("debug");
 
 /***/ }),
@@ -1407,7 +1591,6 @@ module.exports = require("debug");
   \*************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("dotenv");
 
 /***/ }),
@@ -1418,8 +1601,17 @@ module.exports = require("dotenv");
   \**************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("express");
+
+/***/ }),
+
+/***/ "express-session":
+/*!**********************************!*\
+  !*** external "express-session" ***!
+  \**********************************/
+/***/ ((module) => {
+
+module.exports = require("express-session");
 
 /***/ }),
 
@@ -1429,7 +1621,6 @@ module.exports = require("express");
   \***************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("mongoose");
 
 /***/ }),
@@ -1440,8 +1631,27 @@ module.exports = require("mongoose");
   \*************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("morgan");
+
+/***/ }),
+
+/***/ "passport":
+/*!***************************!*\
+  !*** external "passport" ***!
+  \***************************/
+/***/ ((module) => {
+
+module.exports = require("passport");
+
+/***/ }),
+
+/***/ "passport-local":
+/*!*********************************!*\
+  !*** external "passport-local" ***!
+  \*********************************/
+/***/ ((module) => {
+
+module.exports = require("passport-local");
 
 /***/ }),
 
@@ -1451,7 +1661,6 @@ module.exports = require("morgan");
   \************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("react");
 
 /***/ }),
@@ -1462,7 +1671,6 @@ module.exports = require("react");
   \***********************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("react-dom/server");
 
 /***/ }),
@@ -1473,7 +1681,6 @@ module.exports = require("react-dom/server");
   \******************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("react-redux");
 
 /***/ }),
@@ -1484,7 +1691,6 @@ module.exports = require("react-redux");
   \**************************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("react-router-config");
 
 /***/ }),
@@ -1495,7 +1701,6 @@ module.exports = require("react-router-config");
   \***********************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("react-router-dom");
 
 /***/ }),
@@ -1506,7 +1711,6 @@ module.exports = require("react-router-dom");
   \************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("redux");
 
 /***/ }),
@@ -1517,7 +1721,6 @@ module.exports = require("redux");
   \******************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("redux-thunk");
 
 /***/ }),
@@ -1528,7 +1731,6 @@ module.exports = require("redux-thunk");
   \***************************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("serialize-javascript");
 
 /***/ }),
@@ -1539,7 +1741,6 @@ module.exports = require("serialize-javascript");
   \*********************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("fs");
 
 /***/ }),
@@ -1550,7 +1751,6 @@ module.exports = require("fs");
   \***********************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = require("path");
 
 /***/ })
@@ -1624,9 +1824,8 @@ module.exports = require("path");
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-"use strict";
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
@@ -1641,17 +1840,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var morgan__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(morgan__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var react_router_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-config */ "react-router-config");
 /* harmony import */ var react_router_config__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_router_config__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./config */ "./src/config.js");
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_config__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var express_session__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! express-session */ "express-session");
+/* harmony import */ var express_session__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(express_session__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _server_helpers_renderer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./server/helpers/renderer */ "./src/server/helpers/renderer.js");
 /* harmony import */ var _server_helpers_createStore__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./server/helpers/createStore */ "./src/server/helpers/createStore.js");
 /* harmony import */ var _client_Routes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./client/Routes */ "./src/client/Routes.js");
 /* harmony import */ var _server_routes_blogRoutes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./server/routes/blogRoutes */ "./src/server/routes/blogRoutes.js");
 /* harmony import */ var _server_routes_authRoutes__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./server/routes/authRoutes */ "./src/server/routes/authRoutes.js");
-
-
-
-
+/* harmony import */ var _server_passport_passport__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./server/passport/passport */ "./src/server/passport/passport.js");
 
 dotenv__WEBPACK_IMPORTED_MODULE_0___default().config();
 
@@ -1660,14 +1856,30 @@ dotenv__WEBPACK_IMPORTED_MODULE_0___default().config();
 
 
 
+
+
+
+
+
 var app = express__WEBPACK_IMPORTED_MODULE_1___default()();
 var debug = debug__WEBPACK_IMPORTED_MODULE_2___default()('app');
+var _process$env = process.env,
+    HOST = _process$env.HOST,
+    PORT = _process$env.PORT,
+    SECRET = _process$env.SECRET;
 app.use(morgan__WEBPACK_IMPORTED_MODULE_3___default()('dev'));
 app.use(express__WEBPACK_IMPORTED_MODULE_1___default().urlencoded({
   extended: true
 }));
 app.use(express__WEBPACK_IMPORTED_MODULE_1___default().json());
-app.use(express__WEBPACK_IMPORTED_MODULE_1___default()["static"]('public'));
+app.use(express__WEBPACK_IMPORTED_MODULE_1___default()["static"]('public')); //Auth Config
+
+app.use(express_session__WEBPACK_IMPORTED_MODULE_5___default()({
+  secret: SECRET,
+  resave: false,
+  saveUninitialized: false
+}));
+(0,_server_passport_passport__WEBPACK_IMPORTED_MODULE_11__.passportConfig)(app);
 app.use('/api/blogs', (0,_server_routes_blogRoutes__WEBPACK_IMPORTED_MODULE_9__["default"])());
 app.use('/api/auth', (0,_server_routes_authRoutes__WEBPACK_IMPORTED_MODULE_10__["default"])());
 app.get('*', function (req, res) {
@@ -1681,8 +1893,8 @@ app.get('*', function (req, res) {
     res.send(content);
   });
 });
-app.listen((_config__WEBPACK_IMPORTED_MODULE_5___default().port), (_config__WEBPACK_IMPORTED_MODULE_5___default().host), function () {
-  return debug("Server is running on port ".concat((_config__WEBPACK_IMPORTED_MODULE_5___default().port)));
+app.listen(PORT, HOST, function () {
+  return debug("Server is running on port ".concat(PORT));
 });
 })();
 

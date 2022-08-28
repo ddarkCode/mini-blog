@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { readFileSync, writeFile } from 'fs';
 import { join } from 'path';
+import passport from 'passport';
 
 import User from '../model/User';
 
@@ -24,7 +25,12 @@ const routes = () => {
       });
       users.push(newUser);
       writeFile(usersFilePath, JSON.stringify(users), 'utf-8', () => {
-        return res.json(newUser);
+        // passport.authenticate('local')(req, res, () => {
+        //   res.redirect('/secrets');
+        // });
+        passport.authenticate('local')(req, res, () => {
+          return res.json(newUser);
+        });
       });
     } catch (err) {
       console.log(err);

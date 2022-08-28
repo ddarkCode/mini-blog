@@ -1,4 +1,4 @@
-import { FETCH_ALL_BLOGS, ADD_NEW_BLOG } from './constants';
+import { FETCH_ALL_BLOGS, ADD_NEW_BLOG, GET_SINGLE_BLOG } from './constants';
 import axios from 'axios';
 
 export const getALlBlogs = () => async (dispatch) => {
@@ -18,4 +18,18 @@ export const addNewBlog = (blogToAdd) => async (dispatch) => {
     type: ADD_NEW_BLOG,
     payload: data,
   });
+};
+
+//Single Blog Actions
+
+export const getBlog = (blogId) => {
+  return async (dispatch) => {
+    const { data } = await axios.get(
+      `http://localhost:3000/api/blogs/${blogId}`
+    );
+    dispatch({
+      type: GET_SINGLE_BLOG,
+      payload: data,
+    });
+  };
 };
