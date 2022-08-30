@@ -228,9 +228,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function Header(_ref) {
-  var auth = _ref.auth;
-  var loginOrLogout = auth ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
+function Header() {
+  var _useSelector = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(function (state) {
+    return state.auth;
+  }),
+      user = _useSelector.user;
+
+  var loginOrLogout = user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
     href: "/api/auth/register"
   }, "Logout") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
     to: "/login"
@@ -245,19 +249,12 @@ function Header(_ref) {
     to: "/blogs"
   }, "All blogs")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
     to: "/blogs/write/new-blog"
-  }, "Write")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, loginOrLogout), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, auth ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+  }, "Write")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, loginOrLogout), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, user ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
     to: "/register"
   }, "Register")))));
 }
 
-var mapStateToProps = function mapStateToProps(_ref2) {
-  var auth = _ref2.auth;
-  return {
-    auth: auth
-  };
-};
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapStateToProps)(Header));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Header);
 
 /***/ }),
 
@@ -331,7 +328,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "react-redux");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _redux_auth_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../redux/auth/actions */ "./src/client/redux/auth/actions.js");
+/* harmony import */ var _redux_auth__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../redux/auth */ "./src/client/redux/auth/index.js");
 /* harmony import */ var _components_input_InputContainer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/input/InputContainer */ "./src/client/components/input/InputContainer.js");
 /* harmony import */ var _components_input_Input__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/input/Input */ "./src/client/components/input/Input.js");
 
@@ -348,8 +345,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 function LoginPage(_ref) {
-  var login = _ref.login,
-      history = _ref.history;
+  var history = _ref.history;
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_3__.useDispatch)();
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
     username: '',
@@ -370,7 +367,7 @@ function LoginPage(_ref) {
 
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
-    login(formEntries);
+    dispatch((0,_redux_auth__WEBPACK_IMPORTED_MODULE_4__.loginUser)(formEntries));
     history.push('/blogs');
   };
 
@@ -400,11 +397,8 @@ function LoginPage(_ref) {
   }, "Login"));
 }
 
-var mapDispatchToProps = {
-  login: _redux_auth_actions__WEBPACK_IMPORTED_MODULE_4__.login
-};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  component: (0,react_redux__WEBPACK_IMPORTED_MODULE_3__.connect)(null, mapDispatchToProps)(LoginPage)
+  component: LoginPage
 });
 
 /***/ }),
@@ -429,7 +423,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _components_input_InputContainer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/input/InputContainer */ "./src/client/components/input/InputContainer.js");
 /* harmony import */ var _components_input_Input__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/input/Input */ "./src/client/components/input/Input.js");
-/* harmony import */ var _redux_auth_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../redux/auth/actions */ "./src/client/redux/auth/actions.js");
+/* harmony import */ var _redux_auth__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../redux/auth */ "./src/client/redux/auth/index.js");
 
 
 
@@ -444,8 +438,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 function RegisterPage(_ref) {
-  var register = _ref.register,
-      history = _ref.history;
+  var history = _ref.history;
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
     fullname: '',
@@ -455,6 +448,8 @@ function RegisterPage(_ref) {
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useState, 2),
       formEntries = _useState2[0],
       setFormEntries = _useState2[1];
+
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_3__.useDispatch)();
 
   var handleFormChange = function handleFormChange(e) {
     var _e$target = e.target,
@@ -467,7 +462,7 @@ function RegisterPage(_ref) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    register(formEntries, history);
+    dispatch((0,_redux_auth__WEBPACK_IMPORTED_MODULE_6__.registerUser)(formEntries));
     history.push('/blogs');
   }
 
@@ -506,11 +501,8 @@ function RegisterPage(_ref) {
   }, "Register"));
 }
 
-var mapDispatchTOProps = {
-  register: _redux_auth_actions__WEBPACK_IMPORTED_MODULE_6__.register
-};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  component: (0,react_redux__WEBPACK_IMPORTED_MODULE_3__.connect)(null, mapDispatchTOProps)(RegisterPage)
+  component: RegisterPage
 });
 
 /***/ }),
@@ -566,40 +558,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "react-redux");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _components_blogs_BlogList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/blogs/BlogList */ "./src/client/components/blogs/BlogList.js");
-/* harmony import */ var _redux_blogs_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../redux/blogs/actions */ "./src/client/redux/blogs/actions.js");
+/* harmony import */ var _redux_blogs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../redux/blogs */ "./src/client/redux/blogs/index.js");
 
 
 
 
 
-function BlogListPage(_ref) {
-  var getALlBlogs = _ref.getALlBlogs,
-      blogs = _ref.blogs;
+function BlogListPage() {
+  var _useSelector = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
+    return state.blogs;
+  }),
+      blogs = _useSelector.blogs;
+
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    getALlBlogs();
+    dispatch((0,_redux_blogs__WEBPACK_IMPORTED_MODULE_3__.getBlogs)());
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_blogs_BlogList__WEBPACK_IMPORTED_MODULE_2__["default"], {
     blogs: blogs
   });
 }
 
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    blogs: state.blogs
-  };
-};
-
-var mapDispatchToProps = {
-  getALlBlogs: _redux_blogs_actions__WEBPACK_IMPORTED_MODULE_3__.getALlBlogs
-};
-
-function loadData(_ref2) {
-  var dispatch = _ref2.dispatch;
-  return dispatch((0,_redux_blogs_actions__WEBPACK_IMPORTED_MODULE_3__.getALlBlogs)());
+function loadData(_ref) {
+  var dispatch = _ref.dispatch;
+  return dispatch((0,_redux_blogs__WEBPACK_IMPORTED_MODULE_3__.getBlogs)());
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  component: (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mapStateToProps, mapDispatchToProps)(BlogListPage),
+  component: BlogListPage,
   loadData: loadData
 });
 
@@ -649,22 +635,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "react-redux");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _redux_blogs_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../redux/blogs/actions */ "./src/client/redux/blogs/actions.js");
+/* harmony import */ var _redux_singleBlog__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../redux/singleBlog */ "./src/client/redux/singleBlog/index.js");
 
 
 
 
 
-function SingleBlogPage(_ref) {
-  var getBlog = _ref.getBlog,
-      blog = _ref.blog;
+function SingleBlogPage() {
+  var _useSelector = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(function (state) {
+    return state.blog;
+  }),
+      blog = _useSelector.blog;
+
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
 
   var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_1__.useParams)(),
       blogId = _useParams.blogId;
 
   global.globalBlogId = blogId;
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    getBlog(blogId);
+    dispatch((0,_redux_singleBlog__WEBPACK_IMPORTED_MODULE_3__.getBlog)(blogId));
   }, []);
 
   function dateFormat(date) {
@@ -691,24 +681,13 @@ function SingleBlogPage(_ref) {
   }, "Back to all blogs"));
 }
 
-var mapStateToProps = function mapStateToProps(_ref2) {
-  var blog = _ref2.blog;
-  return {
-    blog: blog
-  };
-};
-
-var mapDispatchToProps = {
-  getBlog: _redux_blogs_actions__WEBPACK_IMPORTED_MODULE_3__.getBlog
-};
-
-function loadData(_ref3) {
-  var dispatch = _ref3.dispatch;
-  return dispatch((0,_redux_blogs_actions__WEBPACK_IMPORTED_MODULE_3__.getBlog)(globalBlogId));
+function loadData(_ref) {
+  var dispatch = _ref.dispatch;
+  return dispatch((0,_redux_singleBlog__WEBPACK_IMPORTED_MODULE_3__.getBlog)(globalBlogId));
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  component: (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapStateToProps, mapDispatchToProps)(SingleBlogPage),
+  component: SingleBlogPage,
   loadData: loadData
 });
 
@@ -750,114 +729,6 @@ var loadData = function loadData() {
 
 /***/ }),
 
-/***/ "./src/client/redux/auth/actions.js":
-/*!******************************************!*\
-  !*** ./src/client/redux/auth/actions.js ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "login": () => (/* binding */ login),
-/* harmony export */   "register": () => (/* binding */ register)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "axios");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./constants */ "./src/client/redux/auth/constants.js");
-
-
-
-
-var register = function register(newUserDetails) {
-  return /*#__PURE__*/function () {
-    var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(dispatch) {
-      var _yield$axios$post, data;
-
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().post('http://localhost:3000/api/auth/register', newUserDetails);
-
-            case 2:
-              _yield$axios$post = _context.sent;
-              data = _yield$axios$post.data;
-              dispatch({
-                type: _constants__WEBPACK_IMPORTED_MODULE_3__.REGISTER_USER,
-                payload: data
-              });
-
-            case 5:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-
-    return function (_x) {
-      return _ref.apply(this, arguments);
-    };
-  }();
-};
-var login = function login(loginDetails) {
-  return /*#__PURE__*/function () {
-    var _ref2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(dispatch) {
-      var _yield$axios$post2, data;
-
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().post('http://localhost:3000/api/auth/login', loginDetails);
-
-            case 2:
-              _yield$axios$post2 = _context2.sent;
-              data = _yield$axios$post2.data;
-              console.log(data);
-              dispatch({
-                type: _constants__WEBPACK_IMPORTED_MODULE_3__.LOGIN_IN_USER,
-                payload: data
-              });
-
-            case 6:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2);
-    }));
-
-    return function (_x2) {
-      return _ref2.apply(this, arguments);
-    };
-  }();
-};
-
-/***/ }),
-
-/***/ "./src/client/redux/auth/constants.js":
-/*!********************************************!*\
-  !*** ./src/client/redux/auth/constants.js ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "LOGIN_IN_USER": () => (/* binding */ LOGIN_IN_USER),
-/* harmony export */   "REGISTER_USER": () => (/* binding */ REGISTER_USER)
-/* harmony export */ });
-var REGISTER_USER = 'REGISTER_USER';
-var LOGIN_IN_USER = 'LOGIN_IN_USER';
-
-/***/ }),
-
 /***/ "./src/client/redux/auth/index.js":
 /*!****************************************!*\
   !*** ./src/client/redux/auth/index.js ***!
@@ -866,173 +737,151 @@ var LOGIN_IN_USER = 'LOGIN_IN_USER';
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "loginUser": () => (/* binding */ loginUser),
+/* harmony export */   "logoutUser": () => (/* binding */ logoutUser),
+/* harmony export */   "registerUser": () => (/* binding */ registerUser)
 /* harmony export */ });
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants */ "./src/client/redux/auth/constants.js");
-
-
-var authReducer = function authReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-  var action = arguments.length > 1 ? arguments[1] : undefined;
-
-  switch (action.type) {
-    case _constants__WEBPACK_IMPORTED_MODULE_0__.REGISTER_USER:
-      return action.payload;
-
-    case _constants__WEBPACK_IMPORTED_MODULE_0__.LOGIN_IN_USER:
-      return action.payload;
-
-    default:
-      return state;
-  }
-};
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (authReducer);
-
-/***/ }),
-
-/***/ "./src/client/redux/blogs/actions.js":
-/*!*******************************************!*\
-  !*** ./src/client/redux/blogs/actions.js ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "addNewBlog": () => (/* binding */ addNewBlog),
-/* harmony export */   "getALlBlogs": () => (/* binding */ getALlBlogs),
-/* harmony export */   "getBlog": () => (/* binding */ getBlog)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants */ "./src/client/redux/blogs/constants.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "@babel/runtime/helpers/defineProperty");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "axios");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @reduxjs/toolkit */ "@reduxjs/toolkit");
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4__);
+
+
+
+var _extraReducers;
 
 
 
 
-var getALlBlogs = function getALlBlogs() {
-  return /*#__PURE__*/function () {
-    var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(dispatch) {
-      var _yield$axios$get, data;
+var registerUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4__.createAsyncThunk)('auth/registerUser', /*#__PURE__*/function () {
+  var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(newUserDetails, thunkAPI) {
+    var _yield$axios$post, data;
 
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_3___default().get('http://localhost:3000/api/blogs');
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            _context.next = 3;
+            return axios__WEBPACK_IMPORTED_MODULE_3___default().post('http://localhost:3000/api/auth/register', newUserDetails);
 
-            case 2:
-              _yield$axios$get = _context.sent;
-              data = _yield$axios$get.data;
-              dispatch({
-                type: _constants__WEBPACK_IMPORTED_MODULE_2__.FETCH_ALL_BLOGS,
-                payload: data
-              });
+          case 3:
+            _yield$axios$post = _context.sent;
+            data = _yield$axios$post.data;
+            return _context.abrupt("return", data);
 
-            case 5:
-            case "end":
-              return _context.stop();
-          }
+          case 8:
+            _context.prev = 8;
+            _context.t0 = _context["catch"](0);
+            return _context.abrupt("return", thunkAPI.rejectWithValue('Something went wrong: ', _context.t0));
+
+          case 11:
+          case "end":
+            return _context.stop();
         }
-      }, _callee);
-    }));
+      }
+    }, _callee, null, [[0, 8]]);
+  }));
 
-    return function (_x) {
-      return _ref.apply(this, arguments);
-    };
-  }();
+  return function (_x, _x2) {
+    return _ref.apply(this, arguments);
+  };
+}());
+var loginUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4__.createAsyncThunk)('auth/loginUser', /*#__PURE__*/function () {
+  var _ref2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee2(loginDetails, thunkAPI) {
+    var _yield$axios$post2, data;
+
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            _context2.next = 3;
+            return axios__WEBPACK_IMPORTED_MODULE_3___default().post('http://localhost:3000/api/auth/login', loginDetails);
+
+          case 3:
+            _yield$axios$post2 = _context2.sent;
+            data = _yield$axios$post2.data;
+            return _context2.abrupt("return", data);
+
+          case 8:
+            _context2.prev = 8;
+            _context2.t0 = _context2["catch"](0);
+            return _context2.abrupt("return", thunkAPI.rejectWithValue('Something went wrong: ', _context2.t0));
+
+          case 11:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, null, [[0, 8]]);
+  }));
+
+  return function (_x3, _x4) {
+    return _ref2.apply(this, arguments);
+  };
+}()); // export const logoutUser = createAsyncThunk(
+//   'auth/logoutUser',
+//   async (userId, thunkAPI) => {
+//     try {
+//       const { data } = await axios.p(
+//         `http://localhost:3000/api/auth/logout`,
+//         {userId}
+//       );
+//       return data;
+//     } catch (err) {
+//       return thunkAPI.rejectWithValue('Something went wrong: ', err);
+//     }
+//   }
+// );
+
+var initialState = {
+  isPending: false,
+  user: null,
+  err: ''
 };
-var addNewBlog = function addNewBlog(blogToAdd) {
-  return /*#__PURE__*/function () {
-    var _ref2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(dispatch) {
-      var _yield$axios$post, data;
+var authReducer = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4__.createSlice)({
+  name: 'auth',
+  initialState: initialState,
+  reducers: {
+    logoutUser: function logoutUser() {
+      return function (state, action) {
+        state.blog = {
+          isPending: false,
+          user: null,
+          err: ''
+        };
+      };
+    }
+  },
+  extraReducers: (_extraReducers = {}, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_extraReducers, registerUser.pending, function (state, action) {
+    state.isPending = true;
+  }), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_extraReducers, registerUser.fulfilled, function (state, action) {
+    state.user = action.payload;
+    state.isPending = false;
+  }), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_extraReducers, registerUser.rejected, function (state, action) {
+    state.err = action.payload;
+    state.isPending = false;
+  }), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_extraReducers, loginUser.pending, function (state, action) {
+    state.isPending = true;
+  }), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_extraReducers, loginUser.fulfilled, function (state, action) {
+    state.user = action.payload;
+    state.isPending = false;
+  }), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_extraReducers, loginUser.rejected, function (state, action) {
+    state.err = action.payload;
+    state.isPending = false;
+  }), _extraReducers)
+});
+var logoutUser = authReducer.actions.logoutUser;
 
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_3___default().post('http://localhost:3000/api/blogs', blogToAdd);
-
-            case 2:
-              _yield$axios$post = _context2.sent;
-              data = _yield$axios$post.data;
-              dispatch({
-                type: _constants__WEBPACK_IMPORTED_MODULE_2__.ADD_NEW_BLOG,
-                payload: data
-              });
-
-            case 5:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2);
-    }));
-
-    return function (_x2) {
-      return _ref2.apply(this, arguments);
-    };
-  }();
-}; //Single Blog Actions
-
-var getBlog = function getBlog(blogId) {
-  return /*#__PURE__*/function () {
-    var _ref3 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee3(dispatch) {
-      var _yield$axios$get2, data;
-
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_3___default().get("http://localhost:3000/api/blogs/".concat(blogId));
-
-            case 2:
-              _yield$axios$get2 = _context3.sent;
-              data = _yield$axios$get2.data;
-              dispatch({
-                type: _constants__WEBPACK_IMPORTED_MODULE_2__.GET_SINGLE_BLOG,
-                payload: data
-              });
-
-            case 5:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3);
-    }));
-
-    return function (_x3) {
-      return _ref3.apply(this, arguments);
-    };
-  }();
-};
-
-/***/ }),
-
-/***/ "./src/client/redux/blogs/constants.js":
-/*!*********************************************!*\
-  !*** ./src/client/redux/blogs/constants.js ***!
-  \*********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ADD_NEW_BLOG": () => (/* binding */ ADD_NEW_BLOG),
-/* harmony export */   "FETCH_ALL_BLOGS": () => (/* binding */ FETCH_ALL_BLOGS),
-/* harmony export */   "GET_SINGLE_BLOG": () => (/* binding */ GET_SINGLE_BLOG)
-/* harmony export */ });
-var FETCH_ALL_BLOGS = 'GET_ALL_BLOGS';
-var ADD_NEW_BLOG = 'ADD_NEW_BLOG'; //Single Blog Constants
-
-var GET_SINGLE_BLOG = 'GET_SINGLE_BLOG';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (authReducer.reducer);
 
 /***/ }),
 
@@ -1044,42 +893,86 @@ var GET_SINGLE_BLOG = 'GET_SINGLE_BLOG';
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "allBlogsReducer": () => (/* binding */ allBlogsReducer),
-/* harmony export */   "singleBlogReducer": () => (/* binding */ singleBlogReducer)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "getBlogs": () => (/* binding */ getBlogs),
+/* harmony export */   "getblogsFromFunc": () => (/* binding */ getblogsFromFunc)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "@babel/runtime/helpers/toConsumableArray");
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./src/client/redux/blogs/constants.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "@babel/runtime/helpers/defineProperty");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @reduxjs/toolkit */ "@reduxjs/toolkit");
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "axios");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
 
 
-var allBlogsReducer = function allBlogsReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  var action = arguments.length > 1 ? arguments[1] : undefined;
 
-  switch (action.type) {
-    case _constants__WEBPACK_IMPORTED_MODULE_1__.FETCH_ALL_BLOGS:
-      return action.payload;
+var _extraReducers;
 
-    case _constants__WEBPACK_IMPORTED_MODULE_1__.ADD_NEW_BLOG:
-      return [].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(state), [action.payload.blog]);
 
-    default:
-      return state;
-  }
-}; //Single Blog Reducer
 
-var singleBlogReducer = function singleBlogReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var action = arguments.length > 1 ? arguments[1] : undefined;
 
-  switch (action.type) {
-    case _constants__WEBPACK_IMPORTED_MODULE_1__.GET_SINGLE_BLOG:
-      return action.payload;
-
-    default:
-      return state;
-  }
+var initialState = {
+  blogs: [],
+  isPending: false,
+  err: ''
 };
+var getBlogs = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_3__.createAsyncThunk)('blogs/getBlogs', /*#__PURE__*/function () {
+  var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(name, thunkAPI) {
+    var _yield$axios$get, data;
+
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            _context.next = 3;
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().get('http://localhost:3000/api/blogs');
+
+          case 3:
+            _yield$axios$get = _context.sent;
+            data = _yield$axios$get.data;
+            return _context.abrupt("return", data);
+
+          case 8:
+            _context.prev = 8;
+            _context.t0 = _context["catch"](0);
+            return _context.abrupt("return", thunkAPI.rejectWithValue('Something went wrong: ', _context.t0));
+
+          case 11:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[0, 8]]);
+  }));
+
+  return function (_x, _x2) {
+    return _ref.apply(this, arguments);
+  };
+}());
+var blogsReducer = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_3__.createSlice)({
+  name: 'blogs',
+  initialState: initialState,
+  reducers: {
+    getblogsFromFunc: function getblogsFromFunc(state, ownParams) {
+      return console.log('getblogsFromFunc: ', state);
+    }
+  },
+  extraReducers: (_extraReducers = {}, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_extraReducers, getBlogs.pending, function (state) {
+    state.isPending = true;
+  }), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_extraReducers, getBlogs.fulfilled, function (state, action) {
+    state.blogs = action.payload;
+  }), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_extraReducers, getBlogs.rejected, function (state, action) {
+    state.err = action.payload;
+  }), _extraReducers)
+});
+var getblogsFromFunc = blogsReducer.actions.getblogsFromFunc;
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (blogsReducer.reducer);
 
 /***/ }),
 
@@ -1092,50 +985,150 @@ var singleBlogReducer = function singleBlogReducer() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   "reducers": () => (/* binding */ reducers)
+/* harmony export */   "reducer": () => (/* binding */ reducer)
 /* harmony export */ });
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "redux");
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux-thunk */ "redux-thunk");
-/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(redux_thunk__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _blogs_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./blogs/index */ "./src/client/redux/blogs/index.js");
-/* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth */ "./src/client/redux/auth/index.js");
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @reduxjs/toolkit */ "@reduxjs/toolkit");
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux-thunk */ "redux-thunk");
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(redux_thunk__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _singleBlog__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./singleBlog */ "./src/client/redux/singleBlog/index.js");
+/* harmony import */ var _blogs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./blogs */ "./src/client/redux/blogs/index.js");
+/* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./auth */ "./src/client/redux/auth/index.js");
 
 
 
 
-var reducers = (0,redux__WEBPACK_IMPORTED_MODULE_0__.combineReducers)({
-  blog: _blogs_index__WEBPACK_IMPORTED_MODULE_2__.singleBlogReducer,
-  blogs: _blogs_index__WEBPACK_IMPORTED_MODULE_2__.allBlogsReducer,
-  auth: _auth__WEBPACK_IMPORTED_MODULE_3__["default"]
-});
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
-  var initialState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return (0,redux__WEBPACK_IMPORTED_MODULE_0__.createStore)(reducers, initialState, (0,redux__WEBPACK_IMPORTED_MODULE_0__.applyMiddleware)((redux_thunk__WEBPACK_IMPORTED_MODULE_1___default())));
+
+
+var reducer = {
+  auth: _auth__WEBPACK_IMPORTED_MODULE_5__["default"],
+  blogs: _blogs__WEBPACK_IMPORTED_MODULE_4__["default"],
+  blog: _singleBlog__WEBPACK_IMPORTED_MODULE_3__["default"]
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (preloadedState) {
+  return (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.configureStore)({
+    reducer: reducer,
+    preloadedState: preloadedState
+  });
 });
 
 /***/ }),
 
-/***/ "./src/server/helpers/createStore.js":
-/*!*******************************************!*\
-  !*** ./src/server/helpers/createStore.js ***!
-  \*******************************************/
+/***/ "./src/client/redux/singleBlog/index.js":
+/*!**********************************************!*\
+  !*** ./src/client/redux/singleBlog/index.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "getBlog": () => (/* binding */ getBlog),
+/* harmony export */   "logState": () => (/* binding */ logState)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "@babel/runtime/helpers/defineProperty");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @reduxjs/toolkit */ "@reduxjs/toolkit");
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "axios");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
+
+
+
+var _extraReducers;
+
+
+
+
+var getBlog = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_3__.createAsyncThunk)('blog/getBlog', /*#__PURE__*/function () {
+  var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(blogId, thunkAPI) {
+    var _yield$axios$get, data;
+
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            _context.next = 3;
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().get("http://localhost:3000/api/blogs/".concat(blogId));
+
+          case 3:
+            _yield$axios$get = _context.sent;
+            data = _yield$axios$get.data;
+            return _context.abrupt("return", data);
+
+          case 8:
+            _context.prev = 8;
+            _context.t0 = _context["catch"](0);
+            return _context.abrupt("return", thunkAPI.rejectWithValue("Something went wrong: ".concat(JSON.stringify(_context.t0))));
+
+          case 11:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[0, 8]]);
+  }));
+
+  return function (_x, _x2) {
+    return _ref.apply(this, arguments);
+  };
+}());
+var initialState = {
+  err: '',
+  isPending: false,
+  blog: {}
+};
+var blogReducer = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_3__.createSlice)({
+  name: 'blog',
+  initialState: initialState,
+  reducers: {
+    logState: function logState(state, action) {
+      return console.log(state);
+    }
+  },
+  extraReducers: (_extraReducers = {}, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_extraReducers, getBlog.pending, function (state, action) {
+    state.isPending = true;
+  }), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_extraReducers, getBlog.fulfilled, function (state, action) {
+    state.blog = action.payload;
+    state.isPending = false;
+  }), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_extraReducers, getBlog.rejected, function (state, action) {
+    state.err = action.payload;
+    state.isPending = false;
+  }), _extraReducers)
+});
+var logState = blogReducer.actions.logState;
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (blogReducer.reducer);
+
+/***/ }),
+
+/***/ "./src/server/helpers/configureStore.js":
+/*!**********************************************!*\
+  !*** ./src/server/helpers/configureStore.js ***!
+  \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "redux");
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux-thunk */ "redux-thunk");
-/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(redux_thunk__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _client_redux_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../client/redux/index */ "./src/client/redux/index.js");
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @reduxjs/toolkit */ "@reduxjs/toolkit");
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _client_redux_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../client/redux/index */ "./src/client/redux/index.js");
 
 
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
-  return (0,redux__WEBPACK_IMPORTED_MODULE_0__.createStore)(_client_redux_index__WEBPACK_IMPORTED_MODULE_2__.reducers, {}, (0,redux__WEBPACK_IMPORTED_MODULE_0__.applyMiddleware)((redux_thunk__WEBPACK_IMPORTED_MODULE_1___default())));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (preloadedState) {
+  return (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.configureStore)({
+    reducer: _client_redux_index__WEBPACK_IMPORTED_MODULE_1__.reducer,
+    preloadedState: preloadedState
+  });
 });
 
 /***/ }),
@@ -1545,16 +1538,6 @@ module.exports = require("@babel/runtime/helpers/slicedToArray");
 
 /***/ }),
 
-/***/ "@babel/runtime/helpers/toConsumableArray":
-/*!***********************************************************!*\
-  !*** external "@babel/runtime/helpers/toConsumableArray" ***!
-  \***********************************************************/
-/***/ ((module) => {
-
-module.exports = require("@babel/runtime/helpers/toConsumableArray");
-
-/***/ }),
-
 /***/ "@babel/runtime/regenerator":
 /*!*********************************************!*\
   !*** external "@babel/runtime/regenerator" ***!
@@ -1562,6 +1545,16 @@ module.exports = require("@babel/runtime/helpers/toConsumableArray");
 /***/ ((module) => {
 
 module.exports = require("@babel/runtime/regenerator");
+
+/***/ }),
+
+/***/ "@reduxjs/toolkit":
+/*!***********************************!*\
+  !*** external "@reduxjs/toolkit" ***!
+  \***********************************/
+/***/ ((module) => {
+
+module.exports = require("@reduxjs/toolkit");
 
 /***/ }),
 
@@ -1843,8 +1836,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var express_session__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! express-session */ "express-session");
 /* harmony import */ var express_session__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(express_session__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _server_helpers_renderer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./server/helpers/renderer */ "./src/server/helpers/renderer.js");
-/* harmony import */ var _server_helpers_createStore__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./server/helpers/createStore */ "./src/server/helpers/createStore.js");
-/* harmony import */ var _client_Routes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./client/Routes */ "./src/client/Routes.js");
+/* harmony import */ var _client_Routes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./client/Routes */ "./src/client/Routes.js");
+/* harmony import */ var _server_helpers_configureStore__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./server/helpers/configureStore */ "./src/server/helpers/configureStore.js");
 /* harmony import */ var _server_routes_blogRoutes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./server/routes/blogRoutes */ "./src/server/routes/blogRoutes.js");
 /* harmony import */ var _server_routes_authRoutes__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./server/routes/authRoutes */ "./src/server/routes/authRoutes.js");
 /* harmony import */ var _server_passport_passport__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./server/passport/passport */ "./src/server/passport/passport.js");
@@ -1883,8 +1876,8 @@ app.use(express_session__WEBPACK_IMPORTED_MODULE_5___default()({
 app.use('/api/blogs', (0,_server_routes_blogRoutes__WEBPACK_IMPORTED_MODULE_9__["default"])());
 app.use('/api/auth', (0,_server_routes_authRoutes__WEBPACK_IMPORTED_MODULE_10__["default"])());
 app.get('*', function (req, res) {
-  var store = (0,_server_helpers_createStore__WEBPACK_IMPORTED_MODULE_7__["default"])();
-  var promises = (0,react_router_config__WEBPACK_IMPORTED_MODULE_4__.matchRoutes)(_client_Routes__WEBPACK_IMPORTED_MODULE_8__["default"], req.path).map(function (_ref) {
+  var store = (0,_server_helpers_configureStore__WEBPACK_IMPORTED_MODULE_8__["default"])({});
+  var promises = (0,react_router_config__WEBPACK_IMPORTED_MODULE_4__.matchRoutes)(_client_Routes__WEBPACK_IMPORTED_MODULE_7__["default"], req.path).map(function (_ref) {
     var route = _ref.route;
     return route.loadData ? route.loadData(store) : null;
   });

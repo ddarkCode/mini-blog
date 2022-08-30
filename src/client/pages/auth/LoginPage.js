@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { login } from '../../redux/auth/actions';
+import { loginUser } from '../../redux/auth';
 
 import InputContainer from '../../components/input/InputContainer';
 import Input from '../../components/input/Input';
 
-function LoginPage({ login, history }) {
+function LoginPage({ history }) {
+  const dispatch = useDispatch();
   const [formEntries, setFormEntries] = useState({
     username: '',
     password: '',
@@ -24,7 +25,7 @@ function LoginPage({ login, history }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(formEntries);
+    dispatch(loginUser(formEntries));
     history.push('/blogs');
   };
 
@@ -59,9 +60,6 @@ function LoginPage({ login, history }) {
   );
 }
 
-const mapDispatchToProps = {
-  login,
-};
 export default {
-  component: connect(null, mapDispatchToProps)(LoginPage),
+  component: LoginPage,
 };

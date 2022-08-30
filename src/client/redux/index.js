@@ -1,14 +1,20 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { applyMiddleware, combineReducers } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 
-import { singleBlogReducer, allBlogsReducer } from './blogs/index';
+import blogReducer from './singleBlog';
+import blogsReducer from './blogs';
 import authReducer from './auth';
 
-export const reducers = combineReducers({
-  blog: singleBlogReducer,
-  blogs: allBlogsReducer,
+export const reducer = {
   auth: authReducer,
-});
+  blogs: blogsReducer,
+  blog: blogReducer,
+};
 
-export default (initialState = {}) =>
-  createStore(reducers, initialState, applyMiddleware(thunk));
+export default (preloadedState) => {
+  return configureStore({
+    reducer,
+    preloadedState,
+  });
+};

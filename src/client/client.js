@@ -5,11 +5,11 @@ import { renderRoutes } from 'react-router-config';
 import { Provider } from 'react-redux';
 
 import Routes from './Routes';
-import createStore from './redux';
+import configureStoreKit from './redux';
 
 const { INITIAL_STATE } = window;
 
-const store = createStore(INITIAL_STATE);
+const store = configureStoreKit(INITIAL_STATE);
 
 ReactDOM.hydrateRoot(
   document.getElementById('root'),

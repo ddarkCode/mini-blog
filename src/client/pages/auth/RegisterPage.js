@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import InputContainer from '../../components/input/InputContainer';
 import Input from '../../components/input/Input';
-import { register } from '../../redux/auth/actions';
+import { registerUser } from '../../redux/auth';
 
-function RegisterPage({ register, history }) {
+function RegisterPage({ history }) {
   const [formEntries, setFormEntries] = useState({
     fullname: '',
     username: '',
     password: '',
   });
+  const dispatch = useDispatch();
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -21,9 +22,10 @@ function RegisterPage({ register, history }) {
       };
     });
   };
+
   function handleSubmit(e) {
     e.preventDefault();
-    register(formEntries, history);
+    dispatch(registerUser(formEntries));
     history.push('/blogs');
   }
 
@@ -69,10 +71,6 @@ function RegisterPage({ register, history }) {
   );
 }
 
-const mapDispatchTOProps = {
-  register,
-};
-
 export default {
-  component: connect(null, mapDispatchTOProps)(RegisterPage),
+  component: RegisterPage,
 };

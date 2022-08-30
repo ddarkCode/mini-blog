@@ -1,14 +1,18 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { getBlog } from '../../redux/blogs/actions';
+import { getBlog } from '../../redux/singleBlog';
 
-function SingleBlogPage({ getBlog, blog }) {
+function SingleBlogPage() {
+  const { blog } = useSelector((state) => state.blog);
+  const dispatch = useDispatch();
+
   const { blogId } = useParams();
   global.globalBlogId = blogId;
+
   useEffect(() => {
-    getBlog(blogId);
+    dispatch(getBlog(blogId));
   }, []);
 
   function dateFormat(date) {
@@ -33,21 +37,11 @@ function SingleBlogPage({ getBlog, blog }) {
   );
 }
 
-const mapStateToProps = ({ blog }) => {
-  return {
-    blog,
-  };
-};
-
-const mapDispatchToProps = {
-  getBlog,
-};
-
 function loadData({ dispatch }) {
   return dispatch(getBlog(globalBlogId));
 }
 
 export default {
-  component: connect(mapStateToProps, mapDispatchToProps)(SingleBlogPage),
+  component: SingleBlogPage,
   loadData,
 };

@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-function Header({ auth }) {
-  const loginOrLogout = auth ? (
+function Header() {
+  const { user } = useSelector((state) => state.auth);
+  const loginOrLogout = user ? (
     <a href="/api/auth/register">Logout</a>
   ) : (
     <Link to="/login">Login</Link>
@@ -23,13 +24,11 @@ function Header({ auth }) {
             <Link to="/blogs/write/new-blog">Write</Link>
           </li>
           <li>{loginOrLogout}</li>
-          <li>{auth ? null : <Link to="/register">Register</Link>}</li>
+          <li>{user ? null : <Link to="/register">Register</Link>}</li>
         </ul>
       </div>
     </nav>
   );
 }
 
-const mapStateToProps = ({ auth }) => ({ auth });
-
-export default connect(mapStateToProps)(Header);
+export default Header;
