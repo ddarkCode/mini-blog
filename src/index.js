@@ -7,8 +7,8 @@ import { matchRoutes } from 'react-router-config';
 import session from 'express-session';
 
 import renderer from './server/helpers/renderer';
+import createStore from './server/helpers/createStore';
 import Routes from './client/Routes';
-import configureStoreKit from './server/helpers/configureStore';
 
 import blogRoutes from './server/routes/blogRoutes';
 import authRoutes from './server/routes/authRoutes';
@@ -37,10 +37,12 @@ app.use('/api/blogs', blogRoutes());
 app.use('/api/auth', authRoutes());
 
 app.get('*', (req, res) => {
-  const store = configureStoreKit({});
+  const store = createStore();
 
   const promises = matchRoutes(Routes, req.path).map(({ route }) => {
-    return route.loadData ? route.loadData(store) : null;
+    return route.loadData
+      ? route.loadData(store, req.path.split('/')[2])
+      : null;
   });
   Promise.all(promises).then(() => {
     const content = renderer(req, store);

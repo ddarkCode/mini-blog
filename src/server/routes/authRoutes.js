@@ -51,6 +51,15 @@ const routes = () => {
       console.log(error);
     }
   });
+  authRoutes.route('/logout').get((req, res) => {
+    try {
+      req.logout(() => {
+        return res.json({ user: null });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
   return authRoutes;
 };
 

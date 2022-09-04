@@ -141,6 +141,11 @@ nav {
   width: 100%;
 }
 
+.logout-button {
+  background: none;
+  border: none;
+}
+
 .nav-container {
   display: flex;
   align-items: center;

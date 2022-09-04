@@ -1,14 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
+import { logout } from '../../redux/auth/actions';
 
-function Header() {
-  const { user } = useSelector((state) => state.auth);
-  const loginOrLogout = user ? (
-    <a href="/api/auth/register">Logout</a>
-  ) : (
-    <Link to="/login">Login</Link>
-  );
+function Header({ auth, logout }) {
   return (
     <nav>
       <div className="nav-container">
@@ -23,12 +18,24 @@ function Header() {
           <li>
             <Link to="/blogs/write/new-blog">Write</Link>
           </li>
-          <li>{loginOrLogout}</li>
-          <li>{user ? null : <Link to="/register">Register</Link>}</li>
+
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+          <li>
+            <button className="logout-button" onClick={logout}>
+              Logout
+            </button>
+          </li>
         </ul>
       </div>
     </nav>
   );
 }
 
-export default Header;
+const mapStateToProps = ({ auth }) => ({ auth });
+const mapDispatchToProps = {
+  logout,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

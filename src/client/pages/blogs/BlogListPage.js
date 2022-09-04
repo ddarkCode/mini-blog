@@ -1,24 +1,30 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 
 import BlogList from '../../components/blogs/BlogList';
+import { getALlBlogs } from '../../redux/blogs/actions';
 
-import { getBlogs } from '../../redux/blogs';
-
-function BlogListPage() {
-  const { blogs } = useSelector((state) => state.blogs);
-
-  const dispatch = useDispatch();
+function BlogListPage({ getALlBlogs, blogs }) {
   useEffect(() => {
-    dispatch(getBlogs());
+    getALlBlogs();
   }, []);
   return <BlogList blogs={blogs} />;
 }
 
+const mapStateToProps = (state) => {
+  return {
+    blogs: state.blogs,
+  };
+};
+
+const mapDispatchToProps = {
+  getALlBlogs,
+};
+
 function loadData({ dispatch }) {
-  return dispatch(getBlogs());
+  return dispatch(getALlBlogs());
 }
 export default {
-  component: BlogListPage,
+  component: connect(mapStateToProps, mapDispatchToProps)(BlogListPage),
   loadData,
 };
