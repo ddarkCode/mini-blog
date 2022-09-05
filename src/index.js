@@ -39,14 +39,31 @@ app.use('/api/auth', authRoutes());
 app.get('*', (req, res) => {
   const store = createStore();
 
-  const promises = matchRoutes(Routes, req.path).map(({ route }) => {
-    return route.loadData
-      ? route.loadData(store, req.path.split('/')[2])
-      : null;
-  });
+  const promises = matchRoutes(Routes, req.path)
+    .map(({ route }) => {
+      return route.loadData
+        ? route.loadData(store, req.path.split('/')[2])
+        : null;
+    })
+    .map((promise) => {
+      console.log('Inner Promise: ', promise);
+      if (promise) {
+        return new Promise((resolve, reject) => {
+          promise.then(resolve).catch(resolve);
+        });
+      }
+    });
   Promise.all(promises).then(() => {
-    const content = renderer(req, store);
-    res.send(content);
+    const context = {};
+    const content = renderer(req, store, context);
+
+    if (context.url) {
+      return res.redirect(301, context.url);
+    }
+    if (context.notFound) {
+      res.status(404);
+    }
+    return res.send(content);
   });
 });
 

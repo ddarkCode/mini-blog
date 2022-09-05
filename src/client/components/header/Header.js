@@ -1,31 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { logout } from '../../redux/auth/actions';
 
-function Header({ auth, logout }) {
+function Header() {
   return (
     <nav>
       <div className="nav-container">
         <div className="logo-container">
-          <Link to="/">Bloggy</Link>
+          <Link to="/">Blogger</Link>
         </div>
-
         <ul>
           <li>
-            <Link to="/blogs">All blogs</Link>
+            <Link to="/blogs">Bloggies</Link>
           </li>
           <li>
-            <Link to="/blogs/write/new-blog">Write</Link>
-          </li>
-
-          <li>
-            <Link to="/login">Login</Link>
+            <Link to="/blogs/write/new-blog">Write Bloggy</Link>
           </li>
           <li>
-            <button className="logout-button" onClick={logout}>
-              Logout
-            </button>
+            <Link to="/options">Options</Link>
           </li>
         </ul>
       </div>
@@ -33,9 +24,4 @@ function Header({ auth, logout }) {
   );
 }
 
-const mapStateToProps = ({ auth }) => ({ auth });
-const mapDispatchToProps = {
-  logout,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

@@ -8,6 +8,8 @@ import BlogPage from './pages/blogs/BlogPage';
 import BlogListPage from './pages/blogs/BlogListPage';
 import SingleBlogPage from './pages/blogs/SingleBlogPage';
 import AddNewBlogPage from './pages/blogs/AddNewBlogPage';
+import NotFoundPage from './pages/notFound/NotFoundPage';
+import OptionsPage from './pages/options/OptionsPage';
 
 export default [
   {
@@ -27,6 +29,10 @@ export default [
         ...LoginPage,
       },
       {
+        path: '/options',
+        ...OptionsPage,
+      },
+      {
         ...BlogPage,
         routes: [
           {
@@ -42,6 +48,9 @@ export default [
           {
             path: '/blogs/write/new-blog',
             ...AddNewBlogPage,
+          },
+          {
+            ...NotFoundPage,
           },
         ],
       },

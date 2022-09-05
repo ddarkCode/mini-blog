@@ -1,4 +1,5 @@
 import React from 'react';
+import requireAuth from '../../components/hocs/requireAuth';
 
 function AddNewBlogPage() {
   return (
@@ -26,5 +27,5 @@ function AddNewBlogPage() {
 }
 
 export default {
-  component: AddNewBlogPage,
+  component: requireAuth(AddNewBlogPage),
 };
