@@ -120,28 +120,33 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function Blog(_ref) {
-  var blog = _ref.blog;
+  var title = _ref.title,
+      authorId = _ref.authorId,
+      content = _ref.content,
+      createdAt = _ref.createdAt,
+      _id = _ref._id;
 
   function dateFormat(date) {
+    var newDate = new Date(date);
     var options = {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
       day: 'numeric'
     };
-    return date.toLocaleDateString('en-US', options);
+    return newDate.toLocaleDateString('en-US', options);
   }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "blog-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, blog.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "date"
-  }, dateFormat(blog.date)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+  }, dateFormat(createdAt)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "author"
-  }, blog.author), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+  }, authorId), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "post"
-  }, blog.post.substring(0, 130), "..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
-    to: "/blogs/".concat(blog._id)
+  }, content.substring(0, 130), "..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+    to: "/blogs/".concat(_id)
   }, "Read more"));
 }
 
@@ -160,34 +165,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "@babel/runtime/helpers/defineProperty");
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/extends */ "@babel/runtime/helpers/extends");
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Blog__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Blog */ "./src/client/components/blogs/Blog.js");
-
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 
 
 
 function BlogList(_ref) {
   var blogs = _ref.blogs;
-  var blogsToRender = blogs ? blogs.map(function (blog) {
-    return _objectSpread(_objectSpread({}, blog), {}, {
-      date: new Date()
-    });
-  }) : [];
+  var blogsToRender = blogs;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "bloglist-container"
   }, blogsToRender.map(function (blog) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_Blog__WEBPACK_IMPORTED_MODULE_2__["default"], {
-      key: blog._id,
-      blog: blog
-    });
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_Blog__WEBPACK_IMPORTED_MODULE_2__["default"], _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default()({
+      key: blog._id
+    }, blog));
   }));
 }
 
@@ -583,30 +578,54 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_hocs_requireAuth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/hocs/requireAuth */ "./src/client/components/hocs/requireAuth.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "@babel/runtime/helpers/slicedToArray");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_hocs_requireAuth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/hocs/requireAuth */ "./src/client/components/hocs/requireAuth.js");
+
 
 
 
 function AddNewBlogPage() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
-    className: "write"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Add New Blog Post"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "text",
-    placeholder: "Enter Blog Title"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "Author ID"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "text",
-    placeholder: "Author ID"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "Content"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
-    placeholder: "Enter Blog Content",
-    rows: 10,
-    cols: 15
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "Add"));
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
+    title: '',
+    content: ''
+  }),
+      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
+      blog = _useState2[0],
+      setBlog = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+      _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState3, 2),
+      isExpanded = _useState4[0],
+      setExpanded = _useState4[1];
+
+  function expand() {
+    setExpanded(true);
+  }
+
+  function handleChange(e) {}
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("form", {
+    className: "create-note"
+  }, isExpanded && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("input", {
+    name: "title",
+    onChange: handleChange,
+    value: blog.title,
+    placeholder: "Title"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("textarea", {
+    name: "content",
+    onClick: expand,
+    onChange: handleChange,
+    value: blog.content,
+    placeholder: "Take a note...",
+    rows: isExpanded ? 3 : 1
+  })));
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  component: (0,_components_hocs_requireAuth__WEBPACK_IMPORTED_MODULE_1__["default"])(AddNewBlogPage)
+  component: (0,_components_hocs_requireAuth__WEBPACK_IMPORTED_MODULE_2__["default"])(AddNewBlogPage)
 });
 
 /***/ }),
@@ -728,6 +747,7 @@ function SingleBlogPage(_ref) {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     getBlog(blogId);
   }, []);
+  console.log(blog);
 
   function dateFormat(date) {
     var dateToReturn = new Date(date);
@@ -744,11 +764,11 @@ function SingleBlogPage(_ref) {
     className: "single-blog-page"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, blog.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "date"
-  }, dateFormat(blog.date)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+  }, dateFormat(blog.createdAt)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "author"
-  }, blog.author), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+  }, blog.authorId), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "post"
-  }, blog.post), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+  }, blog.content), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
     to: "/blogs"
   }, "Back to all blogs"));
 }
@@ -932,7 +952,7 @@ var register = function register(newUserDetails) {
               data = _yield$axios$post.data;
               dispatch({
                 type: _constants__WEBPACK_IMPORTED_MODULE_3__.REGISTER_USER,
-                payload: data
+                data: data
               });
 
             case 5:
@@ -965,8 +985,8 @@ var login = function login(loginDetails) {
               data = _yield$axios$post2.data;
               console.log(data);
               dispatch({
-                type: _constants__WEBPACK_IMPORTED_MODULE_3__.LOGIN_IN_USER,
-                payload: data
+                type: _constants__WEBPACK_IMPORTED_MODULE_3__.LOG_IN_USER,
+                data: data
               });
 
             case 6:
@@ -1000,7 +1020,7 @@ var logout = function logout() {
               console.log(data);
               dispatch({
                 type: _constants__WEBPACK_IMPORTED_MODULE_3__.LOG_OUT_USER,
-                payload: data
+                data: data
               });
 
             case 6:
@@ -1028,12 +1048,12 @@ var logout = function logout() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "LOGIN_IN_USER": () => (/* binding */ LOGIN_IN_USER),
+/* harmony export */   "LOG_IN_USER": () => (/* binding */ LOG_IN_USER),
 /* harmony export */   "LOG_OUT_USER": () => (/* binding */ LOG_OUT_USER),
 /* harmony export */   "REGISTER_USER": () => (/* binding */ REGISTER_USER)
 /* harmony export */ });
 var REGISTER_USER = 'REGISTER_USER';
-var LOGIN_IN_USER = 'LOGIN_IN_USER';
+var LOG_IN_USER = 'LOG_IN_USER';
 var LOG_OUT_USER = 'LOG_OUT_USER';
 
 /***/ }),
@@ -1058,13 +1078,13 @@ var authReducer = function authReducer() {
 
   switch (action.type) {
     case _constants__WEBPACK_IMPORTED_MODULE_0__.REGISTER_USER:
-      return action.payload;
+      return action.data.user;
 
-    case _constants__WEBPACK_IMPORTED_MODULE_0__.LOGIN_IN_USER:
-      return action.payload;
+    case _constants__WEBPACK_IMPORTED_MODULE_0__.LOG_IN_USER:
+      return action.data.user;
 
     case _constants__WEBPACK_IMPORTED_MODULE_0__.LOG_OUT_USER:
-      return action.payload.user;
+      return action.data.user;
 
     default:
       return state;
@@ -1429,11 +1449,7 @@ var blogSchema = new mongoose__WEBPACK_IMPORTED_MODULE_0__.Schema({
   authorId: {
     type: String
   },
-  img_url: {
-    type: String,
-    "default": ''
-  },
-  body: {
+  content: {
     type: String
   }
 }, {
@@ -1470,16 +1486,24 @@ var userSchema = new Schema({
   fullname: {
     type: String,
     required: true
+  },
+  img_url: {
+    type: String,
+    "default": ''
+  },
+  isAdmin: {
+    type: Boolean,
+    "default": false
   }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (model('User', userSchema));
 
 /***/ }),
 
-/***/ "./src/server/passport/passport.js":
-/*!*****************************************!*\
-  !*** ./src/server/passport/passport.js ***!
-  \*****************************************/
+/***/ "./src/server/passport/index.js":
+/*!**************************************!*\
+  !*** ./src/server/passport/index.js ***!
+  \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1517,33 +1541,70 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "localStrategy": () => (/* binding */ localStrategy)
 /* harmony export */ });
-/* harmony import */ var passport_local__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! passport-local */ "passport-local");
-/* harmony import */ var passport_local__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(passport_local__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! passport */ "passport");
-/* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(passport__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! fs */ "fs");
-/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! path */ "path");
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var passport_local__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! passport-local */ "passport-local");
+/* harmony import */ var passport_local__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(passport_local__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! passport */ "passport");
+/* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(passport__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _model_User__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../model/User */ "./src/server/model/User.js");
 
 
 
 
-var usersFilePath = (0,path__WEBPACK_IMPORTED_MODULE_3__.join)('src', 'db', 'users.json');
+
 var localStrategy = function localStrategy() {
-  passport__WEBPACK_IMPORTED_MODULE_1___default().use(new passport_local__WEBPACK_IMPORTED_MODULE_0__.Strategy(function (username, password, done) {
+  passport__WEBPACK_IMPORTED_MODULE_3___default().use(new passport_local__WEBPACK_IMPORTED_MODULE_2__.Strategy(function (username, password, done) {
     try {
-      var usersInDb = (0,fs__WEBPACK_IMPORTED_MODULE_2__.readFileSync)(usersFilePath, 'utf-8');
-      var foundUser = JSON.parse(usersInDb).find(function (user) {
-        return user.username === username && user.password === password;
-      });
-      console.log("Passport Local Strategy FOund User: ".concat(JSON.stringify(foundUser)));
+      (function () {
+        var _getUser = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
+          var user;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _context.next = 2;
+                  return _model_User__WEBPACK_IMPORTED_MODULE_4__["default"].findOne({
+                    username: username
+                  });
 
-      if (!foundUser) {
-        return done(null, false);
-      }
+                case 2:
+                  user = _context.sent;
 
-      return done(null, foundUser);
+                  if (user) {
+                    _context.next = 5;
+                    break;
+                  }
+
+                  return _context.abrupt("return", done(null, false));
+
+                case 5:
+                  if (!(user.password !== password)) {
+                    _context.next = 7;
+                    break;
+                  }
+
+                  return _context.abrupt("return", done(null, false));
+
+                case 7:
+                  return _context.abrupt("return", done(null, user));
+
+                case 8:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }));
+
+        function getUser() {
+          return _getUser.apply(this, arguments);
+        }
+
+        return getUser;
+      })()();
     } catch (err) {
       console.log(err);
       return done(err);
@@ -1564,84 +1625,135 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ "express");
-/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! fs */ "fs");
-/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! path */ "path");
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! express */ "express");
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! passport */ "passport");
 /* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(passport__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _model_User__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../model/User */ "./src/server/model/User.js");
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! debug */ "debug");
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _model_User__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../model/User */ "./src/server/model/User.js");
 
 
 
 
 
-var usersFilePath = (0,path__WEBPACK_IMPORTED_MODULE_2__.join)('src', 'db', 'users.json');
+
+var log = debug__WEBPACK_IMPORTED_MODULE_4___default()('app:authRoutes');
 
 var routes = function routes() {
-  var authRoutes = (0,express__WEBPACK_IMPORTED_MODULE_0__.Router)();
-  authRoutes.use(function (req, res, next) {
-    var users = JSON.parse((0,fs__WEBPACK_IMPORTED_MODULE_1__.readFileSync)(usersFilePath, 'utf-8'));
-    req.users = users;
-    next();
-  });
-  authRoutes.route('/register').post(function (req, res) {
-    try {
-      var _req$body = req.body,
-          username = _req$body.username,
-          password = _req$body.password,
-          fullname = _req$body.fullname;
-      var users = req.users;
-      var newUser = new _model_User__WEBPACK_IMPORTED_MODULE_4__["default"]({
-        username: username,
-        password: password,
-        fullname: fullname
-      });
-      users.push(newUser);
-      (0,fs__WEBPACK_IMPORTED_MODULE_1__.writeFile)(usersFilePath, JSON.stringify(users), 'utf-8', function () {
-        // passport.authenticate('local')(req, res, () => {
-        //   res.redirect('/secrets');
-        // });
-        passport__WEBPACK_IMPORTED_MODULE_3___default().authenticate('local')(req, res, function () {
-          return res.json(newUser);
-        });
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
-  authRoutes.route('/login').post(function (req, res) {
-    try {
-      var _req$body2 = req.body,
-          username = _req$body2.username,
-          password = _req$body2.password;
-      var users = req.users;
-      var userDetails = users.find(function (user) {
-        return user.username === username && user.password === password;
-      });
+  var authRoutes = (0,express__WEBPACK_IMPORTED_MODULE_2__.Router)();
+  authRoutes.route('/register').post( /*#__PURE__*/function () {
+    var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(req, res) {
+      var _req$body, username, password, fullname, newUser, savedUser;
 
-      if (!userDetails) {
-        return res.json({
-          message: 'Invalid username or password.'
-        });
-      }
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _req$body = req.body, username = _req$body.username, password = _req$body.password, fullname = _req$body.fullname;
+              newUser = new _model_User__WEBPACK_IMPORTED_MODULE_5__["default"]({
+                username: username,
+                password: password,
+                fullname: fullname
+              });
+              _context.next = 5;
+              return newUser.save();
 
-      return res.json(userDetails);
-    } catch (error) {
-      console.log(error);
-    }
-  });
+            case 5:
+              savedUser = _context.sent;
+              passport__WEBPACK_IMPORTED_MODULE_3___default().authenticate('local')(req, res, function () {
+                return res.status(201).json({
+                  user: savedUser
+                });
+              });
+              _context.next = 12;
+              break;
+
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context["catch"](0);
+              log(_context.t0);
+
+            case 12:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[0, 9]]);
+    }));
+
+    return function (_x, _x2) {
+      return _ref.apply(this, arguments);
+    };
+  }());
+  authRoutes.route('/login').post( /*#__PURE__*/function () {
+    var _ref2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(req, res) {
+      var _req$body2, username, password, foundUser;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _req$body2 = req.body, username = _req$body2.username, password = _req$body2.password;
+              _context2.next = 4;
+              return _model_User__WEBPACK_IMPORTED_MODULE_5__["default"].findOne({
+                username: username
+              });
+
+            case 4:
+              foundUser = _context2.sent;
+
+              if (!(!foundUser || foundUser.password !== password)) {
+                _context2.next = 7;
+                break;
+              }
+
+              return _context2.abrupt("return", res.status(403).json({
+                user: null
+              }));
+
+            case 7:
+              passport__WEBPACK_IMPORTED_MODULE_3___default().authenticate('local')(req, res, function () {
+                return res.status(200).json({
+                  user: foundUser
+                });
+              });
+              _context2.next = 13;
+              break;
+
+            case 10:
+              _context2.prev = 10;
+              _context2.t0 = _context2["catch"](0);
+              log(_context2.t0);
+
+            case 13:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[0, 10]]);
+    }));
+
+    return function (_x3, _x4) {
+      return _ref2.apply(this, arguments);
+    };
+  }());
   authRoutes.route('/logout').get(function (req, res) {
     try {
       req.logout(function () {
-        return res.json({
+        return res.status(200).json({
           user: null
         });
       });
     } catch (err) {
-      console.log(err);
+      log(err);
+      return res.status(500).json(err);
     }
   });
   return authRoutes;
@@ -1662,89 +1774,974 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "@babel/runtime/helpers/defineProperty");
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! express */ "express");
-/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! fs */ "fs");
-/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _model_Blog__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../model/Blog */ "./src/server/model/Blog.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "@babel/runtime/helpers/defineProperty");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! express */ "express");
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! fs */ "fs");
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! debug */ "debug");
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _model_Blog__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../model/Blog */ "./src/server/model/Blog.js");
+
+
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 
 
 
-var _require = __webpack_require__(/*! path */ "path"),
-    join = _require.join;
 
 
-var blogsFilePath = join('src', 'db', 'blogs.json');
+var blogsFilePath = (0,path__WEBPACK_IMPORTED_MODULE_5__.join)('src', 'db', 'blogs.json');
+var log = debug__WEBPACK_IMPORTED_MODULE_6___default()('app:blogRoutes');
 
 var router = function router() {
-  var blogRoutes = (0,express__WEBPACK_IMPORTED_MODULE_1__.Router)();
-  blogRoutes;
+  var blogRoutes = (0,express__WEBPACK_IMPORTED_MODULE_3__.Router)();
   blogRoutes.use(function (req, res, next) {
-    var blogs = (0,fs__WEBPACK_IMPORTED_MODULE_2__.readFileSync)(blogsFilePath, 'utf8');
+    var blogs = (0,fs__WEBPACK_IMPORTED_MODULE_4__.readFileSync)(blogsFilePath, 'utf8');
     var parsedBlogs = JSON.parse(blogs).map(function (blog) {
       return _objectSpread(_objectSpread({}, blog), {}, {
-        post: blog.post.join(),
-        date: new Date()
+        content: blog.post.join(' ')
       });
     });
     req.blogs = parsedBlogs;
     next();
-  }).route('/').get(function (req, res) {
-    try {
-      var blogs = req.blogs;
-      return res.json(blogs);
-    } catch (err) {
-      console.log(err);
-    }
-  }).post(function (req, res) {
-    try {
-      var _req$body = req.body,
-          title = _req$body.title,
-          id = _req$body.id,
-          post = _req$body.post,
-          author = _req$body.author;
-      var blogs = req.blogs;
-      var newBlog = new _model_Blog__WEBPACK_IMPORTED_MODULE_3__["default"]({
-        title: title,
-        id: id,
-        author: author,
-        post: post.split('.')
-      });
-      blogs.push(newBlog);
-      (0,fs__WEBPACK_IMPORTED_MODULE_2__.writeFile)(blogsFilePath, JSON.stringify(blogs), function () {
-        return res.json({
-          message: 'New Blog Added Successfully',
-          blog: newBlog
-        });
-      });
-    } catch (err) {
-      console.log(err);
-    }
   });
-  blogRoutes.route('/:blogId').get(function (req, res) {
-    try {
-      var blogId = req.params.blogId;
-      var blogs = req.blogs;
-      var requestedBlog = blogs.find(function (blog) {
-        return blog._id === +blogId;
-      });
-      return res.json(requestedBlog);
-    } catch (err) {
-      console.log(err);
-    }
-  });
+  blogRoutes.route('/').get( /*#__PURE__*/function () {
+    var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(req, res) {
+      var query, foundBlogs, blogsWithLinks;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              // const { blogs } = req;
+              // log(blogs);
+              query = {};
+
+              if (req.query.authorId) {
+                query.authorId = req.query.authorId;
+              }
+
+              _context.next = 5;
+              return _model_Blog__WEBPACK_IMPORTED_MODULE_7__["default"].find(query);
+
+            case 5:
+              foundBlogs = _context.sent;
+              // if (foundBlogs.length === 0) {
+              //   const results = await Blog.insertMany(blogs);
+              //   return res.json(results);
+              // }
+              blogsWithLinks = foundBlogs.map(function (blog) {
+                var newBlog = blog.toJSON();
+                newBlog.links = {};
+                newBlog.links.self = "http://".concat(req.headers.host, "/api/blogs/").concat(blog._id);
+                return newBlog;
+              });
+              return _context.abrupt("return", res.json(blogsWithLinks));
+
+            case 10:
+              _context.prev = 10;
+              _context.t0 = _context["catch"](0);
+              log(_context.t0);
+
+            case 13:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[0, 10]]);
+    }));
+
+    return function (_x, _x2) {
+      return _ref.apply(this, arguments);
+    };
+  }()).post( /*#__PURE__*/function () {
+    var _ref2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee2(req, res) {
+      var _req$body, title, content, authorId, newBlog, savedBlog, newBlogWithLink;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              if (!req.isAuthenticated()) {
+                _context2.next = 18;
+                break;
+              }
+
+              _context2.prev = 1;
+              _req$body = req.body, title = _req$body.title, content = _req$body.content, authorId = _req$body.authorId; // const { blogs } = req;
+
+              newBlog = new _model_Blog__WEBPACK_IMPORTED_MODULE_7__["default"]({
+                title: title,
+                authorId: authorId,
+                content: content
+              }); // blogs.push(newBlog);
+              // writeFile(blogsFilePath, JSON.stringify(blogs), () => {
+              //   return res.json({
+              //     message: 'New Blog Added Successfully',
+              //     blog: newBlog,
+              //   });
+              // });
+
+              _context2.next = 6;
+              return newBlog.save();
+
+            case 6:
+              savedBlog = _context2.sent;
+              newBlogWithLink = savedBlog.toJSON();
+              newBlogWithLink.links = {};
+              newBlogWithLink.links.filteredByThisAuthor = "http://".concat(req.headers.host, "/api/blogs/?authorId=").concat(newBlog.authorId);
+              return _context2.abrupt("return", res.status(201).json(newBlogWithLink));
+
+            case 13:
+              _context2.prev = 13;
+              _context2.t0 = _context2["catch"](1);
+              log(_context2.t0);
+
+            case 16:
+              _context2.next = 19;
+              break;
+
+            case 18:
+              return _context2.abrupt("return", res.status(403).json({
+                message: 'You must be logged in to post a new blog'
+              }));
+
+            case 19:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[1, 13]]);
+    }));
+
+    return function (_x3, _x4) {
+      return _ref2.apply(this, arguments);
+    };
+  }())["delete"]( /*#__PURE__*/function () {
+    var _ref3 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee3(req, res) {
+      var query, results;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              if (!(req.isAuthenticated() && req.user.isAdmin)) {
+                _context3.next = 16;
+                break;
+              }
+
+              _context3.prev = 1;
+              query = {};
+
+              if (req.query.authorId) {
+                query.authorId = req.query.authorId;
+              }
+
+              _context3.next = 6;
+              return _model_Blog__WEBPACK_IMPORTED_MODULE_7__["default"].deleteMany(query);
+
+            case 6:
+              results = _context3.sent;
+              return _context3.abrupt("return", res.status(200).json(results));
+
+            case 10:
+              _context3.prev = 10;
+              _context3.t0 = _context3["catch"](1);
+              log(_context3.t0);
+              return _context3.abrupt("return", res.status(500).json(_context3.t0));
+
+            case 14:
+              _context3.next = 17;
+              break;
+
+            case 16:
+              return _context3.abrupt("return", res.status(403).json({
+                message: 'You do not have the required permission to perform this operation.'
+              }));
+
+            case 17:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, null, [[1, 10]]);
+    }));
+
+    return function (_x5, _x6) {
+      return _ref3.apply(this, arguments);
+    };
+  }());
+  blogRoutes.route('/:blogId').all(function (req, res, next) {
+    (function () {
+      var _getBlog = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee4() {
+        var blogId, blog;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                blogId = req.params.blogId;
+                _context4.next = 3;
+                return _model_Blog__WEBPACK_IMPORTED_MODULE_7__["default"].findById(blogId);
+
+              case 3:
+                blog = _context4.sent;
+
+                if (blog) {
+                  _context4.next = 8;
+                  break;
+                }
+
+                return _context4.abrupt("return", res.status(404).json({
+                  message: 'No such blog in our database.'
+                }));
+
+              case 8:
+                req.blog = blog;
+                next();
+
+              case 10:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      function getBlog() {
+        return _getBlog.apply(this, arguments);
+      }
+
+      return getBlog;
+    })()();
+  }).get( /*#__PURE__*/function () {
+    var _ref4 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee5(req, res) {
+      var blog, newBlog;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              _context5.prev = 0;
+              blog = req.blog;
+              newBlog = blog.toJSON();
+              newBlog.links = {};
+              newBlog.links.filteredByThisAuthor = "http://".concat(req.headers.host, "/api/blogs/?authorId=").concat(blog.authorId);
+              return _context5.abrupt("return", res.json(newBlog));
+
+            case 8:
+              _context5.prev = 8;
+              _context5.t0 = _context5["catch"](0);
+              log(_context5.t0);
+              return _context5.abrupt("return", res.status(500).json(_context5.t0));
+
+            case 12:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5, null, [[0, 8]]);
+    }));
+
+    return function (_x7, _x8) {
+      return _ref4.apply(this, arguments);
+    };
+  }()).put( /*#__PURE__*/function () {
+    var _ref5 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee6(req, res) {
+      var blogId, blog, updateInfo;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              if (!req.isAuthenticated()) {
+                _context6.next = 21;
+                break;
+              }
+
+              _context6.prev = 1;
+              blogId = req.params.blogId;
+              blog = req.blog;
+
+              if (req.body._id) {
+                delete req.body._id;
+              }
+
+              if (!(req.user._id === blog.authorId || req.user.isAdmin)) {
+                _context6.next = 12;
+                break;
+              }
+
+              _context6.next = 8;
+              return _model_Blog__WEBPACK_IMPORTED_MODULE_7__["default"].replaceOne({
+                _id: blogId
+              }, req.body);
+
+            case 8:
+              updateInfo = _context6.sent;
+              return _context6.abrupt("return", res.status(200).json({
+                message: 'Blog Updated Successfully',
+                updateInfo: updateInfo
+              }));
+
+            case 12:
+              return _context6.abrupt("return", res.status(403).json({
+                message: 'You do not have the necessary permission to perform this operation.'
+              }));
+
+            case 13:
+              _context6.next = 19;
+              break;
+
+            case 15:
+              _context6.prev = 15;
+              _context6.t0 = _context6["catch"](1);
+              log(_context6.t0);
+              return _context6.abrupt("return", res.status(500).json(_context6.t0));
+
+            case 19:
+              _context6.next = 22;
+              break;
+
+            case 21:
+              return _context6.abrupt("return", res.status(403).json({
+                message: 'You must be logged in to perform this operation.'
+              }));
+
+            case 22:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6, null, [[1, 15]]);
+    }));
+
+    return function (_x9, _x10) {
+      return _ref5.apply(this, arguments);
+    };
+  }()).patch( /*#__PURE__*/function () {
+    var _ref6 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee7(req, res) {
+      var blogId, blog, updateInfo;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              if (!req.isAuthenticated()) {
+                _context7.next = 21;
+                break;
+              }
+
+              _context7.prev = 1;
+              blogId = req.params.blogId;
+              blog = req.blog;
+
+              if (req.body._id) {
+                delete req.body._id;
+              }
+
+              if (!(blog.authorId === req.user._id || req.user.isAdmin)) {
+                _context7.next = 12;
+                break;
+              }
+
+              _context7.next = 8;
+              return _model_Blog__WEBPACK_IMPORTED_MODULE_7__["default"].updateOne({
+                _id: blogId
+              }, _objectSpread({}, req.body));
+
+            case 8:
+              updateInfo = _context7.sent;
+              return _context7.abrupt("return", res.status(200).json({
+                message: 'Blog Updated Successfully',
+                updateInfo: updateInfo
+              }));
+
+            case 12:
+              return _context7.abrupt("return", res.status(403).json({
+                message: 'You do not have the necessary permission to perform this operation.'
+              }));
+
+            case 13:
+              _context7.next = 19;
+              break;
+
+            case 15:
+              _context7.prev = 15;
+              _context7.t0 = _context7["catch"](1);
+              log(_context7.t0);
+              return _context7.abrupt("return", res.status(500).json(_context7.t0));
+
+            case 19:
+              _context7.next = 22;
+              break;
+
+            case 21:
+              return _context7.abrupt("return", res.status(403).json({
+                message: 'You must be logged in to perform this operation'
+              }));
+
+            case 22:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7, null, [[1, 15]]);
+    }));
+
+    return function (_x11, _x12) {
+      return _ref6.apply(this, arguments);
+    };
+  }())["delete"]( /*#__PURE__*/function () {
+    var _ref7 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee8(req, res) {
+      var blogId, blog, deletionInfo;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              if (!req.isAuthenticated()) {
+                _context8.next = 20;
+                break;
+              }
+
+              _context8.prev = 1;
+              blogId = req.params.blogId;
+              blog = req.blog;
+
+              if (!(req.user._id === blog.authorId || req.user.isAdmin)) {
+                _context8.next = 11;
+                break;
+              }
+
+              _context8.next = 7;
+              return _model_Blog__WEBPACK_IMPORTED_MODULE_7__["default"].deleteOne({
+                _id: blogId
+              });
+
+            case 7:
+              deletionInfo = _context8.sent;
+              return _context8.abrupt("return", res.status(200).json({
+                message: 'Blog deleted successfully.',
+                deletionInfo: deletionInfo
+              }));
+
+            case 11:
+              return _context8.abrupt("return", res.status(403).json({
+                message: 'You do not have the necessary permission to perform this operation.'
+              }));
+
+            case 12:
+              _context8.next = 18;
+              break;
+
+            case 14:
+              _context8.prev = 14;
+              _context8.t0 = _context8["catch"](1);
+              log(_context8.t0);
+              return _context8.abrupt("return", res.status(500).json(_context8.t0));
+
+            case 18:
+              _context8.next = 21;
+              break;
+
+            case 20:
+              return _context8.abrupt("return", res.status(403).json({
+                message: 'You must be logged in to perform this operation'
+              }));
+
+            case 21:
+            case "end":
+              return _context8.stop();
+          }
+        }
+      }, _callee8, null, [[1, 14]]);
+    }));
+
+    return function (_x13, _x14) {
+      return _ref7.apply(this, arguments);
+    };
+  }());
   return blogRoutes;
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
+
+/***/ }),
+
+/***/ "./src/server/routes/userRoutes.js":
+/*!*****************************************!*\
+  !*** ./src/server/routes/userRoutes.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! express */ "express");
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! debug */ "debug");
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! mongoose */ "mongoose");
+/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(mongoose__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _model_User__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../model/User */ "./src/server/model/User.js");
+
+
+
+
+
+
+var log = debug__WEBPACK_IMPORTED_MODULE_3___default()('app:authorRoutes');
+
+var routes = function routes() {
+  var userRoutes = (0,express__WEBPACK_IMPORTED_MODULE_2__.Router)();
+  userRoutes.route('/').get( /*#__PURE__*/function () {
+    var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(req, res) {
+      var query, users;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              query = {};
+
+              if (req.query.userId) {
+                query._id = (0,mongoose__WEBPACK_IMPORTED_MODULE_4__.ObjectId)(req.query.userId);
+              }
+
+              _context.next = 5;
+              return _model_User__WEBPACK_IMPORTED_MODULE_5__["default"].find(query);
+
+            case 5:
+              users = _context.sent;
+
+              if (users) {
+                _context.next = 8;
+                break;
+              }
+
+              return _context.abrupt("return", res.status(404).json({
+                message: 'No such user in our database.'
+              }));
+
+            case 8:
+              return _context.abrupt("return", res.status(200).json(users));
+
+            case 11:
+              _context.prev = 11;
+              _context.t0 = _context["catch"](0);
+              log(_context.t0);
+              return _context.abrupt("return", res.status(500).json(_context.t0));
+
+            case 15:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[0, 11]]);
+    }));
+
+    return function (_x, _x2) {
+      return _ref.apply(this, arguments);
+    };
+  }())["delete"](function (req, res) {
+    (function () {
+      var _deleteUsers = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2() {
+        var deletedUsers;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!req.isAuthenticated()) {
+                  _context2.next = 16;
+                  break;
+                }
+
+                if (!req.user.isAdmin) {
+                  _context2.next = 15;
+                  break;
+                }
+
+                _context2.prev = 2;
+                _context2.next = 5;
+                return _model_User__WEBPACK_IMPORTED_MODULE_5__["default"].deleteMany({});
+
+              case 5:
+                deletedUsers = _context2.sent;
+                return _context2.abrupt("return", res.status(200).json({
+                  message: 'All users deleted.',
+                  databaseMessage: deletedUsers
+                }));
+
+              case 9:
+                _context2.prev = 9;
+                _context2.t0 = _context2["catch"](2);
+                log(_context2.t0);
+                return _context2.abrupt("return", res.status(500).json(_context2.t0));
+
+              case 13:
+                _context2.next = 16;
+                break;
+
+              case 15:
+                return _context2.abrupt("return", res.status(403).json({
+                  message: 'Must be an Admin to perform such operation.'
+                }));
+
+              case 16:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[2, 9]]);
+      }));
+
+      function deleteUsers() {
+        return _deleteUsers.apply(this, arguments);
+      }
+
+      return deleteUsers;
+    })()();
+  });
+  userRoutes.route('/:userId').all(function (req, res, next) {
+    (function () {
+      var _getUser = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee3() {
+        var userId, foundUser;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                userId = req.params.userId;
+                _context3.next = 4;
+                return _model_User__WEBPACK_IMPORTED_MODULE_5__["default"].findById(userId);
+
+              case 4:
+                foundUser = _context3.sent;
+
+                if (foundUser) {
+                  _context3.next = 7;
+                  break;
+                }
+
+                return _context3.abrupt("return", res.status(404).json({
+                  message: 'No such user in our database.'
+                }));
+
+              case 7:
+                req.foundUser = foundUser;
+                next();
+                _context3.next = 14;
+                break;
+
+              case 11:
+                _context3.prev = 11;
+                _context3.t0 = _context3["catch"](0);
+                return _context3.abrupt("return", res.status(500).json({
+                  err: _context3.t0
+                }));
+
+              case 14:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[0, 11]]);
+      }));
+
+      function getUser() {
+        return _getUser.apply(this, arguments);
+      }
+
+      return getUser;
+    })()();
+  }).get(function (req, res) {
+    (function () {
+      var _getUser2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee4() {
+        var foundUser;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+                foundUser = req.foundUser;
+                return _context4.abrupt("return", res.status(200).json(foundUser));
+
+              case 5:
+                _context4.prev = 5;
+                _context4.t0 = _context4["catch"](0);
+                log(_context4.t0);
+                return _context4.abrupt("return", res.status(500).json({
+                  err: _context4.t0
+                }));
+
+              case 9:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[0, 5]]);
+      }));
+
+      function getUser() {
+        return _getUser2.apply(this, arguments);
+      }
+
+      return getUser;
+    })()();
+  }).put(function (req, res) {
+    (function () {
+      var _replaceProfile = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee5() {
+        var foundUser, updateInfo;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                if (!req.isAuthenticated()) {
+                  _context5.next = 20;
+                  break;
+                }
+
+                _context5.prev = 1;
+
+                if (req.body._id) {
+                  delete req.body._id;
+                }
+
+                foundUser = req.foundUser;
+
+                if (!(req.body.isAdmin && req.user.isAdmin !== true)) {
+                  _context5.next = 6;
+                  break;
+                }
+
+                return _context5.abrupt("return", res.status(403).json({
+                  message: 'You do not have the permission to perform this operation.'
+                }));
+
+              case 6:
+                if (!(req.user.username === foundUser.username && req.user.password === foundUser.password || req.user.isAdmin === true)) {
+                  _context5.next = 11;
+                  break;
+                }
+
+                _context5.next = 9;
+                return _model_User__WEBPACK_IMPORTED_MODULE_5__["default"].replaceOne({
+                  _id: foundUser._id
+                }, req.body);
+
+              case 9:
+                updateInfo = _context5.sent;
+                return _context5.abrupt("return", res.status(200).json({
+                  message: 'Account updated successfully',
+                  updateInfo: updateInfo
+                }));
+
+              case 11:
+                return _context5.abrupt("return", res.status(403).json({
+                  message: 'Can only update your own account'
+                }));
+
+              case 14:
+                _context5.prev = 14;
+                _context5.t0 = _context5["catch"](1);
+                log(_context5.t0);
+                return _context5.abrupt("return", res.status(500).json(_context5.t0));
+
+              case 18:
+                _context5.next = 21;
+                break;
+
+              case 20:
+                return _context5.abrupt("return", res.status(403).json({
+                  message: 'Must be an account owner to perform such operation.'
+                }));
+
+              case 21:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, null, [[1, 14]]);
+      }));
+
+      function replaceProfile() {
+        return _replaceProfile.apply(this, arguments);
+      }
+
+      return replaceProfile;
+    })()();
+  }).patch(function (req, res) {
+    (function () {
+      var _replaceProfile2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee6() {
+        var foundUser, updateInfo;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                if (!req.isAuthenticated()) {
+                  _context6.next = 20;
+                  break;
+                }
+
+                _context6.prev = 1;
+
+                if (req.body._id) {
+                  delete req.body._id;
+                }
+
+                foundUser = req.foundUser;
+
+                if (!(req.body.isAdmin && req.user.isAdmin !== true)) {
+                  _context6.next = 6;
+                  break;
+                }
+
+                return _context6.abrupt("return", res.status(403).json({
+                  message: 'You do not have the permission to perform this operation.'
+                }));
+
+              case 6:
+                if (!(req.user.username === foundUser.username && req.user.password === foundUser.password || req.user.isAdmin === true)) {
+                  _context6.next = 11;
+                  break;
+                }
+
+                _context6.next = 9;
+                return _model_User__WEBPACK_IMPORTED_MODULE_5__["default"].updateOne({
+                  _id: foundUser._id
+                }, req.body);
+
+              case 9:
+                updateInfo = _context6.sent;
+                return _context6.abrupt("return", res.status(200).json({
+                  message: 'Account updated successfully',
+                  updateInfo: updateInfo
+                }));
+
+              case 11:
+                return _context6.abrupt("return", res.status(403).json({
+                  message: 'Can only update your own account'
+                }));
+
+              case 14:
+                _context6.prev = 14;
+                _context6.t0 = _context6["catch"](1);
+                log(_context6.t0);
+                return _context6.abrupt("return", res.status(500).json(_context6.t0));
+
+              case 18:
+                _context6.next = 21;
+                break;
+
+              case 20:
+                return _context6.abrupt("return", res.status(403).json({
+                  message: 'Must be an account owner to perform such operation.'
+                }));
+
+              case 21:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, null, [[1, 14]]);
+      }));
+
+      function replaceProfile() {
+        return _replaceProfile2.apply(this, arguments);
+      }
+
+      return replaceProfile;
+    })()();
+  })["delete"](function (req, res) {
+    (function () {
+      var _deleteUser = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee7() {
+        var foundUser, deletionInfo;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                if (!req.isAuthenticated()) {
+                  _context7.next = 20;
+                  break;
+                }
+
+                _context7.prev = 1;
+                foundUser = req.foundUser;
+
+                if (!(req.user.username === foundUser.username && req.user.password === foundUser.password || req.user.isAdmin)) {
+                  _context7.next = 11;
+                  break;
+                }
+
+                _context7.next = 6;
+                return _model_User__WEBPACK_IMPORTED_MODULE_5__["default"].deleteOne({
+                  _id: foundUser._id
+                });
+
+              case 6:
+                deletionInfo = _context7.sent;
+                log(deletionInfo);
+                return _context7.abrupt("return", res.status(200).json({
+                  message: 'User account deleted successfully.',
+                  deletionInfo: deletionInfo
+                }));
+
+              case 11:
+                return _context7.abrupt("return", res.status(403).json({
+                  message: 'You do not have the required permission to perform this operation.'
+                }));
+
+              case 12:
+                _context7.next = 18;
+                break;
+
+              case 14:
+                _context7.prev = 14;
+                _context7.t0 = _context7["catch"](1);
+                log(_context7.t0);
+                return _context7.abrupt("return", res.status(500).json(_context7.t0));
+
+              case 18:
+                _context7.next = 21;
+                break;
+
+              case 20:
+                return _context7.abrupt("return", res.status(403).json({
+                  message: 'Must be an account owner to perform such operation.'
+                }));
+
+              case 21:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, null, [[1, 14]]);
+      }));
+
+      function deleteUser() {
+        return _deleteUser.apply(this, arguments);
+      }
+
+      return deleteUser;
+    })()();
+  });
+  return userRoutes;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
 
 /***/ }),
 
@@ -3127,14 +4124,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_config__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_router_config__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var express_session__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! express-session */ "express-session");
 /* harmony import */ var express_session__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(express_session__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _server_helpers_renderer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./server/helpers/renderer */ "./src/server/helpers/renderer.js");
-/* harmony import */ var _server_helpers_createStore__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./server/helpers/createStore */ "./src/server/helpers/createStore.js");
-/* harmony import */ var _client_Routes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./client/Routes */ "./src/client/Routes.js");
-/* harmony import */ var _server_routes_blogRoutes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./server/routes/blogRoutes */ "./src/server/routes/blogRoutes.js");
-/* harmony import */ var _server_routes_authRoutes__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./server/routes/authRoutes */ "./src/server/routes/authRoutes.js");
-/* harmony import */ var _server_passport_passport__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./server/passport/passport */ "./src/server/passport/passport.js");
+/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! mongoose */ "mongoose");
+/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(mongoose__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _server_helpers_renderer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./server/helpers/renderer */ "./src/server/helpers/renderer.js");
+/* harmony import */ var _server_helpers_createStore__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./server/helpers/createStore */ "./src/server/helpers/createStore.js");
+/* harmony import */ var _client_Routes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./client/Routes */ "./src/client/Routes.js");
+/* harmony import */ var _server_routes_blogRoutes__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./server/routes/blogRoutes */ "./src/server/routes/blogRoutes.js");
+/* harmony import */ var _server_routes_authRoutes__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./server/routes/authRoutes */ "./src/server/routes/authRoutes.js");
+/* harmony import */ var _server_routes_userRoutes__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./server/routes/userRoutes */ "./src/server/routes/userRoutes.js");
+/* harmony import */ var _server_passport__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./server/passport */ "./src/server/passport/index.js");
 
 dotenv__WEBPACK_IMPORTED_MODULE_0___default().config();
+
+
 
 
 
@@ -3151,30 +4153,37 @@ var debug = debug__WEBPACK_IMPORTED_MODULE_2___default()('app');
 var _process$env = process.env,
     HOST = _process$env.HOST,
     PORT = _process$env.PORT,
-    SECRET = _process$env.SECRET;
+    SECRET = _process$env.SECRET,
+    DATABASE_URL = _process$env.DATABASE_URL;
 app.use(morgan__WEBPACK_IMPORTED_MODULE_3___default()('dev'));
 app.use(express__WEBPACK_IMPORTED_MODULE_1___default().urlencoded({
   extended: true
 }));
 app.use(express__WEBPACK_IMPORTED_MODULE_1___default().json());
-app.use(express__WEBPACK_IMPORTED_MODULE_1___default()["static"]('public')); //Auth Config
+app.use(express__WEBPACK_IMPORTED_MODULE_1___default()["static"]('public'));
+(0,mongoose__WEBPACK_IMPORTED_MODULE_6__.connect)(DATABASE_URL, function (err) {
+  if (err) {
+    debug(err);
+  } else {
+    debug("Database connected successfully.");
+  }
+}); //Auth Config
 
 app.use(express_session__WEBPACK_IMPORTED_MODULE_5___default()({
   secret: SECRET,
   resave: false,
   saveUninitialized: false
 }));
-(0,_server_passport_passport__WEBPACK_IMPORTED_MODULE_11__.passportConfig)(app);
-app.use('/api/blogs', (0,_server_routes_blogRoutes__WEBPACK_IMPORTED_MODULE_9__["default"])());
-app.use('/api/auth', (0,_server_routes_authRoutes__WEBPACK_IMPORTED_MODULE_10__["default"])());
+(0,_server_passport__WEBPACK_IMPORTED_MODULE_13__.passportConfig)(app);
+app.use('/api/blogs', (0,_server_routes_blogRoutes__WEBPACK_IMPORTED_MODULE_10__["default"])());
+app.use('/api/auth', (0,_server_routes_authRoutes__WEBPACK_IMPORTED_MODULE_11__["default"])());
+app.use('/api/users', (0,_server_routes_userRoutes__WEBPACK_IMPORTED_MODULE_12__["default"])());
 app.get('*', function (req, res) {
-  var store = (0,_server_helpers_createStore__WEBPACK_IMPORTED_MODULE_7__["default"])();
-  var promises = (0,react_router_config__WEBPACK_IMPORTED_MODULE_4__.matchRoutes)(_client_Routes__WEBPACK_IMPORTED_MODULE_8__["default"], req.path).map(function (_ref) {
+  var store = (0,_server_helpers_createStore__WEBPACK_IMPORTED_MODULE_8__["default"])();
+  var promises = (0,react_router_config__WEBPACK_IMPORTED_MODULE_4__.matchRoutes)(_client_Routes__WEBPACK_IMPORTED_MODULE_9__["default"], req.path).map(function (_ref) {
     var route = _ref.route;
     return route.loadData ? route.loadData(store, req.path.split('/')[2]) : null;
   }).map(function (promise) {
-    console.log('Inner Promise: ', promise);
-
     if (promise) {
       return new Promise(function (resolve, reject) {
         promise.then(resolve)["catch"](resolve);
@@ -3183,7 +4192,7 @@ app.get('*', function (req, res) {
   });
   Promise.all(promises).then(function () {
     var context = {};
-    var content = (0,_server_helpers_renderer__WEBPACK_IMPORTED_MODULE_6__["default"])(req, store, context);
+    var content = (0,_server_helpers_renderer__WEBPACK_IMPORTED_MODULE_7__["default"])(req, store, context);
 
     if (context.url) {
       return res.redirect(301, context.url);
@@ -3197,7 +4206,7 @@ app.get('*', function (req, res) {
   });
 });
 app.listen(PORT, HOST, function () {
-  return debug("Server is running on port ".concat(PORT));
+  return debug("Server is running on ".concat(HOST, ", port ").concat(PORT));
 });
 })();
 

@@ -1,28 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import requireAuth from '../../components/hocs/requireAuth';
 
 function AddNewBlogPage() {
+  const [blog, setBlog] = useState({
+    title: '',
+    content: '',
+  });
+  const [isExpanded, setExpanded] = useState(false);
+
+  function expand() {
+    setExpanded(true);
+  }
+
+  function handleChange(e) {}
   return (
-    <form className="write">
-      <h2>Add New Blog Post</h2>
-      <div>
-        <label>Title</label>
-        <input type="text" placeholder="Enter Blog Title" />
-      </div>
-      <div>
-        <label>Author ID</label>
-        <input type="text" placeholder="Author ID" />
-      </div>
-      <div>
-        <label>Content</label>
+    <div>
+      <form className="create-note">
+        {isExpanded && (
+          <input
+            name="title"
+            onChange={handleChange}
+            value={blog.title}
+            placeholder="Title"
+          />
+        )}
+
         <textarea
-          placeholder="Enter Blog Content"
-          rows={10}
-          cols={15}
-        ></textarea>
-      </div>
-      <button>Add</button>
-    </form>
+          name="content"
+          onClick={expand}
+          onChange={handleChange}
+          value={blog.content}
+          placeholder="Take a note..."
+          rows={isExpanded ? 3 : 1}
+        />
+      </form>
+    </div>
   );
 }
 

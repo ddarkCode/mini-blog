@@ -13,6 +13,14 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  img_url: {
+    type: String,
+    default: '',
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 export default model('User', userSchema);

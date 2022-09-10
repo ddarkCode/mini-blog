@@ -1,8 +1,7 @@
 [
   {
     "title": "Discover Your Calling: The Life's Task",
-    "author": "Robert Greene",
-    "_id": 1,
+    "authorId": "6315b3005a906d4d2e372cf5",
     "post": [
       "You posses a kind of inner force that seeks to guide you towards your Life's Task, what you are meant to accomplish in the time that you have to live. In childhold this force was clear to you.",
       "It directed you towards activities and subjects that fits your natural inclinations, that sparked a curiosity that was deep and primal.",
@@ -14,8 +13,7 @@
   },
   {
     "title": "Submit To Reality: The Ideal Apprenticeship",
-    "author": "darkcode__",
-    "_id": 2,
+    "authorId": "6315b3005a906d4d2e372cf5",
     "post": [
       "After your formal education, you enter the most critical phase in your life-a second, practical education known as The Apprenticeship.",
       "Every time you change careers or acquire new skills, you reenter this phase of life. The dangers are many.",
@@ -26,8 +24,7 @@
   },
   {
     "title": "Absorb The Master's Power: The mentor dynamic",
-    "author": "Robert Greene",
-    "_id": 3,
+    "authorId": "6315b3005a906d4d2e372cf5",
     "post": [
       "Life is short, and your time for learning and creativity is limited.",
       "Without any guidance, you can waste valuable years trying to gain knowledge and practice from various sources.",
@@ -44,8 +41,7 @@
   },
   {
     "title": "See People As They Are: Social Intelligence",
-    "author": "Robert Greene",
-    "_id": 4,
+    "authorId": "6315b3005a906d4d2e372cf5",
     "post": [
       "Often the greatest obstacle to our pursuit of mastery comes from the emotional drain we experience i dealing with the resistance and mainipulation of the people around us.",
       "If we are not careful, our minds become absorbed in endless political intrigues and battles.",
@@ -58,8 +54,7 @@
   },
   {
     "title": "Awaken The Dimensional Mind: The Createive-Active",
-    "author": "Robert Greene",
-    "_id": 5,
+    "authorId": "6315b3005a906d4d2e372cf5",
     "post": [
       "As you accumulate more skills and internalize the rules that govern your field, Your mind would want to become more active, ",
       "seeking to use this knowledge in ways that are more suited to your inclinations.",
@@ -76,8 +71,7 @@
   },
   {
     "title": "Awaken The Dimensional Mind",
-    "author": "Robert Greene",
-    "_id": 6,
+    "authorId": "6315b3005a906d4d2e372cf5",
     "post": [
       "As you accumulate more skills and internalize the rules that govern your field, Your mind would want to become more active, seeking to use this knowledge in ways that are more suited to your inclinations",
       " What will impede this natural creative dynamic from flourishing is not a lack of talent, but your attitude",
