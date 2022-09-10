@@ -3,13 +3,11 @@ import React from 'react';
 import Blog from './Blog';
 
 function BlogList({ blogs }) {
-  const blogsToRender = blogs
-    ? blogs.map((blog) => ({ ...blog, date: new Date() }))
-    : [];
+  const blogsToRender = blogs;
   return (
     <div className="bloglist-container">
       {blogsToRender.map((blog) => (
-        <Blog key={blog._id} blog={blog} />
+        <Blog key={blog._id} {...blog} />
       ))}
     </div>
   );

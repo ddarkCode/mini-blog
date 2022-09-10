@@ -9,6 +9,7 @@ function SingleBlogPage({ getBlog, blog }) {
   useEffect(() => {
     getBlog(blogId);
   }, []);
+  console.log(blog);
 
   function dateFormat(date) {
     const dateToReturn = new Date(date);
@@ -24,9 +25,9 @@ function SingleBlogPage({ getBlog, blog }) {
   return (
     <div className="single-blog-page">
       <h2>{blog.title}</h2>
-      <p className="date">{dateFormat(blog.date)}</p>
-      <p className="author">{blog.author}</p>
-      <p className="post">{blog.post}</p>
+      <p className="date">{dateFormat(blog.createdAt)}</p>
+      <p className="author">{blog.authorId}</p>
+      <p className="post">{blog.content}</p>
       <Link to={`/blogs`}>Back to all blogs</Link>
     </div>
   );

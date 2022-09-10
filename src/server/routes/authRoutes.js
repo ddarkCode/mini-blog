@@ -1,63 +1,51 @@
 import { Router } from 'express';
-import { readFileSync, writeFile } from 'fs';
-import { join } from 'path';
 import passport from 'passport';
+import debug from 'debug';
 
 import User from '../model/User';
 
-const usersFilePath = join('src', 'db', 'users.json');
+const log = debug('app:authRoutes');
 
 const routes = () => {
   const authRoutes = Router();
-  authRoutes.use((req, res, next) => {
-    const users = JSON.parse(readFileSync(usersFilePath, 'utf-8'));
-    req.users = users;
-    next();
-  });
-  authRoutes.route('/register').post((req, res) => {
+  authRoutes.route('/register').post(async (req, res) => {
     try {
       const { username, password, fullname } = req.body;
-      const { users } = req;
       const newUser = new User({
         username,
         password,
         fullname,
       });
-      users.push(newUser);
-      writeFile(usersFilePath, JSON.stringify(users), 'utf-8', () => {
-        // passport.authenticate('local')(req, res, () => {
-        //   res.redirect('/secrets');
-        // });
-        passport.authenticate('local')(req, res, () => {
-          return res.json(newUser);
-        });
+      const savedUser = await newUser.save();
+      passport.authenticate('local')(req, res, () => {
+        return res.status(201).json({ user: savedUser });
       });
     } catch (err) {
-      console.log(err);
+      log(err);
     }
   });
-  authRoutes.route('/login').post((req, res) => {
+  authRoutes.route('/login').post(async (req, res) => {
     try {
       const { username, password } = req.body;
-      const { users } = req;
-      const userDetails = users.find(
-        (user) => user.username === username && user.password === password
-      );
-      if (!userDetails) {
-        return res.json({ message: 'Invalid username or password.' });
+      const foundUser = await User.findOne({ username });
+      if (!foundUser || foundUser.password !== password) {
+        return res.status(403).json({ user: null });
       }
-      return res.json(userDetails);
+      passport.authenticate('local')(req, res, () => {
+        return res.status(200).json({ user: foundUser });
+      });
     } catch (error) {
-      console.log(error);
+      log(error);
     }
   });
   authRoutes.route('/logout').get((req, res) => {
     try {
       req.logout(() => {
-        return res.json({ user: null });
+        return res.status(200).json({ user: null });
       });
     } catch (err) {
-      console.log(err);
+      log(err);
+      return res.status(500).json(err);
     }
   });
   return authRoutes;

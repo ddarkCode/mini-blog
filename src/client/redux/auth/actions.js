@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { REGISTER_USER, LOGIN_IN_USER, LOG_OUT_USER } from './constants';
+import { REGISTER_USER, LOG_IN_USER, LOG_OUT_USER } from './constants';
 
 export const register = (newUserDetails) => {
   return async (dispatch) => {
@@ -10,7 +10,7 @@ export const register = (newUserDetails) => {
     );
     dispatch({
       type: REGISTER_USER,
-      payload: data,
+      data,
     });
   };
 };
@@ -23,8 +23,8 @@ export const login = (loginDetails) => {
     );
     console.log(data);
     dispatch({
-      type: LOGIN_IN_USER,
-      payload: data,
+      type: LOG_IN_USER,
+      data,
     });
   };
 };
@@ -35,7 +35,7 @@ export const logout = () => {
     console.log(data);
     dispatch({
       type: LOG_OUT_USER,
-      payload: data,
+      data,
     });
   };
 };

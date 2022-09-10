@@ -8,11 +8,7 @@ const blogSchema = new Schema(
     authorId: {
       type: String,
     },
-    img_url: {
-      type: String,
-      default: '',
-    },
-    body: {
+    content: {
       type: String,
     },
   },

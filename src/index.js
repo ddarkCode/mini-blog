@@ -5,6 +5,7 @@ import deb from 'debug';
 import morgan from 'morgan';
 import { matchRoutes } from 'react-router-config';
 import session from 'express-session';
+import { connect } from 'mongoose';
 
 import renderer from './server/helpers/renderer';
 import createStore from './server/helpers/createStore';
@@ -12,16 +13,25 @@ import Routes from './client/Routes';
 
 import blogRoutes from './server/routes/blogRoutes';
 import authRoutes from './server/routes/authRoutes';
-import { passportConfig } from './server/passport/passport';
+import userRoutes from './server/routes/userRoutes';
+import { passportConfig } from './server/passport';
 
 const app = express();
 const debug = deb('app');
-const { HOST, PORT, SECRET } = process.env;
+const { HOST, PORT, SECRET, DATABASE_URL } = process.env;
 
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
+
+connect(DATABASE_URL, (err) => {
+  if (err) {
+    debug(err);
+  } else {
+    debug(`Database connected successfully.`);
+  }
+});
 
 //Auth Config
 app.use(
@@ -35,6 +45,7 @@ passportConfig(app);
 
 app.use('/api/blogs', blogRoutes());
 app.use('/api/auth', authRoutes());
+app.use('/api/users', userRoutes());
 
 app.get('*', (req, res) => {
   const store = createStore();
@@ -46,7 +57,6 @@ app.get('*', (req, res) => {
         : null;
     })
     .map((promise) => {
-      console.log('Inner Promise: ', promise);
       if (promise) {
         return new Promise((resolve, reject) => {
           promise.then(resolve).catch(resolve);
@@ -67,4 +77,6 @@ app.get('*', (req, res) => {
   });
 });
 
-app.listen(PORT, HOST, () => debug(`Server is running on port ${PORT}`));
+app.listen(PORT, HOST, () =>
+  debug(`Server is running on ${HOST}, port ${PORT}`)
+);
