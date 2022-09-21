@@ -1,5 +1,6 @@
 import { Strategy } from 'passport-local';
 import passport from 'passport';
+import { compareSync } from 'bcrypt';
 
 import User from '../../model/User';
 
@@ -12,13 +13,12 @@ export const localStrategy = () => {
           if (!user) {
             return done(null, false);
           }
-          if (user.password !== password) {
+          if (compareSync(password, user.password) !== true) {
             return done(null, false);
           }
           return done(null, user);
         })();
       } catch (err) {
-        console.log(err);
         return done(err);
       }
     })
