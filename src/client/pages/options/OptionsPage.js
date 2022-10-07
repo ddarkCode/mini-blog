@@ -11,7 +11,12 @@ function OptionsPage() {
     dispatch(logout());
     history.push('/');
   };
-  return <button onClick={handleLogout}>Logout</button>;
+  return (
+    <div className="optionsPage">
+      <button onClick={handleLogout}>Logout</button>
+      <button>Update or Delete Blog</button>
+    </div>
+  );
 }
 
 export default {

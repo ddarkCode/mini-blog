@@ -2,11 +2,11 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { persistReducer } from 'redux-persist';
 import logger from 'redux-logger';
-import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 
 import { singleBlogReducer, allBlogsReducer } from './blogs/index';
 import authReducer from './auth';
+import usersReducer from './users';
 
 const createNoopStorage = () => {
   return {
@@ -36,6 +36,7 @@ export const reducers = combineReducers({
   blog: singleBlogReducer,
   blogs: allBlogsReducer,
   auth: authReducer,
+  users: usersReducer,
 });
 
 export const persistedReducer = persistReducer(persistConfig, reducers);

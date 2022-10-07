@@ -123,9 +123,8 @@ a:active {
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,800&display=swap');
 
 body {
-  line-height: 1;
   font-family: 'Montserrat', sans-serif;
-  font-size: 400;
+  background-color: #f5f0dd;
 }
 a {
   text-decoration: none;
@@ -141,16 +140,11 @@ nav {
   width: 100%;
 }
 
-.logout-button {
-  background: none;
-  border: none;
-}
-
 .nav-container {
   display: flex;
   align-items: center;
-  justify-content: space-around;
   margin: 0 40px;
+  font-size: 0.8rem;
 }
 
 .logo-container {
@@ -186,6 +180,35 @@ nav {
 
 .nav-container ul li:hover {
   border-bottom: 2px solid #000;
+}
+
+@media only screen and (max-width: 600px) {
+  .nav-container {
+    margin: 10px 20px;
+    font-size: 0.6rem;
+  }
+
+  .nav-container ul li {
+    margin-left: 10px;
+  }
+}
+
+@media only screen and (max-width: 570px) {
+  .nav-container {
+    margin: 10px 16px;
+    font-size: 0.5rem;
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .nav-container {
+    margin: 0 7px;
+    font-size: 0.5rem;
+  }
+
+  .nav-container ul li {
+    margin-left: 6px;
+  }
 }
 
 /*HomePage Section*/
@@ -245,6 +268,18 @@ footer {
 
 /*Auth Form Section*/
 
+.form-container span {
+  display: block;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.form-container span a {
+  border-bottom: 2px solid #000;
+}
+
 .auth-form-container {
   background-color: #fff;
   color: #000;
@@ -252,42 +287,42 @@ footer {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: max-content;
+  min-height: 85vh;
   margin: 30px auto;
-  width: 40vw;
+  width: 70vw;
 }
 
 .auth-form-container h2 {
   font-size: 36px;
-  font-weight: 900;
+  font-weight: 700;
   margin-bottom: 30px;
 
   width: 80%;
 }
 
 .auth-form-container .input-container {
-  margin-right: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 auto;
   width: 80%;
-  color: #999999;
+
+  margin-bottom: 10px;
 }
 
 .auth-form-container div label {
   margin-right: auto;
   font-size: 18px;
   font-weight: 100;
-  margin-bottom: 10px;
+  color: #0c0a0a;
 }
 
 .auth-form-container div input {
   width: 100%;
   height: 50px;
-  border: 1px inset;
+  border: none;
+  border-bottom: 1px solid #000;
   border-radius: 20px;
-  color: #999999;
+  color: #0c0a0a;
   margin: 10px 0;
   font-size: 15px;
   font-weight: 100;
@@ -305,7 +340,7 @@ footer {
 .auth-form-container button {
   width: 80%;
   height: 50px;
-  background: #999999;
+  background: #242222;
   border: none;
   border-radius: 20px;
   color: #fff;
@@ -313,69 +348,115 @@ footer {
   margin-top: 15px;
 }
 
-.login-form {
-  height: 70vh;
+@media only screen and (max-width: 800px) {
+  .auth-form-container {
+    width: 80vw;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .auth-form-container {
+    width: 87vw;
+  }
+
+  .auth-form-container .input-container {
+    width: 95%;
+  }
+
+  .auth-form-container button {
+    width: 95%;
+  }
 }
 
 /*BlogList Section*/
 
 .bloglist-container {
-  margin: 20px 40px;
   display: flex;
   flex-wrap: wrap;
-  height: max-content;
+  align-items: center;
   justify-content: space-between;
+  margin: 0 auto;
+  min-height: 70vh;
+  width: calc(100% - 80px);
 }
 
 .blog-container {
-  background-color: #2e494a;
-  color: #fff;
-  margin: 10px 0;
-  width: 30%;
-  padding: 10px;
-  border-radius: 10px;
+  background-color: #fefefe;
+  color: #4d4d4d;
+  width: 31%;
+  min-height: 300px;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .blog-container h3 {
-  font-weight: 700;
-  font-size: 24px;
-  margin: 5px 0;
-  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 15px;
 }
 
 .blog-container .author,
 .date {
   font-style: italic;
+  margin-bottom: 5px;
+  text-align: center;
 }
 
 .blog-container .post {
-  margin: 10px 0;
+  margin-top: 15px;
+  text-align: center;
 }
 
 .blog-container a {
-  background-color: #56c870;
-  color: #fff;
+  background-color: #f5ba13;
+  color: #000;
   display: block;
   width: 100px;
   height: 50px;
   padding-top: 15px;
   text-align: center;
-  border-radius: 10px;
+  margin-top: 15px;
 }
 
 .blog-container a:hover {
-  background-color: #fff;
-  color: #56c870;
+  background-color: #000;
+  color: #f5ba13;
   font-weight: 500;
+}
+@media only screen and (max-width: 800px) {
+  .blog-container {
+    width: 46.5%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .bloglist-container {
+    width: 100%;
+  }
+  .blog-container {
+    width: 93%;
+    margin: 10px auto;
+  }
+}
+
+@media only screen and (max-width: 250px) {
+  .blog-container {
+    height: 420px;
+  }
 }
 
 /*Single Blog Page */
 
 .single-blog-page {
+  background-color: #fefefe;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 80vh;
+  min-height: 70vh;
 }
 
 .single-blog-page h2 {
@@ -399,61 +480,6 @@ footer {
 }
 
 /*Write a New Blog*/
-/* .write {
-  height: max-content;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 40px;
-}
-
-.write h2 {
-  font-weight: 700;
-  font-size: 2em;
-  margin-bottom: 20px;
-}
-
-.write div {
-  display: flex;
-  flex-direction: column;
-  margin: 10px 0;
-}
-
-.write div label {
-  font-weight: 500;
-  font-size: 1.1em;
-  margin: 0 auto;
-  margin-bottom: 7px;
-}
-
-.write div input {
-  height: 40px;
-  width: 350px;
-  border-radius: 10px;
-  padding-left: 10px;
-}
-
-.write div textarea {
-  height: 250px;
-  width: 350px;
-  border-radius: 10px;
-  padding-left: 10px;
-}
-.write div textarea:focus {
-  outline: none;
-}
-.write button {
-  background-color: #ffc017;
-  border: none;
-  color: #000;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 16px;
-  height: 40px;
-  margin-bottom: 20px;
-  width: 200px;
-} */
 
 form.create-note {
   position: relative;
@@ -475,6 +501,11 @@ form.create-note textarea {
   font-family: inherit;
   resize: none;
 }
+
+form.create-note input {
+  margin-bottom: 10px;
+}
+
 form.create-note button {
   position: absolute;
   right: 18px;
@@ -490,4 +521,21 @@ form.create-note button {
   outline: none;
 }
 
-/*  */
+/* Options Page   */
+.optionsPage {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.optionsPage button {
+  margin: 10px 0;
+  width: 40vw;
+  height: 70px;
+  background-color: #fefefe;
+  color: #4d4d4d;
+  border: none;
+  cursor: pointer;
+}

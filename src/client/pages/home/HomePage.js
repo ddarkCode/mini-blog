@@ -8,7 +8,7 @@ const HomePage = () => {
       <p>
         Discover stories, thinking, and expertise from writers on any topic.
       </p>
-      <Link to="/blogs">Starting reading</Link>
+      <Link to="/blogs">Start reading</Link>
     </div>
   );
 };

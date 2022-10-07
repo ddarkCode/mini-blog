@@ -9,15 +9,17 @@ export const getALlBlogs = () => async (dispatch) => {
   });
 };
 
-export const addNewBlog = (blogToAdd) => async (dispatch) => {
-  const { data } = await axios.post(
-    'http://localhost:3000/api/blogs',
-    blogToAdd
-  );
-  dispatch({
-    type: ADD_NEW_BLOG,
-    payload: data,
-  });
+export const addNewBlog = (blogToAdd) => {
+  return async (dispatch) => {
+    const { data } = await axios.post(
+      'http://localhost:3000/api/blogs',
+      blogToAdd
+    );
+    dispatch({
+      type: ADD_NEW_BLOG,
+      payload: data,
+    });
+  };
 };
 
 //Single Blog Actions

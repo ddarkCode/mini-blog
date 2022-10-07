@@ -30,12 +30,12 @@ function LoginPage({ login, history }) {
   };
 
   return (
-    <div>
+    <div className="form-container">
       <form className="login-form auth-form-container" onSubmit={handleSubmit}>
         <h2>Login</h2>
 
         <InputContainer>
-          <label htmlFor="username">Email</label>
+          {/* <label htmlFor="username">Email</label> */}
           <Input
             type="text"
             name="username"
@@ -46,7 +46,7 @@ function LoginPage({ login, history }) {
           />
         </InputContainer>
         <InputContainer>
-          <label htmlFor="password">Password</label>
+          {/* <label htmlFor="password">Password</label> */}
           <Input
             type="text"
             name="password"
@@ -57,10 +57,10 @@ function LoginPage({ login, history }) {
           />
         </InputContainer>
         <button type="submit">Login</button>
+        <span>
+          Don't have an account? <Link to={'/register'}>Register</Link>
+        </span>
       </form>
-      <span>
-        Don't have an account? <Link to={'/register'}>Register</Link>
-      </span>
     </div>
   );
 }

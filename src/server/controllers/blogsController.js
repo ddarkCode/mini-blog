@@ -43,6 +43,7 @@ export default (function controller() {
         if (req.isAuthenticated()) {
           try {
             const { title, content, authorId } = req.body;
+            log('Post New Author: ', authorId);
             const newBlog = new Blog({
               title,
               authorId,

@@ -29,11 +29,11 @@ function RegisterPage({ register, history }) {
   }
 
   return (
-    <div>
+    <div className="form-container">
       <form className="auth-form-container" onSubmit={handleSubmit}>
         <h2>Create your account</h2>
         <InputContainer>
-          <label htmlFor="fullname">First Name</label>
+          {/* <label htmlFor="fullname">First Name</label> */}
           <Input
             type="text"
             name="fullname"
@@ -45,7 +45,7 @@ function RegisterPage({ register, history }) {
         </InputContainer>
 
         <InputContainer>
-          <label htmlFor="username">Email</label>
+          {/* <label htmlFor="username">Email</label> */}
           <Input
             type="email"
             name="username"
@@ -56,7 +56,7 @@ function RegisterPage({ register, history }) {
           />
         </InputContainer>
         <InputContainer>
-          <label htmlFor="password">Password</label>
+          {/* <label htmlFor="password">Password</label> */}
           <Input
             type="password"
             name="password"
@@ -67,10 +67,10 @@ function RegisterPage({ register, history }) {
           />
         </InputContainer>
         <button type="submit">Register</button>
+        <span>
+          Already have an account? <Link to={'/login'}>Login</Link>
+        </span>
       </form>
-      <span>
-        Already have an account? <Link to={'/login'}>Login</Link>
-      </span>
     </div>
   );
 }
