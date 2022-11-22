@@ -1,12 +1,11 @@
 import passport from 'passport';
 
-import { localStrategy } from './strategies/localStrategy';
+import localStrategy from './strategies/localStrategy';
+import jwtStrategy from './strategies/jwtStrategy';
 
 export const passportConfig = (app) => {
   app.use(passport.initialize());
   app.use(passport.session());
-
-  localStrategy();
 
   passport.serializeUser(function (user, cb) {
     process.nextTick(function () {
@@ -19,4 +18,7 @@ export const passportConfig = (app) => {
       return cb(null, user);
     });
   });
+
+  localStrategy();
+  jwtStrategy();
 };

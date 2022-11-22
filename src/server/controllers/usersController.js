@@ -1,43 +1,35 @@
 import debug from 'debug';
-import { hashSync, compareSync } from 'bcrypt';
-import { ObjectId } from 'mongoose';
 
 import User from '../model/User';
 
 const log = debug('app:userController');
-const { SALT_ROUNDS } = process.env;
 
 export default (function controller() {
   return {
     getUsers: (req, res) => {
       (async function getAllUsers() {
         try {
-          if (req.query.userId) {
-            const user = User.findById(req.query.userId);
-            if (!user) {
-              return res
-                .status(404)
-                .json({ message: 'No such user in our database.' });
-            }
-            const userWithLinks = user.toJSON();
-            userWithLinks.links = {};
-            userWithLinks.links.filteredByThisAuthor = `http://${req.headers.host}/api/blogs/?authorId=${user._id}`;
-            return res.status(200).json(userWithLinks);
-          }
           const users = await User.find({});
           if (users.length === 0) {
             return res
               .status(404)
               .json({ message: 'No users in our database yet.' });
           }
-          const usersWithFilter = users.map((user) => {
-            const userWithLinks = user.toJSON();
-            userWithLinks.links = {};
-            userWithLinks.links.filteredByThisAuthor = `http://${req.headers.host}/api/blogs/?authorId=${user._id}`;
-            return userWithLinks;
+          const mappedUsers = users.map((user) => {
+            const userWithLink = {
+              _id: user._id,
+              username: user.username,
+              fullname: user.fullname,
+              img_url: user.img_url,
+              isAdmin: user.isAdmin,
+            };
+
+            userWithLink.links = {};
+            userWithLink.links.filteredByThisAuthor = `http://${req.headers.host}/api/blogs/?authorId=${user._id}`;
+            return userWithLink;
           });
 
-          return res.status(200).json(usersWithFilter);
+          return res.status(200).json(mappedUsers);
         } catch (err) {
           log(err);
           return res.status(500).json(err);
@@ -46,26 +38,20 @@ export default (function controller() {
     },
     deleteUsers: (req, res) => {
       (async function deleteUsers() {
-        if (req.isAuthenticated()) {
-          if (req.user.isAdmin) {
-            try {
-              const deletedUsers = await User.deleteMany({});
-              return res.status(200).json({
-                message: 'All users deleted.',
-                databaseMessage: deletedUsers,
-              });
-            } catch (err) {
-              log(err);
-              return res.status(500).json(err);
-            }
-          } else {
-            return res.status(403).json({
-              message: 'Must be an Admin to perform this operation.',
+        if (req.user.isAdmin) {
+          try {
+            const deletedUsers = await User.deleteMany({});
+            return res.status(200).json({
+              message: 'All users deleted.',
+              databaseMessage: deletedUsers,
             });
+          } catch (err) {
+            log(err);
+            return res.status(500).json(err);
           }
         } else {
           return res.status(403).json({
-            message: 'Must be logged in to perform this operation.',
+            message: 'Must be an Admin to perform this operation.',
           });
         }
       })();
@@ -73,8 +59,21 @@ export default (function controller() {
     getUser: (req, res) => {
       (async function getUser() {
         try {
-          const { foundUser } = req;
-          const userWithLinks = foundUser.toJSON();
+          const { userId } = req.params;
+          const foundUser = await User.findOne({ _id: userId });
+          if (!foundUser) {
+            return res
+              .status(404)
+              .json({ message: 'No such user in our database.' });
+          }
+
+          const userWithLinks = {
+            _id: foundUser._id,
+            username: foundUser.username,
+            fullname: foundUser.fullname,
+            img_url: foundUser.img_url,
+            isAdmin: foundUser.isAdmin,
+          };
           userWithLinks.links = {};
           userWithLinks.links.filteredBlogsByThisAuthor = `http://${req.headers.host}/api/blogs/?authorId=${foundUser._id}`;
           return res.status(200).json(userWithLinks);
@@ -85,133 +84,105 @@ export default (function controller() {
       })();
     },
     replaceProfile: (req, res) => {
-      (async function replaceProfile() {
-        if (req.isAuthenticated()) {
-          try {
-            if (req.body._id) {
-              delete req.body._id;
-            }
-            const { foundUser } = req;
-
-            if (req.body.isAdmin && foundUser.isAdmin !== true) {
-              return res.status(403).json({
-                message:
-                  'You do not have the permission to perform this operation.',
-              });
-            }
-            if (
-              req.user.username === foundUser.username ||
-              req.user.isAdmin === true
-            ) {
-              if (req.body.password) {
-                req.body.password = hashSync(req.body.password, +SALT_ROUNDS);
-              }
-              const updateInfo = await User.replaceOne(
-                { _id: foundUser._id },
-                req.body
-              );
-              const updatedUser = await User.findById(foundUser._id);
-              const updatedUserWithLinks = updatedUser.toJSON();
-              updatedUserWithLinks.links = {};
-              updatedUserWithLinks.links.filteredBlogsByThisAuthor = `http://${req.headers.host}/api/blogs/?authorId=${foundUser._id}`;
-
-              return res.status(200).json({
-                message: 'Account updated successfully',
-                user: updatedUserWithLinks,
-              });
-            }
-
-            return res
-              .status(403)
-              .json({ message: 'Can only update your own account' });
-          } catch (err) {
-            log(err);
-            return res.status(500).json(err);
+      (async function updateProfile() {
+        const { userId } = req.params;
+        try {
+          if (req.body._id) {
+            delete req.body._id;
           }
-        } else {
-          return res.status(403).json({
-            message: 'Must be logged in to perform such operation.',
-          });
+          if (req.body.isAdmin) {
+            delete req.body.isAdmin;
+          }
+
+          if (req.user._id === userId) {
+            const updateInfo = await User.replaceOne({ _id: userId }, req.body);
+            const updatedUser = await User.findById(userId);
+            const updatedUserWithLinks = {
+              _id: updatedUser._id,
+              username: updatedUser.username,
+              fullname: updatedUser.fullname,
+              img_url: updatedUser.img_url,
+              isAdmin: updatedUser.isAdmin,
+            };
+            updatedUserWithLinks.links = {};
+            updatedUserWithLinks.links.filteredBlogsByThisAuthor = `http://${req.headers.host}/api/blogs/?authorId=${userId}`;
+
+            return res.status(200).json({
+              message: 'Account updated successfully',
+              user: updatedUserWithLinks,
+            });
+          } else {
+            return res.status(403).json({
+              message:
+                'You Do not Have The Necessary Permission To Perform This Operation.',
+            });
+          }
+        } catch (err) {
+          log(err);
+          return res.status(500).json(err);
         }
       })();
     },
     updateProfile: (req, res) => {
-      (async function replaceProfile() {
-        if (req.isAuthenticated()) {
-          try {
-            if (req.body._id) {
-              delete req.body._id;
-            }
-            const { foundUser } = req;
-
-            if (req.body.isAdmin && foundUser.isAdmin !== true) {
-              return res.status(403).json({
-                message:
-                  'You do not have the permission to perform this operation.',
-              });
-            }
-            if (
-              req.user.username === foundUser.username ||
-              req.user.isAdmin === true
-            ) {
-              if (req.body.password) {
-                req.body.password = hashSync(req.body.password, +SALT_ROUNDS);
-              }
-              const updateInfo = await User.updateOne(
-                { _id: foundUser._id },
-                req.body
-              );
-              const updatedUser = await User.findById(foundUser._id);
-              const updatedUserWithLinks = updatedUser.toJSON();
-              updatedUserWithLinks.links = {};
-              updatedUserWithLinks.links.filteredBlogsByThisAuthor = `http://${req.headers.host}/api/blogs/?authorId=${foundUser._id}`;
-
-              return res.status(200).json({
-                message: 'Account updated successfully',
-                user: updatedUserWithLinks,
-              });
-            }
-
-            return res
-              .status(403)
-              .json({ message: 'Can only update your own account' });
-          } catch (err) {
-            log(err);
-            return res.status(500).json(err);
+      (async function updateProfile() {
+        const { userId } = req.params;
+        try {
+          if (req.body._id) {
+            delete req.body._id;
           }
-        } else {
-          return res.status(403).json({
-            message: 'Must be logged in to perform such operation.',
-          });
+          if (req.body.isAdmin) {
+            delete req.body.isAdmin;
+          }
+
+          if (req.user._id === userId) {
+            const updateInfo = await User.updateOne({ _id: userId }, req.body);
+            const updatedUser = await User.findById(userId);
+            const updatedUserWithLinks = {
+              _id: updatedUser._id,
+              username: updatedUser.username,
+              fullname: updatedUser.fullname,
+              img_url: updatedUser.img_url,
+              isAdmin: updatedUser.isAdmin,
+            };
+            updatedUserWithLinks.links = {};
+            updatedUserWithLinks.links.filteredBlogsByThisAuthor = `http://${req.headers.host}/api/blogs/?authorId=${userId}`;
+
+            return res.status(200).json({
+              message: 'Account updated successfully',
+              user: updatedUserWithLinks,
+            });
+          } else {
+            return res.status(403).json({
+              message:
+                'You Do not Have The Necessary Permission To Perform This Operation.',
+            });
+          }
+        } catch (err) {
+          log(err);
+          return res.status(500).json(err);
         }
       })();
     },
 
     deleteUser: (req, res) => {
       (async function deleteUser() {
-        if (req.isAuthenticated()) {
-          try {
-            const { foundUser } = req;
-            if (req.user.username === foundUser.username || req.user.isAdmin) {
-              const deletionInfo = await User.deleteOne({ _id: foundUser._id });
-              return res.status(200).json({
-                message: 'User account deleted successfully.',
-                deletionInfo,
-              });
-            } else {
-              return res.status(403).json({
-                message:
-                  'You do not have the required permission to perform this operation.',
-              });
-            }
-          } catch (err) {
-            log(err);
-            return res.status(500).json(err);
+        try {
+          const { userId } = req.params;
+          if (req.user._id === userId || req.user.isAdmin) {
+            const deletionInfo = await User.deleteOne({ _id: userId });
+            return res.status(200).json({
+              message: 'User Account Deleted Successfully.',
+              deletionInfo,
+            });
+          } else {
+            return res.status(403).json({
+              message:
+                'You Do Not Have The Required Permission To Perform This Operation.',
+            });
           }
-        } else {
-          return res.status(403).json({
-            message: 'Must be an account owner to perform such operation.',
-          });
+        } catch (err) {
+          log(err);
+          return res.status(500).json(err);
         }
       })();
     },

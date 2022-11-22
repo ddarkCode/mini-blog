@@ -1,17 +1,16 @@
 import { Router } from 'express';
-import { readFileSync, writeFile } from 'fs';
-import { join } from 'path';
 import debug from 'debug';
 
 import Blog from '../model/Blog';
 import blogsController from '../controllers/blogsController';
+import passport from 'passport';
 
-const blogsFilePath = join('src', 'db', 'blogs.json');
 const log = debug('app:blogRoutes');
 
 const {
   getBlogs,
   getBlog,
+  replaceBlog,
   updateBlog,
   deleteAllBlogs,
   deleteBlog,
@@ -20,23 +19,11 @@ const {
 
 const router = () => {
   const blogRoutes = Router();
-  blogRoutes.use((req, res, next) => {
-    try {
-      const blogs = readFileSync(blogsFilePath, 'utf8');
-      const parsedBlogs = JSON.parse(blogs).map((blog) => {
-        return {
-          ...blog,
-          content: blog.post.join(' '),
-        };
-      });
-      req.blogs = parsedBlogs;
-      next();
-    } catch (err) {
-      log(err);
-      return res.status(500).json(err);
-    }
-  });
-  blogRoutes.route('/').get(getBlogs).post(postNewBlog).delete(deleteAllBlogs);
+  blogRoutes
+    .route('/')
+    .get(getBlogs)
+    .post(passport.authenticate('jwt', { session: false }), postNewBlog)
+    .delete(passport.authenticate('jwt', { session: false }), deleteAllBlogs);
   blogRoutes
     .route('/:blogId')
     .all((req, res, next) => {
@@ -59,13 +46,9 @@ const router = () => {
       })();
     })
     .get(getBlog)
-    .put((req, res) => {
-      updateBlog(req, res, Blog.replaceOne);
-    })
-    .patch((req, res) => {
-      updateBlog(req, res, Blog.updateOne);
-    })
-    .delete(deleteBlog);
+    .put(passport.authenticate('jwt', { session: false }), replaceBlog)
+    .patch(passport.authenticate('jwt', { session: false }), updateBlog)
+    .delete(passport.authenticate('jwt', { session: false }), deleteBlog);
 
   return blogRoutes;
 };

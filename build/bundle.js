@@ -1587,95 +1587,52 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! debug */ "debug");
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! passport */ "passport");
-/* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(passport__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var bcrypt__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! bcrypt */ "bcrypt");
-/* harmony import */ var bcrypt__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(bcrypt__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _model_User__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../model/User */ "./src/server/model/User.js");
-
-
+/* harmony import */ var jsonwebtoken__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jsonwebtoken */ "jsonwebtoken");
+/* harmony import */ var jsonwebtoken__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jsonwebtoken__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
 
 var log = debug__WEBPACK_IMPORTED_MODULE_2___default()('app:authController');
-var SALT_ROUNDS = process.env.SALT_ROUNDS;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((function controller() {
   return {
     register: function register(req, res) {
       (function () {
         var _registerUser = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
-          var _req$body, username, password, fullname, userExist, hash, newUser, savedUser, userWithLinks;
-
+          var userWithLink, token;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
                   _context.prev = 0;
-
-                  if (!req.body.isAdmin) {
-                    _context.next = 3;
-                    break;
-                  }
-
-                  return _context.abrupt("return", res.status(403).json({
-                    message: 'Registration with administrative right not allowed'
+                  userWithLink = {
+                    _id: req.user._id,
+                    username: req.user.username,
+                    fullname: req.user.fullname,
+                    img_url: req.user.img_url,
+                    isAdmin: req.user.isAdmin
+                  };
+                  userWithLink.links = {};
+                  userWithLink.links.filteredBlogsByThisAuthor = "http://".concat(req.headers.host, "/api/blogs/?authorId=").concat(req.user._id);
+                  token = jsonwebtoken__WEBPACK_IMPORTED_MODULE_3___default().sign(userWithLink, process.env.JWT_SECRET);
+                  return _context.abrupt("return", res.status(201).json({
+                    token: token,
+                    online: true,
+                    profile: userWithLink
                   }));
 
-                case 3:
-                  _req$body = req.body, username = _req$body.username, password = _req$body.password, fullname = _req$body.fullname;
-                  _context.next = 6;
-                  return _model_User__WEBPACK_IMPORTED_MODULE_5__["default"].findOne({
-                    username: username
-                  });
-
-                case 6:
-                  userExist = _context.sent;
-
-                  if (!userExist) {
-                    _context.next = 9;
-                    break;
-                  }
-
-                  return _context.abrupt("return", res.status(409).json({
-                    message: 'User Already Exists'
-                  }));
-
-                case 9:
-                  hash = (0,bcrypt__WEBPACK_IMPORTED_MODULE_4__.hashSync)(password, +SALT_ROUNDS);
-                  newUser = new _model_User__WEBPACK_IMPORTED_MODULE_5__["default"]({
-                    username: username,
-                    password: hash,
-                    fullname: fullname
-                  });
-                  _context.next = 13;
-                  return newUser.save();
-
-                case 13:
-                  savedUser = _context.sent;
-                  userWithLinks = savedUser.toJSON();
-                  userWithLinks.links = {};
-                  userWithLinks.links.filteredBlogsByThisAuthor = "http://".concat(req.headers.host, "/api/blogs/?authorId=").concat(savedUser._id);
-                  passport__WEBPACK_IMPORTED_MODULE_3___default().authenticate('local')(req, res, function () {
-                    return res.status(201).json({
-                      user: userWithLinks
-                    });
-                  });
-                  _context.next = 24;
-                  break;
-
-                case 20:
-                  _context.prev = 20;
+                case 8:
+                  _context.prev = 8;
                   _context.t0 = _context["catch"](0);
                   log(_context.t0);
                   return _context.abrupt("return", res.status(500).json(_context.t0));
 
-                case 24:
+                case 12:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, null, [[0, 20]]);
+          }, _callee, null, [[0, 8]]);
         }));
 
         function registerUser() {
@@ -1685,81 +1642,56 @@ var SALT_ROUNDS = process.env.SALT_ROUNDS;
         return registerUser;
       })()();
     },
-    login: function login(req, res) {
-      (function () {
-        var _loginUser = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2() {
-          var _req$body2, username, password, foundUser, userWithLinks;
+    login: function login(req, res, _ref) {
+      var err = _ref.err,
+          user = _ref.user,
+          info = _ref.info;
 
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
-            while (1) {
-              switch (_context2.prev = _context2.next) {
-                case 0:
-                  _context2.prev = 0;
-                  _req$body2 = req.body, username = _req$body2.username, password = _req$body2.password;
-                  _context2.next = 4;
-                  return _model_User__WEBPACK_IMPORTED_MODULE_5__["default"].findOne({
-                    username: username
-                  });
+      if (err) {
+        log(err);
+        return res.status(500).json({
+          err: err,
+          info: info
+        });
+      }
 
-                case 4:
-                  foundUser = _context2.sent;
+      if (!user) {
+        log(user);
+        return res.status(403).json({
+          message: 'Incorrect username or password.',
+          info: info
+        });
+      }
 
-                  if (!(!foundUser || (0,bcrypt__WEBPACK_IMPORTED_MODULE_4__.compareSync)(password, foundUser.password) !== true)) {
-                    _context2.next = 7;
-                    break;
-                  }
-
-                  return _context2.abrupt("return", res.status(403).json({
-                    user: null,
-                    message: 'Incorrect username or password'
-                  }));
-
-                case 7:
-                  userWithLinks = foundUser.toJSON();
-                  userWithLinks.links = {};
-                  userWithLinks.links.filteredBlogsByThisAuthor = "http://".concat(req.headers.host, "/api/blogs/?authorId=").concat(foundUser._id);
-                  passport__WEBPACK_IMPORTED_MODULE_3___default().authenticate('local')(req, res, function () {
-                    return res.status(200).json({
-                      user: userWithLinks
-                    });
-                  });
-                  _context2.next = 16;
-                  break;
-
-                case 13:
-                  _context2.prev = 13;
-                  _context2.t0 = _context2["catch"](0);
-                  log(_context2.t0);
-
-                case 16:
-                case "end":
-                  return _context2.stop();
-              }
-            }
-          }, _callee2, null, [[0, 13]]);
-        }));
-
-        function loginUser() {
-          return _loginUser.apply(this, arguments);
-        }
-
-        return loginUser;
-      })()();
+      var userWithLink = {
+        _id: user._id,
+        username: user.username,
+        fullname: user.fullname,
+        img_url: user.img_url,
+        isAdmin: user.isAdmin
+      };
+      userWithLink.links = {};
+      userWithLink.links.filteredBlogsByThisAuthor = "http://".concat(req.headers.host, "/api/blogs/?authorId=").concat(user._id);
+      var token = jsonwebtoken__WEBPACK_IMPORTED_MODULE_3___default().sign(userWithLink, process.env.JWT_SECRET);
+      return res.status(200).json({
+        token: token,
+        online: true,
+        profile: userWithLink
+      });
     },
     logout: function logout(req, res) {
-      (function logoutUser() {
-        try {
-          req.logout(function () {
-            return res.status(200).json({
-              message: 'You have successfully logged out from your account.',
-              user: null
-            });
+      try {
+        req.logout(function () {
+          return res.status(200).json({
+            token: null,
+            profile: null,
+            online: false
           });
-        } catch (err) {
-          log(err);
-          return res.status(500).json(err);
-        }
-      })();
+        });
+      } catch (err) {
+        log(err);
+        return res.status(500).json(err);
+      }
     }
   };
 })());
@@ -1793,45 +1725,24 @@ var log = debug__WEBPACK_IMPORTED_MODULE_3___default()('app:blogsController');
   return {
     getBlogs: function getBlogs(req, res) {
       (function () {
-        var _getBlogs = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
-          var blogs, query, foundBlogs, results, resultsToReturn, blogsWithLinks;
+        var _getBlogs = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(req, res) {
+          var query, foundBlogs, blogsWithLinks;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
                   _context.prev = 0;
-                  blogs = req.blogs;
                   query = {};
 
                   if (req.query.authorId) {
                     query.authorId = req.query.authorId;
                   }
 
-                  _context.next = 6;
+                  _context.next = 5;
                   return _model_Blog__WEBPACK_IMPORTED_MODULE_2__["default"].find(query);
 
-                case 6:
+                case 5:
                   foundBlogs = _context.sent;
-
-                  if (!(foundBlogs.length === 0)) {
-                    _context.next = 13;
-                    break;
-                  }
-
-                  _context.next = 10;
-                  return _model_Blog__WEBPACK_IMPORTED_MODULE_2__["default"].insertMany(blogs);
-
-                case 10:
-                  results = _context.sent;
-                  resultsToReturn = results.map(function (blog) {
-                    var newBlog = blog.toJSON();
-                    newBlog.links = {};
-                    newBlog.links.self = "http://".concat(req.headers.host, "/api/blogs/").concat(blog._id);
-                    return newBlog;
-                  });
-                  return _context.abrupt("return", res.json(resultsToReturn));
-
-                case 13:
                   blogsWithLinks = foundBlogs.map(function (blog) {
                     var newBlog = blog.toJSON();
                     newBlog.links = {};
@@ -1840,96 +1751,86 @@ var log = debug__WEBPACK_IMPORTED_MODULE_3___default()('app:blogsController');
                   });
                   return _context.abrupt("return", res.status(200).json(blogsWithLinks));
 
-                case 17:
-                  _context.prev = 17;
+                case 10:
+                  _context.prev = 10;
                   _context.t0 = _context["catch"](0);
                   log(_context.t0);
 
-                case 20:
+                case 13:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, null, [[0, 17]]);
+          }, _callee, null, [[0, 10]]);
         }));
 
-        function getBlogs() {
+        function getBlogs(_x, _x2) {
           return _getBlogs.apply(this, arguments);
         }
 
         return getBlogs;
-      })()();
+      })()(req, res);
     },
     postNewBlog: function postNewBlog(req, res) {
       (function () {
-        var _postNewBlog = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2() {
-          var _req$body, title, content, authorId, newBlog, savedBlog, newBlogWithLink;
+        var _postNewBlog = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(req, res) {
+          var _req$body, title, content, newBlog, savedBlog, newBlogWithLink;
 
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
-                  if (!req.isAuthenticated()) {
-                    _context2.next = 19;
-                    break;
-                  }
-
-                  _context2.prev = 1;
-                  _req$body = req.body, title = _req$body.title, content = _req$body.content, authorId = _req$body.authorId;
-                  log('Post New Author: ', authorId);
+                  _context2.prev = 0;
+                  _req$body = req.body, title = _req$body.title, content = _req$body.content;
                   newBlog = new _model_Blog__WEBPACK_IMPORTED_MODULE_2__["default"]({
                     title: title,
-                    authorId: authorId,
+                    authorId: req.user._id,
                     content: content
                   });
-                  _context2.next = 7;
+                  _context2.next = 5;
                   return newBlog.save();
 
-                case 7:
+                case 5:
                   savedBlog = _context2.sent;
                   newBlogWithLink = savedBlog.toJSON();
                   newBlogWithLink.links = {};
                   newBlogWithLink.links.filteredByThisAuthor = "http://".concat(req.headers.host, "/api/blogs/?authorId=").concat(newBlog.authorId);
                   return _context2.abrupt("return", res.status(201).json(newBlogWithLink));
 
-                case 14:
-                  _context2.prev = 14;
-                  _context2.t0 = _context2["catch"](1);
+                case 12:
+                  _context2.prev = 12;
+                  _context2.t0 = _context2["catch"](0);
                   log(_context2.t0);
 
-                case 17:
-                  _context2.next = 20;
-                  break;
-
-                case 19:
+                case 15:
                   return _context2.abrupt("return", res.status(403).json({
                     message: 'You must be logged in to post a new blog'
                   }));
 
-                case 20:
+                case 16:
                 case "end":
                   return _context2.stop();
               }
             }
-          }, _callee2, null, [[1, 14]]);
+          }, _callee2, null, [[0, 12]]);
         }));
 
-        function postNewBlog() {
+        function postNewBlog(_x3, _x4) {
           return _postNewBlog.apply(this, arguments);
         }
 
         return postNewBlog;
-      })()();
+      })()(req, res);
     },
     deleteAllBlogs: function deleteAllBlogs(req, res) {
       (function () {
-        var _deleteAllBlogs = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee3() {
+        var _deleteAllBlogs = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee3(req, res) {
           var query, results;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee3$(_context3) {
             while (1) {
               switch (_context3.prev = _context3.next) {
                 case 0:
-                  if (!(req.isAuthenticated() && req.user.isAdmin)) {
+                  if (!req.user.isAdmin) {
                     _context3.next = 16;
                     break;
                   }
@@ -1971,12 +1872,12 @@ var log = debug__WEBPACK_IMPORTED_MODULE_3___default()('app:blogsController');
           }, _callee3, null, [[1, 10]]);
         }));
 
-        function deleteAllBlogs() {
+        function deleteAllBlogs(_x5, _x6) {
           return _deleteAllBlogs.apply(this, arguments);
         }
 
         return deleteAllBlogs;
-      })()();
+      })()(req, res);
     },
     getBlog: function getBlog(req, res) {
       (function () {
@@ -2016,80 +1917,136 @@ var log = debug__WEBPACK_IMPORTED_MODULE_3___default()('app:blogsController');
     },
     replaceBlog: function replaceBlog(req, res) {
       (function () {
-        var _updateBlog = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee5() {
-          var blogId, blog, updateInfo, updatedBlog, updatedBlogWithLinks;
+        var _replaceBlog = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee5() {
+          var blog, updateInfo, updatedBlog, updatedBlogWithLinks;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee5$(_context5) {
             while (1) {
               switch (_context5.prev = _context5.next) {
                 case 0:
-                  if (!req.isAuthenticated()) {
-                    _context5.next = 27;
-                    break;
-                  }
-
-                  _context5.prev = 1;
-                  blogId = req.params.blogId;
+                  _context5.prev = 0;
                   blog = req.blog;
 
                   if (req.body._id) {
                     delete req.body._id;
                   }
 
-                  if (!(req.user._id === blog.authorId || req.user.isAdmin)) {
-                    _context5.next = 18;
+                  if (!(req.user._id === blog.authorId)) {
+                    _context5.next = 17;
                     break;
                   }
 
-                  _context5.next = 8;
+                  req.body.authorId = req.user._id;
+                  _context5.next = 7;
                   return _model_Blog__WEBPACK_IMPORTED_MODULE_2__["default"].replaceOne({
-                    _id: blogId
+                    _id: blog._id
                   }, req.body);
 
-                case 8:
+                case 7:
                   updateInfo = _context5.sent;
-                  _context5.next = 11;
-                  return _model_Blog__WEBPACK_IMPORTED_MODULE_2__["default"].findById(blogId);
+                  _context5.next = 10;
+                  return _model_Blog__WEBPACK_IMPORTED_MODULE_2__["default"].findById(blog._id);
 
-                case 11:
+                case 10:
                   updatedBlog = _context5.sent;
                   updatedBlogWithLinks = updatedBlog.toJSON();
                   updatedBlogWithLinks.links = {};
-                  updatedBlogWithLinks.links.filteredByThisAuthor = "http://".concat(req.headers.host, "/api/blogs/?authorId=").concat(updatedBlog.authorId);
+                  updatedBlogWithLinks.links.filteredByThisAuthor = "http://".concat(req.headers.host, "/api/blogs/?authorId=").concat(blog.authorId);
                   return _context5.abrupt("return", res.status(200).json({
                     message: 'Blog Updated Successfully',
                     blog: updatedBlogWithLinks
                   }));
 
-                case 18:
+                case 17:
                   return _context5.abrupt("return", res.status(403).json({
-                    message: 'You do not have the necessary permission to perform this operation.'
+                    message: 'You Do Not Have The Permission To Perform This Operation.'
                   }));
 
-                case 19:
-                  _context5.next = 25;
+                case 18:
+                  _context5.next = 24;
                   break;
 
-                case 21:
-                  _context5.prev = 21;
-                  _context5.t0 = _context5["catch"](1);
+                case 20:
+                  _context5.prev = 20;
+                  _context5.t0 = _context5["catch"](0);
                   log(_context5.t0);
                   return _context5.abrupt("return", res.status(500).json(_context5.t0));
 
-                case 25:
-                  _context5.next = 28;
-                  break;
-
-                case 27:
-                  return _context5.abrupt("return", res.status(403).json({
-                    message: 'You must be logged in to perform this operation.'
-                  }));
-
-                case 28:
+                case 24:
                 case "end":
                   return _context5.stop();
               }
             }
-          }, _callee5, null, [[1, 21]]);
+          }, _callee5, null, [[0, 20]]);
+        }));
+
+        function replaceBlog() {
+          return _replaceBlog.apply(this, arguments);
+        }
+
+        return replaceBlog;
+      })()();
+    },
+    updateBlog: function updateBlog(req, res) {
+      (function () {
+        var _updateBlog = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee6() {
+          var blog, updateInfo, updatedBlog, updatedBlogWithLinks;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee6$(_context6) {
+            while (1) {
+              switch (_context6.prev = _context6.next) {
+                case 0:
+                  _context6.prev = 0;
+                  blog = req.blog;
+
+                  if (req.body._id) {
+                    delete req.body._id;
+                  }
+
+                  if (!(req.user._id === blog.authorId)) {
+                    _context6.next = 16;
+                    break;
+                  }
+
+                  _context6.next = 6;
+                  return _model_Blog__WEBPACK_IMPORTED_MODULE_2__["default"].updateOne({
+                    _id: blog._id
+                  }, req.body);
+
+                case 6:
+                  updateInfo = _context6.sent;
+                  _context6.next = 9;
+                  return _model_Blog__WEBPACK_IMPORTED_MODULE_2__["default"].findById(blog._id);
+
+                case 9:
+                  updatedBlog = _context6.sent;
+                  updatedBlogWithLinks = updatedBlog.toJSON();
+                  updatedBlogWithLinks.links = {};
+                  updatedBlogWithLinks.links.filteredByThisAuthor = "http://".concat(req.headers.host, "/api/blogs/?authorId=").concat(blog.authorId);
+                  return _context6.abrupt("return", res.status(200).json({
+                    message: 'Blog Updated Successfully',
+                    blog: updatedBlogWithLinks
+                  }));
+
+                case 16:
+                  return _context6.abrupt("return", res.status(403).json({
+                    message: 'You Do Not Have The Permission To Perform This Operation.'
+                  }));
+
+                case 17:
+                  _context6.next = 23;
+                  break;
+
+                case 19:
+                  _context6.prev = 19;
+                  _context6.t0 = _context6["catch"](0);
+                  log(_context6.t0);
+                  return _context6.abrupt("return", res.status(500).json(_context6.t0));
+
+                case 23:
+                case "end":
+                  return _context6.stop();
+              }
+            }
+          }, _callee6, null, [[0, 19]]);
         }));
 
         function updateBlog() {
@@ -2099,155 +2056,55 @@ var log = debug__WEBPACK_IMPORTED_MODULE_3___default()('app:blogsController');
         return updateBlog;
       })()();
     },
-    updateBlog: function updateBlog(req, res) {
-      (function () {
-        var _updateBlog2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee6() {
-          var blogId, blog, updateInfo, updatedBlog, updatedBlogWithLinks;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee6$(_context6) {
-            while (1) {
-              switch (_context6.prev = _context6.next) {
-                case 0:
-                  if (!req.isAuthenticated()) {
-                    _context6.next = 27;
-                    break;
-                  }
-
-                  _context6.prev = 1;
-                  blogId = req.params.blogId;
-                  blog = req.blog;
-
-                  if (req.body._id) {
-                    delete req.body._id;
-                  }
-
-                  if (!(req.user._id === blog.authorId || req.user.isAdmin)) {
-                    _context6.next = 18;
-                    break;
-                  }
-
-                  _context6.next = 8;
-                  return _model_Blog__WEBPACK_IMPORTED_MODULE_2__["default"].updateOne({
-                    _id: blogId
-                  }, req.body);
-
-                case 8:
-                  updateInfo = _context6.sent;
-                  _context6.next = 11;
-                  return _model_Blog__WEBPACK_IMPORTED_MODULE_2__["default"].findById(blogId);
-
-                case 11:
-                  updatedBlog = _context6.sent;
-                  updatedBlogWithLinks = updatedBlog.toJSON();
-                  updatedBlogWithLinks.links = {};
-                  updatedBlogWithLinks.links.filteredByThisAuthor = "http://".concat(req.headers.host, "/api/blogs/?authorId=").concat(updatedBlog.authorId);
-                  return _context6.abrupt("return", res.status(200).json({
-                    message: 'Blog Updated Successfully',
-                    blog: updatedBlogWithLinks
-                  }));
-
-                case 18:
-                  return _context6.abrupt("return", res.status(403).json({
-                    message: 'You do not have the necessary permission to perform this operation.'
-                  }));
-
-                case 19:
-                  _context6.next = 25;
-                  break;
-
-                case 21:
-                  _context6.prev = 21;
-                  _context6.t0 = _context6["catch"](1);
-                  log(_context6.t0);
-                  return _context6.abrupt("return", res.status(500).json(_context6.t0));
-
-                case 25:
-                  _context6.next = 28;
-                  break;
-
-                case 27:
-                  return _context6.abrupt("return", res.status(403).json({
-                    message: 'You must be logged in to perform this operation.'
-                  }));
-
-                case 28:
-                case "end":
-                  return _context6.stop();
-              }
-            }
-          }, _callee6, null, [[1, 21]]);
-        }));
-
-        function updateBlog() {
-          return _updateBlog2.apply(this, arguments);
-        }
-
-        return updateBlog;
-      })()();
-    },
     deleteBlog: function deleteBlog(req, res) {
       (function () {
         var _deleteBlog = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee7() {
-          var blogId, blog, deletionInfo;
+          var blog, deletionInfo;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee7$(_context7) {
             while (1) {
               switch (_context7.prev = _context7.next) {
                 case 0:
-                  if (!req.isAuthenticated()) {
-                    _context7.next = 20;
-                    break;
-                  }
-
-                  _context7.prev = 1;
-                  blogId = req.params.blogId;
+                  _context7.prev = 0;
                   blog = req.blog;
 
-                  if (!(req.user._id === blog.authorId || req.user.isAdmin)) {
-                    _context7.next = 11;
+                  if (!(req.user._id === blog.authorId)) {
+                    _context7.next = 9;
                     break;
                   }
 
-                  _context7.next = 7;
+                  _context7.next = 5;
                   return _model_Blog__WEBPACK_IMPORTED_MODULE_2__["default"].deleteOne({
-                    _id: blogId
+                    _id: blog._id
                   });
 
-                case 7:
+                case 5:
                   deletionInfo = _context7.sent;
                   return _context7.abrupt("return", res.status(200).json({
                     message: 'Blog deleted successfully.',
                     deletionInfo: deletionInfo
                   }));
 
-                case 11:
+                case 9:
                   return _context7.abrupt("return", res.status(403).json({
-                    message: 'You do not have the necessary permission to perform this operation.'
+                    message: 'You Do Not Have The Permission To Perform This Operation.'
                   }));
 
-                case 12:
-                  _context7.next = 18;
+                case 10:
+                  _context7.next = 16;
                   break;
 
-                case 14:
-                  _context7.prev = 14;
-                  _context7.t0 = _context7["catch"](1);
+                case 12:
+                  _context7.prev = 12;
+                  _context7.t0 = _context7["catch"](0);
                   log(_context7.t0);
                   return _context7.abrupt("return", res.status(500).json(_context7.t0));
 
-                case 18:
-                  _context7.next = 21;
-                  break;
-
-                case 20:
-                  return _context7.abrupt("return", res.status(403).json({
-                    message: 'You must be logged in to perform this operation'
-                  }));
-
-                case 21:
+                case 16:
                 case "end":
                   return _context7.stop();
               }
             }
-          }, _callee7, null, [[1, 14]]);
+          }, _callee7, null, [[0, 12]]);
         }));
 
         function deleteBlog() {
@@ -2279,62 +2136,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! debug */ "debug");
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var bcrypt__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! bcrypt */ "bcrypt");
-/* harmony import */ var bcrypt__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(bcrypt__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! mongoose */ "mongoose");
-/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(mongoose__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _model_User__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../model/User */ "./src/server/model/User.js");
-
-
+/* harmony import */ var _model_User__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../model/User */ "./src/server/model/User.js");
 
 
 
 
 var log = debug__WEBPACK_IMPORTED_MODULE_2___default()('app:userController');
-var SALT_ROUNDS = process.env.SALT_ROUNDS;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((function controller() {
   return {
     getUsers: function getUsers(req, res) {
       (function () {
         var _getAllUsers = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
-          var user, userWithLinks, users, usersWithFilter;
+          var users, mappedUsers;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
                   _context.prev = 0;
+                  _context.next = 3;
+                  return _model_User__WEBPACK_IMPORTED_MODULE_3__["default"].find({});
 
-                  if (!req.query.userId) {
-                    _context.next = 9;
-                    break;
-                  }
-
-                  user = _model_User__WEBPACK_IMPORTED_MODULE_5__["default"].findById(req.query.userId);
-
-                  if (user) {
-                    _context.next = 5;
-                    break;
-                  }
-
-                  return _context.abrupt("return", res.status(404).json({
-                    message: 'No such user in our database.'
-                  }));
-
-                case 5:
-                  userWithLinks = user.toJSON();
-                  userWithLinks.links = {};
-                  userWithLinks.links.filteredByThisAuthor = "http://".concat(req.headers.host, "/api/blogs/?authorId=").concat(user._id);
-                  return _context.abrupt("return", res.status(200).json(userWithLinks));
-
-                case 9:
-                  _context.next = 11;
-                  return _model_User__WEBPACK_IMPORTED_MODULE_5__["default"].find({});
-
-                case 11:
+                case 3:
                   users = _context.sent;
 
                   if (!(users.length === 0)) {
-                    _context.next = 14;
+                    _context.next = 6;
                     break;
                   }
 
@@ -2342,27 +2168,33 @@ var SALT_ROUNDS = process.env.SALT_ROUNDS;
                     message: 'No users in our database yet.'
                   }));
 
-                case 14:
-                  usersWithFilter = users.map(function (user) {
-                    var userWithLinks = user.toJSON();
-                    userWithLinks.links = {};
-                    userWithLinks.links.filteredByThisAuthor = "http://".concat(req.headers.host, "/api/blogs/?authorId=").concat(user._id);
-                    return userWithLinks;
+                case 6:
+                  mappedUsers = users.map(function (user) {
+                    var userWithLink = {
+                      _id: user._id,
+                      username: user.username,
+                      fullname: user.fullname,
+                      img_url: user.img_url,
+                      isAdmin: user.isAdmin
+                    };
+                    userWithLink.links = {};
+                    userWithLink.links.filteredByThisAuthor = "http://".concat(req.headers.host, "/api/blogs/?authorId=").concat(user._id);
+                    return userWithLink;
                   });
-                  return _context.abrupt("return", res.status(200).json(usersWithFilter));
+                  return _context.abrupt("return", res.status(200).json(mappedUsers));
 
-                case 18:
-                  _context.prev = 18;
+                case 10:
+                  _context.prev = 10;
                   _context.t0 = _context["catch"](0);
                   log(_context.t0);
                   return _context.abrupt("return", res.status(500).json(_context.t0));
 
-                case 22:
+                case 14:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, null, [[0, 18]]);
+          }, _callee, null, [[0, 10]]);
         }));
 
         function getAllUsers() {
@@ -2380,57 +2212,43 @@ var SALT_ROUNDS = process.env.SALT_ROUNDS;
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
-                  if (!req.isAuthenticated()) {
-                    _context2.next = 18;
-                    break;
-                  }
-
                   if (!req.user.isAdmin) {
-                    _context2.next = 15;
+                    _context2.next = 14;
                     break;
                   }
 
-                  _context2.prev = 2;
-                  _context2.next = 5;
-                  return _model_User__WEBPACK_IMPORTED_MODULE_5__["default"].deleteMany({});
+                  _context2.prev = 1;
+                  _context2.next = 4;
+                  return _model_User__WEBPACK_IMPORTED_MODULE_3__["default"].deleteMany({});
 
-                case 5:
+                case 4:
                   deletedUsers = _context2.sent;
                   return _context2.abrupt("return", res.status(200).json({
                     message: 'All users deleted.',
                     databaseMessage: deletedUsers
                   }));
 
-                case 9:
-                  _context2.prev = 9;
-                  _context2.t0 = _context2["catch"](2);
+                case 8:
+                  _context2.prev = 8;
+                  _context2.t0 = _context2["catch"](1);
                   log(_context2.t0);
                   return _context2.abrupt("return", res.status(500).json(_context2.t0));
 
-                case 13:
-                  _context2.next = 16;
+                case 12:
+                  _context2.next = 15;
                   break;
 
-                case 15:
+                case 14:
                   return _context2.abrupt("return", res.status(403).json({
                     message: 'Must be an Admin to perform this operation.'
                   }));
 
-                case 16:
-                  _context2.next = 19;
-                  break;
-
-                case 18:
-                  return _context2.abrupt("return", res.status(403).json({
-                    message: 'Must be logged in to perform this operation.'
-                  }));
-
-                case 19:
+                case 15:
                 case "end":
                   return _context2.stop();
               }
             }
-          }, _callee2, null, [[2, 9]]);
+          }, _callee2, null, [[1, 8]]);
         }));
 
         function deleteUsers() {
@@ -2443,32 +2261,56 @@ var SALT_ROUNDS = process.env.SALT_ROUNDS;
     getUser: function getUser(req, res) {
       (function () {
         var _getUser = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee3() {
-          var foundUser, userWithLinks;
+          var userId, foundUser, userWithLinks;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee3$(_context3) {
             while (1) {
               switch (_context3.prev = _context3.next) {
                 case 0:
                   _context3.prev = 0;
-                  foundUser = req.foundUser;
-                  userWithLinks = foundUser.toJSON();
+                  userId = req.params.userId;
+                  _context3.next = 4;
+                  return _model_User__WEBPACK_IMPORTED_MODULE_3__["default"].findOne({
+                    _id: userId
+                  });
+
+                case 4:
+                  foundUser = _context3.sent;
+
+                  if (foundUser) {
+                    _context3.next = 7;
+                    break;
+                  }
+
+                  return _context3.abrupt("return", res.status(404).json({
+                    message: 'No such user in our database.'
+                  }));
+
+                case 7:
+                  userWithLinks = {
+                    _id: foundUser._id,
+                    username: foundUser.username,
+                    fullname: foundUser.fullname,
+                    img_url: foundUser.img_url,
+                    isAdmin: foundUser.isAdmin
+                  };
                   userWithLinks.links = {};
                   userWithLinks.links.filteredBlogsByThisAuthor = "http://".concat(req.headers.host, "/api/blogs/?authorId=").concat(foundUser._id);
                   return _context3.abrupt("return", res.status(200).json(userWithLinks));
 
-                case 8:
-                  _context3.prev = 8;
+                case 13:
+                  _context3.prev = 13;
                   _context3.t0 = _context3["catch"](0);
                   log(_context3.t0);
                   return _context3.abrupt("return", res.status(500).json({
                     err: _context3.t0
                   }));
 
-                case 12:
+                case 17:
                 case "end":
                   return _context3.stop();
               }
             }
-          }, _callee3, null, [[0, 8]]);
+          }, _callee3, null, [[0, 13]]);
         }));
 
         function getUser() {
@@ -2480,257 +2322,213 @@ var SALT_ROUNDS = process.env.SALT_ROUNDS;
     },
     replaceProfile: function replaceProfile(req, res) {
       (function () {
-        var _replaceProfile = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee4() {
-          var foundUser, updateInfo, updatedUser, updatedUserWithLinks;
+        var _updateProfile = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee4() {
+          var userId, updateInfo, updatedUser, updatedUserWithLinks;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee4$(_context4) {
             while (1) {
               switch (_context4.prev = _context4.next) {
                 case 0:
-                  if (!req.isAuthenticated()) {
-                    _context4.next = 27;
-                    break;
-                  }
-
+                  userId = req.params.userId;
                   _context4.prev = 1;
 
                   if (req.body._id) {
                     delete req.body._id;
                   }
 
-                  foundUser = req.foundUser;
+                  if (req.body.isAdmin) {
+                    delete req.body.isAdmin;
+                  }
 
-                  if (!(req.body.isAdmin && foundUser.isAdmin !== true)) {
-                    _context4.next = 6;
+                  if (!(req.user._id === userId)) {
+                    _context4.next = 17;
                     break;
                   }
 
-                  return _context4.abrupt("return", res.status(403).json({
-                    message: 'You do not have the permission to perform this operation.'
-                  }));
-
-                case 6:
-                  if (!(req.user.username === foundUser.username || req.user.isAdmin === true)) {
-                    _context4.next = 18;
-                    break;
-                  }
-
-                  if (req.body.password) {
-                    req.body.password = (0,bcrypt__WEBPACK_IMPORTED_MODULE_3__.hashSync)(req.body.password, +SALT_ROUNDS);
-                  }
-
-                  _context4.next = 10;
-                  return _model_User__WEBPACK_IMPORTED_MODULE_5__["default"].replaceOne({
-                    _id: foundUser._id
+                  _context4.next = 7;
+                  return _model_User__WEBPACK_IMPORTED_MODULE_3__["default"].replaceOne({
+                    _id: userId
                   }, req.body);
 
-                case 10:
+                case 7:
                   updateInfo = _context4.sent;
-                  _context4.next = 13;
-                  return _model_User__WEBPACK_IMPORTED_MODULE_5__["default"].findById(foundUser._id);
+                  _context4.next = 10;
+                  return _model_User__WEBPACK_IMPORTED_MODULE_3__["default"].findById(userId);
 
-                case 13:
+                case 10:
                   updatedUser = _context4.sent;
-                  updatedUserWithLinks = updatedUser.toJSON();
+                  updatedUserWithLinks = {
+                    _id: updatedUser._id,
+                    username: updatedUser.username,
+                    fullname: updatedUser.fullname,
+                    img_url: updatedUser.img_url,
+                    isAdmin: updatedUser.isAdmin
+                  };
                   updatedUserWithLinks.links = {};
-                  updatedUserWithLinks.links.filteredBlogsByThisAuthor = "http://".concat(req.headers.host, "/api/blogs/?authorId=").concat(foundUser._id);
+                  updatedUserWithLinks.links.filteredBlogsByThisAuthor = "http://".concat(req.headers.host, "/api/blogs/?authorId=").concat(userId);
                   return _context4.abrupt("return", res.status(200).json({
                     message: 'Account updated successfully',
                     user: updatedUserWithLinks
                   }));
 
-                case 18:
+                case 17:
                   return _context4.abrupt("return", res.status(403).json({
-                    message: 'Can only update your own account'
+                    message: 'You Do not Have The Necessary Permission To Perform This Operation.'
                   }));
 
-                case 21:
-                  _context4.prev = 21;
+                case 18:
+                  _context4.next = 24;
+                  break;
+
+                case 20:
+                  _context4.prev = 20;
                   _context4.t0 = _context4["catch"](1);
                   log(_context4.t0);
                   return _context4.abrupt("return", res.status(500).json(_context4.t0));
 
-                case 25:
-                  _context4.next = 28;
-                  break;
-
-                case 27:
-                  return _context4.abrupt("return", res.status(403).json({
-                    message: 'Must be logged in to perform such operation.'
-                  }));
-
-                case 28:
+                case 24:
                 case "end":
                   return _context4.stop();
               }
             }
-          }, _callee4, null, [[1, 21]]);
+          }, _callee4, null, [[1, 20]]);
         }));
 
-        function replaceProfile() {
-          return _replaceProfile.apply(this, arguments);
+        function updateProfile() {
+          return _updateProfile.apply(this, arguments);
         }
 
-        return replaceProfile;
+        return updateProfile;
       })()();
     },
     updateProfile: function updateProfile(req, res) {
       (function () {
-        var _replaceProfile2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee5() {
-          var foundUser, updateInfo, updatedUser, updatedUserWithLinks;
+        var _updateProfile2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee5() {
+          var userId, updateInfo, updatedUser, updatedUserWithLinks;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee5$(_context5) {
             while (1) {
               switch (_context5.prev = _context5.next) {
                 case 0:
-                  if (!req.isAuthenticated()) {
-                    _context5.next = 27;
-                    break;
-                  }
-
+                  userId = req.params.userId;
                   _context5.prev = 1;
 
                   if (req.body._id) {
                     delete req.body._id;
                   }
 
-                  foundUser = req.foundUser;
+                  if (req.body.isAdmin) {
+                    delete req.body.isAdmin;
+                  }
 
-                  if (!(req.body.isAdmin && foundUser.isAdmin !== true)) {
-                    _context5.next = 6;
+                  if (!(req.user._id === userId)) {
+                    _context5.next = 17;
                     break;
                   }
 
-                  return _context5.abrupt("return", res.status(403).json({
-                    message: 'You do not have the permission to perform this operation.'
-                  }));
-
-                case 6:
-                  if (!(req.user.username === foundUser.username || req.user.isAdmin === true)) {
-                    _context5.next = 18;
-                    break;
-                  }
-
-                  if (req.body.password) {
-                    req.body.password = (0,bcrypt__WEBPACK_IMPORTED_MODULE_3__.hashSync)(req.body.password, +SALT_ROUNDS);
-                  }
-
-                  _context5.next = 10;
-                  return _model_User__WEBPACK_IMPORTED_MODULE_5__["default"].updateOne({
-                    _id: foundUser._id
+                  _context5.next = 7;
+                  return _model_User__WEBPACK_IMPORTED_MODULE_3__["default"].updateOne({
+                    _id: userId
                   }, req.body);
 
-                case 10:
+                case 7:
                   updateInfo = _context5.sent;
-                  _context5.next = 13;
-                  return _model_User__WEBPACK_IMPORTED_MODULE_5__["default"].findById(foundUser._id);
+                  _context5.next = 10;
+                  return _model_User__WEBPACK_IMPORTED_MODULE_3__["default"].findById(userId);
 
-                case 13:
+                case 10:
                   updatedUser = _context5.sent;
-                  updatedUserWithLinks = updatedUser.toJSON();
+                  updatedUserWithLinks = {
+                    _id: updatedUser._id,
+                    username: updatedUser.username,
+                    fullname: updatedUser.fullname,
+                    img_url: updatedUser.img_url,
+                    isAdmin: updatedUser.isAdmin
+                  };
                   updatedUserWithLinks.links = {};
-                  updatedUserWithLinks.links.filteredBlogsByThisAuthor = "http://".concat(req.headers.host, "/api/blogs/?authorId=").concat(foundUser._id);
+                  updatedUserWithLinks.links.filteredBlogsByThisAuthor = "http://".concat(req.headers.host, "/api/blogs/?authorId=").concat(userId);
                   return _context5.abrupt("return", res.status(200).json({
                     message: 'Account updated successfully',
                     user: updatedUserWithLinks
                   }));
 
-                case 18:
+                case 17:
                   return _context5.abrupt("return", res.status(403).json({
-                    message: 'Can only update your own account'
+                    message: 'You Do not Have The Necessary Permission To Perform This Operation.'
                   }));
 
-                case 21:
-                  _context5.prev = 21;
+                case 18:
+                  _context5.next = 24;
+                  break;
+
+                case 20:
+                  _context5.prev = 20;
                   _context5.t0 = _context5["catch"](1);
                   log(_context5.t0);
                   return _context5.abrupt("return", res.status(500).json(_context5.t0));
 
-                case 25:
-                  _context5.next = 28;
-                  break;
-
-                case 27:
-                  return _context5.abrupt("return", res.status(403).json({
-                    message: 'Must be logged in to perform such operation.'
-                  }));
-
-                case 28:
+                case 24:
                 case "end":
                   return _context5.stop();
               }
             }
-          }, _callee5, null, [[1, 21]]);
+          }, _callee5, null, [[1, 20]]);
         }));
 
-        function replaceProfile() {
-          return _replaceProfile2.apply(this, arguments);
+        function updateProfile() {
+          return _updateProfile2.apply(this, arguments);
         }
 
-        return replaceProfile;
+        return updateProfile;
       })()();
     },
     deleteUser: function deleteUser(req, res) {
       (function () {
         var _deleteUser = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee6() {
-          var foundUser, deletionInfo;
+          var userId, deletionInfo;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee6$(_context6) {
             while (1) {
               switch (_context6.prev = _context6.next) {
                 case 0:
-                  if (!req.isAuthenticated()) {
-                    _context6.next = 19;
+                  _context6.prev = 0;
+                  userId = req.params.userId;
+
+                  if (!(req.user._id === userId || req.user.isAdmin)) {
+                    _context6.next = 9;
                     break;
                   }
 
-                  _context6.prev = 1;
-                  foundUser = req.foundUser;
-
-                  if (!(req.user.username === foundUser.username || req.user.isAdmin)) {
-                    _context6.next = 10;
-                    break;
-                  }
-
-                  _context6.next = 6;
-                  return _model_User__WEBPACK_IMPORTED_MODULE_5__["default"].deleteOne({
-                    _id: foundUser._id
+                  _context6.next = 5;
+                  return _model_User__WEBPACK_IMPORTED_MODULE_3__["default"].deleteOne({
+                    _id: userId
                   });
 
-                case 6:
+                case 5:
                   deletionInfo = _context6.sent;
                   return _context6.abrupt("return", res.status(200).json({
-                    message: 'User account deleted successfully.',
+                    message: 'User Account Deleted Successfully.',
                     deletionInfo: deletionInfo
                   }));
 
-                case 10:
+                case 9:
                   return _context6.abrupt("return", res.status(403).json({
-                    message: 'You do not have the required permission to perform this operation.'
+                    message: 'You Do Not Have The Required Permission To Perform This Operation.'
                   }));
 
-                case 11:
-                  _context6.next = 17;
+                case 10:
+                  _context6.next = 16;
                   break;
 
-                case 13:
-                  _context6.prev = 13;
-                  _context6.t0 = _context6["catch"](1);
+                case 12:
+                  _context6.prev = 12;
+                  _context6.t0 = _context6["catch"](0);
                   log(_context6.t0);
                   return _context6.abrupt("return", res.status(500).json(_context6.t0));
 
-                case 17:
-                  _context6.next = 20;
-                  break;
-
-                case 19:
-                  return _context6.abrupt("return", res.status(403).json({
-                    message: 'Must be an account owner to perform such operation.'
-                  }));
-
-                case 20:
+                case 16:
                 case "end":
                   return _context6.stop();
               }
             }
-          }, _callee6, null, [[1, 13]]);
+          }, _callee6, null, [[0, 12]]);
         }));
 
         function deleteUser() {
@@ -2832,13 +2630,17 @@ __webpack_require__.r(__webpack_exports__);
 
 var blogSchema = new mongoose__WEBPACK_IMPORTED_MODULE_0__.Schema({
   title: {
-    type: String
+    type: String,
+    required: true,
+    unique: true
   },
   authorId: {
-    type: String
+    type: String,
+    required: true
   },
   content: {
-    type: String
+    type: String,
+    required: true
   }
 }, {
   timestamps: true
@@ -2858,17 +2660,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
 var _require = __webpack_require__(/*! mongoose */ "mongoose"),
     Schema = _require.Schema,
     model = _require.model;
 
+var _require2 = __webpack_require__(/*! bcrypt */ "bcrypt"),
+    hash = _require2.hash,
+    compare = _require2.compare;
+
 var userSchema = new Schema({
   username: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   password: {
-    type: String
+    type: String,
+    required: true
   },
   fullname: {
     type: String,
@@ -2883,6 +2698,57 @@ var userSchema = new Schema({
     "default": false
   }
 });
+userSchema.pre('save', /*#__PURE__*/function () {
+  var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(next) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return hash(this.password, +process.env.SALT_ROUNDS);
+
+          case 2:
+            this.password = _context.sent;
+            next();
+
+          case 4:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, this);
+  }));
+
+  return function (_x) {
+    return _ref.apply(this, arguments);
+  };
+}());
+
+userSchema.methods.verifyPassword = /*#__PURE__*/function () {
+  var _ref2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(password) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.next = 2;
+            return compare(password, this.password);
+
+          case 2:
+            return _context2.abrupt("return", _context2.sent);
+
+          case 3:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, this);
+  }));
+
+  return function (_x2) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (model('User', userSchema));
 
 /***/ }),
@@ -2901,12 +2767,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! passport */ "passport");
 /* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(passport__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _strategies_localStrategy__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./strategies/localStrategy */ "./src/server/passport/strategies/localStrategy.js");
+/* harmony import */ var _strategies_jwtStrategy__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./strategies/jwtStrategy */ "./src/server/passport/strategies/jwtStrategy.js");
+
 
 
 var passportConfig = function passportConfig(app) {
   app.use(passport__WEBPACK_IMPORTED_MODULE_0___default().initialize());
   app.use(passport__WEBPACK_IMPORTED_MODULE_0___default().session());
-  (0,_strategies_localStrategy__WEBPACK_IMPORTED_MODULE_1__.localStrategy)();
   passport__WEBPACK_IMPORTED_MODULE_0___default().serializeUser(function (user, cb) {
     process.nextTick(function () {
       cb(null, {
@@ -2920,7 +2787,44 @@ var passportConfig = function passportConfig(app) {
       return cb(null, user);
     });
   });
+  (0,_strategies_localStrategy__WEBPACK_IMPORTED_MODULE_1__["default"])();
+  (0,_strategies_jwtStrategy__WEBPACK_IMPORTED_MODULE_2__["default"])();
 };
+
+/***/ }),
+
+/***/ "./src/server/passport/strategies/jwtStrategy.js":
+/*!*******************************************************!*\
+  !*** ./src/server/passport/strategies/jwtStrategy.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var passport = __webpack_require__(/*! passport */ "passport");
+
+var _require = __webpack_require__(/*! passport-jwt */ "passport-jwt"),
+    Strategy = _require.Strategy,
+    ExtractJwt = _require.ExtractJwt;
+
+function jwtStrategy() {
+  var options = {
+    secretOrKey: process.env.JWT_SECRET,
+    jwtFromRequest: ExtractJwt.fromUrlQueryParameter('blogger-token')
+  };
+  passport.use(new Strategy(options, function (user, done) {
+    try {
+      return done(null, user);
+    } catch (err) {
+      return done(err);
+    }
+  }));
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (jwtStrategy);
 
 /***/ }),
 
@@ -2933,7 +2837,7 @@ var passportConfig = function passportConfig(app) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "localStrategy": () => (/* binding */ localStrategy)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
@@ -2943,9 +2847,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var passport_local__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(passport_local__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! passport */ "passport");
 /* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(passport__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var bcrypt__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! bcrypt */ "bcrypt");
-/* harmony import */ var bcrypt__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(bcrypt__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _model_User__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../model/User */ "./src/server/model/User.js");
+/* harmony import */ var _model_User__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../model/User */ "./src/server/model/User.js");
 
 
 
@@ -2953,7 +2855,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var localStrategy = function localStrategy() {
-  passport__WEBPACK_IMPORTED_MODULE_3___default().use(new passport_local__WEBPACK_IMPORTED_MODULE_2__.Strategy(function (username, password, done) {
+  passport__WEBPACK_IMPORTED_MODULE_3___default().use('login', new passport_local__WEBPACK_IMPORTED_MODULE_2__.Strategy(function (username, password, done) {
     try {
       (function () {
         var _getUser = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
@@ -2963,7 +2865,7 @@ var localStrategy = function localStrategy() {
               switch (_context.prev = _context.next) {
                 case 0:
                   _context.next = 2;
-                  return _model_User__WEBPACK_IMPORTED_MODULE_5__["default"].findOne({
+                  return _model_User__WEBPACK_IMPORTED_MODULE_4__["default"].findOne({
                     username: username
                   });
 
@@ -2978,7 +2880,7 @@ var localStrategy = function localStrategy() {
                   return _context.abrupt("return", done(null, false));
 
                 case 5:
-                  if (!((0,bcrypt__WEBPACK_IMPORTED_MODULE_4__.compareSync)(password, user.password) !== true)) {
+                  if (user.verifyPassword(password)) {
                     _context.next = 7;
                     break;
                   }
@@ -3006,7 +2908,68 @@ var localStrategy = function localStrategy() {
       return done(err);
     }
   }));
+  passport__WEBPACK_IMPORTED_MODULE_3___default().use('register', new passport_local__WEBPACK_IMPORTED_MODULE_2__.Strategy({
+    passReqToCallback: true
+  }, /*#__PURE__*/function () {
+    var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(req, username, password, done) {
+      var _req$body, fullname, img_url, isAdmin, emailTest, user;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _req$body = req.body, fullname = _req$body.fullname, img_url = _req$body.img_url, isAdmin = _req$body.isAdmin;
+              emailTest = /(\w+)\@(\w+)\.[a-zA-Z]/g;
+
+              if (emailTest.test(username)) {
+                _context2.next = 5;
+                break;
+              }
+
+              throw new Error('Plese Enter  valid email address.');
+
+            case 5:
+              if (!isAdmin) {
+                _context2.next = 7;
+                break;
+              }
+
+              throw new Error('Registration with administrative right not allowed.');
+
+            case 7:
+              _context2.next = 9;
+              return _model_User__WEBPACK_IMPORTED_MODULE_4__["default"].create({
+                username: username,
+                password: password,
+                fullname: fullname,
+                img_url: img_url
+              });
+
+            case 9:
+              user = _context2.sent;
+              return _context2.abrupt("return", done(null, user));
+
+            case 13:
+              _context2.prev = 13;
+              _context2.t0 = _context2["catch"](0);
+              return _context2.abrupt("return", done(_context2.t0));
+
+            case 16:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[0, 13]]);
+    }));
+
+    return function (_x, _x2, _x3, _x4) {
+      return _ref.apply(this, arguments);
+    };
+  }()));
 };
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (localStrategy);
 
 /***/ }),
 
@@ -3023,17 +2986,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ "express");
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _controllers_authController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../controllers/authController */ "./src/server/controllers/authController.js");
+/* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! passport */ "passport");
+/* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(passport__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _controllers_authController__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../controllers/authController */ "./src/server/controllers/authController.js");
 
 
-var register = _controllers_authController__WEBPACK_IMPORTED_MODULE_1__["default"].register,
-    login = _controllers_authController__WEBPACK_IMPORTED_MODULE_1__["default"].login,
-    logout = _controllers_authController__WEBPACK_IMPORTED_MODULE_1__["default"].logout;
+
+var register = _controllers_authController__WEBPACK_IMPORTED_MODULE_2__["default"].register,
+    login = _controllers_authController__WEBPACK_IMPORTED_MODULE_2__["default"].login,
+    logout = _controllers_authController__WEBPACK_IMPORTED_MODULE_2__["default"].logout;
 
 var routes = function routes() {
   var authRoutes = (0,express__WEBPACK_IMPORTED_MODULE_0__.Router)();
-  authRoutes.route('/register').post(register);
-  authRoutes.route('/login').post(login);
+  authRoutes.route('/register').post(passport__WEBPACK_IMPORTED_MODULE_1___default().authenticate('register', {
+    session: false
+  }), register);
+  authRoutes.route('/login').post(function (req, res, next) {
+    return passport__WEBPACK_IMPORTED_MODULE_1___default().authenticate('login', {
+      session: false
+    }, function (err, user, info) {
+      login(req, res, {
+        err: err,
+        user: user,
+        info: info
+      });
+    })(req, res, next);
+  });
   authRoutes.route('/logout').get(logout);
   return authRoutes;
 };
@@ -3055,27 +3033,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "@babel/runtime/helpers/defineProperty");
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! express */ "express");
-/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! fs */ "fs");
-/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! path */ "path");
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! debug */ "debug");
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _model_Blog__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../model/Blog */ "./src/server/model/Blog.js");
-/* harmony import */ var _controllers_blogsController__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../controllers/blogsController */ "./src/server/controllers/blogsController.js");
-
-
-
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! express */ "express");
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! debug */ "debug");
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _model_Blog__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../model/Blog */ "./src/server/model/Blog.js");
+/* harmony import */ var _controllers_blogsController__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../controllers/blogsController */ "./src/server/controllers/blogsController.js");
+/* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! passport */ "passport");
+/* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(passport__WEBPACK_IMPORTED_MODULE_6__);
 
 
 
@@ -3083,45 +3050,34 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 
-var blogsFilePath = (0,path__WEBPACK_IMPORTED_MODULE_5__.join)('src', 'db', 'blogs.json');
-var log = debug__WEBPACK_IMPORTED_MODULE_6___default()('app:blogRoutes');
-var getBlogs = _controllers_blogsController__WEBPACK_IMPORTED_MODULE_8__["default"].getBlogs,
-    getBlog = _controllers_blogsController__WEBPACK_IMPORTED_MODULE_8__["default"].getBlog,
-    updateBlog = _controllers_blogsController__WEBPACK_IMPORTED_MODULE_8__["default"].updateBlog,
-    deleteAllBlogs = _controllers_blogsController__WEBPACK_IMPORTED_MODULE_8__["default"].deleteAllBlogs,
-    deleteBlog = _controllers_blogsController__WEBPACK_IMPORTED_MODULE_8__["default"].deleteBlog,
-    postNewBlog = _controllers_blogsController__WEBPACK_IMPORTED_MODULE_8__["default"].postNewBlog;
+var log = debug__WEBPACK_IMPORTED_MODULE_3___default()('app:blogRoutes');
+var getBlogs = _controllers_blogsController__WEBPACK_IMPORTED_MODULE_5__["default"].getBlogs,
+    getBlog = _controllers_blogsController__WEBPACK_IMPORTED_MODULE_5__["default"].getBlog,
+    replaceBlog = _controllers_blogsController__WEBPACK_IMPORTED_MODULE_5__["default"].replaceBlog,
+    updateBlog = _controllers_blogsController__WEBPACK_IMPORTED_MODULE_5__["default"].updateBlog,
+    deleteAllBlogs = _controllers_blogsController__WEBPACK_IMPORTED_MODULE_5__["default"].deleteAllBlogs,
+    deleteBlog = _controllers_blogsController__WEBPACK_IMPORTED_MODULE_5__["default"].deleteBlog,
+    postNewBlog = _controllers_blogsController__WEBPACK_IMPORTED_MODULE_5__["default"].postNewBlog;
 
 var router = function router() {
-  var blogRoutes = (0,express__WEBPACK_IMPORTED_MODULE_3__.Router)();
-  blogRoutes.use(function (req, res, next) {
-    try {
-      var blogs = (0,fs__WEBPACK_IMPORTED_MODULE_4__.readFileSync)(blogsFilePath, 'utf8');
-      var parsedBlogs = JSON.parse(blogs).map(function (blog) {
-        return _objectSpread(_objectSpread({}, blog), {}, {
-          content: blog.post.join(' ')
-        });
-      });
-      req.blogs = parsedBlogs;
-      next();
-    } catch (err) {
-      log(err);
-      return res.status(500).json(err);
-    }
-  });
-  blogRoutes.route('/').get(getBlogs).post(postNewBlog)["delete"](deleteAllBlogs);
+  var blogRoutes = (0,express__WEBPACK_IMPORTED_MODULE_2__.Router)();
+  blogRoutes.route('/').get(getBlogs).post(passport__WEBPACK_IMPORTED_MODULE_6___default().authenticate('jwt', {
+    session: false
+  }), postNewBlog)["delete"](passport__WEBPACK_IMPORTED_MODULE_6___default().authenticate('jwt', {
+    session: false
+  }), deleteAllBlogs);
   blogRoutes.route('/:blogId').all(function (req, res, next) {
     (function () {
-      var _getBlog = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee() {
+      var _getBlog = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
         var blogId, blog;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
                 blogId = req.params.blogId;
                 _context.next = 4;
-                return _model_Blog__WEBPACK_IMPORTED_MODULE_7__["default"].findById(blogId);
+                return _model_Blog__WEBPACK_IMPORTED_MODULE_4__["default"].findById(blogId);
 
               case 4:
                 blog = _context.sent;
@@ -3163,11 +3119,13 @@ var router = function router() {
 
       return getBlog;
     })()();
-  }).get(getBlog).put(function (req, res) {
-    updateBlog(req, res, _model_Blog__WEBPACK_IMPORTED_MODULE_7__["default"].replaceOne);
-  }).patch(function (req, res) {
-    updateBlog(req, res, _model_Blog__WEBPACK_IMPORTED_MODULE_7__["default"].updateOne);
-  })["delete"](deleteBlog);
+  }).get(getBlog).put(passport__WEBPACK_IMPORTED_MODULE_6___default().authenticate('jwt', {
+    session: false
+  }), replaceBlog).patch(passport__WEBPACK_IMPORTED_MODULE_6___default().authenticate('jwt', {
+    session: false
+  }), updateBlog)["delete"](passport__WEBPACK_IMPORTED_MODULE_6___default().authenticate('jwt', {
+    session: false
+  }), deleteBlog);
   return blogRoutes;
 };
 
@@ -3186,89 +3144,39 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! express */ "express");
-/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! debug */ "debug");
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _model_User__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../model/User */ "./src/server/model/User.js");
-/* harmony import */ var _controllers_usersController__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../controllers/usersController */ "./src/server/controllers/usersController.js");
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ "express");
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! debug */ "debug");
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! passport */ "passport");
+/* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(passport__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _model_User__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../model/User */ "./src/server/model/User.js");
+/* harmony import */ var _controllers_usersController__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../controllers/usersController */ "./src/server/controllers/usersController.js");
 
 
 
 
 
-
-var log = debug__WEBPACK_IMPORTED_MODULE_3___default()('app:userRoutes');
-var getUsers = _controllers_usersController__WEBPACK_IMPORTED_MODULE_5__["default"].getUsers,
-    deleteUsers = _controllers_usersController__WEBPACK_IMPORTED_MODULE_5__["default"].deleteUsers,
-    getUser = _controllers_usersController__WEBPACK_IMPORTED_MODULE_5__["default"].getUser,
-    updateProfile = _controllers_usersController__WEBPACK_IMPORTED_MODULE_5__["default"].updateProfile,
-    replaceProfile = _controllers_usersController__WEBPACK_IMPORTED_MODULE_5__["default"].replaceProfile,
-    deleteUser = _controllers_usersController__WEBPACK_IMPORTED_MODULE_5__["default"].deleteUser;
+var log = debug__WEBPACK_IMPORTED_MODULE_1___default()('app:userRoutes');
+var getUsers = _controllers_usersController__WEBPACK_IMPORTED_MODULE_4__["default"].getUsers,
+    deleteUsers = _controllers_usersController__WEBPACK_IMPORTED_MODULE_4__["default"].deleteUsers,
+    getUser = _controllers_usersController__WEBPACK_IMPORTED_MODULE_4__["default"].getUser,
+    updateProfile = _controllers_usersController__WEBPACK_IMPORTED_MODULE_4__["default"].updateProfile,
+    replaceProfile = _controllers_usersController__WEBPACK_IMPORTED_MODULE_4__["default"].replaceProfile,
+    deleteUser = _controllers_usersController__WEBPACK_IMPORTED_MODULE_4__["default"].deleteUser;
 
 var routes = function routes() {
-  var userRoutes = (0,express__WEBPACK_IMPORTED_MODULE_2__.Router)();
-  userRoutes.route('/').get(getUsers)["delete"](deleteUsers);
-  userRoutes.route('/:userId').all(function (req, res, next) {
-    (function () {
-      var _getUser = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
-        var userId, foundUser;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.prev = 0;
-                userId = req.params.userId;
-                _context.next = 4;
-                return _model_User__WEBPACK_IMPORTED_MODULE_4__["default"].findOne({
-                  _id: userId
-                });
-
-              case 4:
-                foundUser = _context.sent;
-                log('Middleware: ', foundUser);
-
-                if (foundUser) {
-                  _context.next = 8;
-                  break;
-                }
-
-                return _context.abrupt("return", res.status(404).json({
-                  message: 'No such user in our database.'
-                }));
-
-              case 8:
-                req.foundUser = foundUser;
-                next();
-                _context.next = 15;
-                break;
-
-              case 12:
-                _context.prev = 12;
-                _context.t0 = _context["catch"](0);
-                return _context.abrupt("return", res.status(500).json({
-                  err: _context.t0
-                }));
-
-              case 15:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[0, 12]]);
-      }));
-
-      function getUser() {
-        return _getUser.apply(this, arguments);
-      }
-
-      return getUser;
-    })()();
-  }).get(getUser).put(replaceProfile).patch(updateProfile)["delete"](deleteUser);
+  var userRoutes = (0,express__WEBPACK_IMPORTED_MODULE_0__.Router)();
+  userRoutes.route('/').get(getUsers)["delete"](passport__WEBPACK_IMPORTED_MODULE_2___default().authenticate('jwt', {
+    session: false
+  }), deleteUsers);
+  userRoutes.route('/:userId').get(getUser).put(passport__WEBPACK_IMPORTED_MODULE_2___default().authenticate('jwt', {
+    session: false
+  }), replaceProfile).patch(passport__WEBPACK_IMPORTED_MODULE_2___default().authenticate('jwt', {
+    session: false
+  }), updateProfile)["delete"](passport__WEBPACK_IMPORTED_MODULE_2___default().authenticate('jwt', {
+    session: false
+  }), deleteUser);
   return userRoutes;
 };
 
@@ -4361,6 +4269,17 @@ module.exports = require("express-session");
 
 /***/ }),
 
+/***/ "jsonwebtoken":
+/*!*******************************!*\
+  !*** external "jsonwebtoken" ***!
+  \*******************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("jsonwebtoken");
+
+/***/ }),
+
 /***/ "mongoose":
 /*!***************************!*\
   !*** external "mongoose" ***!
@@ -4391,6 +4310,17 @@ module.exports = require("morgan");
 
 "use strict";
 module.exports = require("passport");
+
+/***/ }),
+
+/***/ "passport-jwt":
+/*!*******************************!*\
+  !*** external "passport-jwt" ***!
+  \*******************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("passport-jwt");
 
 /***/ }),
 
@@ -4490,28 +4420,6 @@ module.exports = require("redux-thunk");
 
 "use strict";
 module.exports = require("serialize-javascript");
-
-/***/ }),
-
-/***/ "fs":
-/*!*********************!*\
-  !*** external "fs" ***!
-  \*********************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("fs");
-
-/***/ }),
-
-/***/ "path":
-/*!***********************!*\
-  !*** external "path" ***!
-  \***********************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("path");
 
 /***/ })
 
@@ -4646,14 +4554,14 @@ app.use(express__WEBPACK_IMPORTED_MODULE_1___default()["static"]('public'));
   } else {
     debug("Database connected successfully.");
   }
-}); //Auth Config
+}); // //Auth Config
 
 app.use(express_session__WEBPACK_IMPORTED_MODULE_5___default()({
   secret: SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 1000 * 60 * 60 * 24 * 365
+    maxAge: 3.156e7
   }
 }));
 (0,_server_passport__WEBPACK_IMPORTED_MODULE_13__.passportConfig)(app);

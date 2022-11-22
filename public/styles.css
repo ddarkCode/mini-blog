@@ -539,3 +539,9 @@ form.create-note button {
   border: none;
   cursor: pointer;
 }
+
+@media only screen and (max-width: 800px) {
+  .optionsPage button {
+    width: 80vw;
+  }
+}
