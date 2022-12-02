@@ -9,12 +9,9 @@ function AddNewBlogPage({ addNewBlog, history }) {
   const [blog, setBlog] = useState({
     title: '',
     content: '',
-    authorId: auth._id,
   });
   const [isExpanded, setExpanded] = useState(false);
 
-  console.log('Auth State: ', auth);
-  console.log(blog);
   function expand() {
     setExpanded(true);
   }
@@ -31,7 +28,7 @@ function AddNewBlogPage({ addNewBlog, history }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    addNewBlog(blog);
+    addNewBlog(blog, auth.token);
     history.push('/blogs');
   }
   return (

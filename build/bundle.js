@@ -59,11 +59,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_blogs_AddNewBlogPage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/blogs/AddNewBlogPage */ "./src/client/pages/blogs/AddNewBlogPage.js");
 /* harmony import */ var _pages_notFound_NotFoundPage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/notFound/NotFoundPage */ "./src/client/pages/notFound/NotFoundPage.js");
 /* harmony import */ var _pages_options_OptionsPage__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pages/options/OptionsPage */ "./src/client/pages/options/OptionsPage.js");
+/* harmony import */ var _pages_blogs_UserBlogListPage__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./pages/blogs/UserBlogListPage */ "./src/client/pages/blogs/UserBlogListPage.js");
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
 
 
 
@@ -86,7 +88,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
     path: '/login'
   }, _pages_auth_LoginPage__WEBPACK_IMPORTED_MODULE_5__["default"]), _objectSpread({
     path: '/options'
-  }, _pages_options_OptionsPage__WEBPACK_IMPORTED_MODULE_11__["default"]), _objectSpread(_objectSpread({}, _pages_blogs_BlogPage__WEBPACK_IMPORTED_MODULE_6__["default"]), {}, {
+  }, _pages_options_OptionsPage__WEBPACK_IMPORTED_MODULE_11__["default"]), _objectSpread({
+    path: '/user/blogs'
+  }, _pages_blogs_UserBlogListPage__WEBPACK_IMPORTED_MODULE_12__["default"]), _objectSpread(_objectSpread({}, _pages_blogs_BlogPage__WEBPACK_IMPORTED_MODULE_6__["default"]), {}, {
     routes: [_objectSpread({
       exact: true,
       path: '/blogs'
@@ -116,22 +120,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "react-router-dom");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "react-redux");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_2__);
-
 
 
 
 function Blog(_ref) {
-  var title = _ref.title,
-      authorId = _ref.authorId,
-      content = _ref.content,
-      createdAt = _ref.createdAt,
-      id = _ref.id,
+  var blog = _ref.blog,
       users = _ref.users;
-  var user = users.find(function (user) {
+  var createdAt = blog.createdAt,
+      content = blog.content,
+      _id = blog._id,
+      title = blog.title,
+      authorId = blog.authorId;
+  var user = Array.isArray(users) ? users.find(function (user) {
     return user._id === authorId;
-  });
+  }) : users;
 
   function dateFormat(date) {
     var newDate = new Date(date);
@@ -152,8 +154,8 @@ function Blog(_ref) {
     className: "author"
   }, user ? user.fullname : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "post"
-  }, content.substring(0, 130), "..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
-    to: "/blogs/".concat(id)
+  }, content ? content.substring(0, 130) : '', "..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+    to: "/blogs/".concat(_id)
   }, "Read more"));
 }
 
@@ -172,12 +174,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/extends */ "@babel/runtime/helpers/extends");
-/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Blog__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Blog */ "./src/client/components/blogs/Blog.js");
-
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Blog__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Blog */ "./src/client/components/blogs/Blog.js");
 
 
 
@@ -185,16 +184,15 @@ function BlogList(_ref) {
   var blogs = _ref.blogs,
       users = _ref.users;
   var blogsToRender = blogs;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
+  console.log('Blogs: ', blogs);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "bloglist-container"
   }, blogsToRender.map(function (blog) {
-    console.log(blog._id);
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_Blog__WEBPACK_IMPORTED_MODULE_2__["default"], _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default()({
-      key: blog._id
-    }, blog, {
-      id: blog._id,
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Blog__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      key: blog._id,
+      blog: blog,
       users: users
-    }));
+    });
   }));
 }
 
@@ -293,8 +291,8 @@ __webpack_require__.r(__webpack_exports__);
     }),
         auth = _useSelector.auth;
 
-    switch (auth) {
-      case null:
+    switch (auth.online) {
+      case false:
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Redirect, {
           to: "/login"
         });
@@ -527,7 +525,7 @@ function RegisterPage(_ref) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    register(formEntries, history);
+    register(formEntries);
     history.push('/blogs');
   }
 
@@ -615,8 +613,7 @@ function AddNewBlogPage(_ref) {
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
     title: '',
-    content: '',
-    authorId: auth._id
+    content: ''
   }),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useState, 2),
       blog = _useState2[0],
@@ -626,9 +623,6 @@ function AddNewBlogPage(_ref) {
       _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useState3, 2),
       isExpanded = _useState4[0],
       setExpanded = _useState4[1];
-
-  console.log('Auth State: ', auth);
-  console.log(blog);
 
   function expand() {
     setExpanded(true);
@@ -645,7 +639,7 @@ function AddNewBlogPage(_ref) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    addNewBlog(blog);
+    addNewBlog(blog, auth.token);
     history.push('/blogs');
   }
 
@@ -703,12 +697,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function BlogListPage(_ref) {
-  var getALlBlogs = _ref.getALlBlogs,
+  var getAllBlogs = _ref.getAllBlogs,
       blogs = _ref.blogs,
       getUsers = _ref.getUsers,
       users = _ref.users;
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    getALlBlogs();
+    getAllBlogs();
     getUsers();
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_blogs_BlogList__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -725,14 +719,14 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 var mapDispatchToProps = {
-  getALlBlogs: _redux_blogs_actions__WEBPACK_IMPORTED_MODULE_3__.getALlBlogs,
+  getAllBlogs: _redux_blogs_actions__WEBPACK_IMPORTED_MODULE_3__.getAllBlogs,
   getUsers: _redux_users_actions__WEBPACK_IMPORTED_MODULE_4__.getUsers
 };
 
 function loadData(_ref2) {
   var dispatch = _ref2.dispatch;
   return function () {
-    dispatch((0,_redux_blogs_actions__WEBPACK_IMPORTED_MODULE_3__.getALlBlogs)());
+    dispatch((0,_redux_blogs_actions__WEBPACK_IMPORTED_MODULE_3__.getAllBlogs)());
     dispatch((0,_redux_users_actions__WEBPACK_IMPORTED_MODULE_4__.getUsers)());
   }();
 }
@@ -868,6 +862,64 @@ function loadData(store, blogId) {
 
 /***/ }),
 
+/***/ "./src/client/pages/blogs/UserBlogListPage.js":
+/*!****************************************************!*\
+  !*** ./src/client/pages/blogs/UserBlogListPage.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_objectDestructuringEmpty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectDestructuringEmpty */ "@babel/runtime/helpers/objectDestructuringEmpty");
+/* harmony import */ var _babel_runtime_helpers_objectDestructuringEmpty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_objectDestructuringEmpty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "react-redux");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _components_blogs_BlogList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/blogs/BlogList */ "./src/client/components/blogs/BlogList.js");
+/* harmony import */ var _redux_userblogs_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../redux/userblogs/actions */ "./src/client/redux/userblogs/actions.js");
+
+
+
+
+
+
+function UserBlogListPage(_ref) {
+  _babel_runtime_helpers_objectDestructuringEmpty__WEBPACK_IMPORTED_MODULE_0___default()(_ref);
+
+  var _useSelector = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(function (state) {
+    return state;
+  }),
+      userBlogs = _useSelector.userBlogs,
+      auth = _useSelector.auth;
+
+  console.log('User Blog List Page: ', userBlogs);
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    dispatch((0,_redux_userblogs_actions__WEBPACK_IMPORTED_MODULE_4__.getUserBlogs)(auth.profile._id));
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components_blogs_BlogList__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    blogs: userBlogs,
+    users: auth.profile
+  });
+}
+
+function loadData(store, blogId, userId) {
+  return function () {
+    store.dispatch((0,_redux_userblogs_actions__WEBPACK_IMPORTED_MODULE_4__.getUserBlogs)(userId));
+  }();
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  component: UserBlogListPage,
+  loadData: loadData
+});
+
+/***/ }),
+
 /***/ "./src/client/pages/home/HomePage.js":
 /*!*******************************************!*\
   !*** ./src/client/pages/home/HomePage.js ***!
@@ -964,20 +1016,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 function OptionsPage() {
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_3__.useDispatch)();
   var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useHistory)();
 
   var handleLogout = function handleLogout() {
     dispatch((0,_redux_auth_actions__WEBPACK_IMPORTED_MODULE_1__.logout)());
-    history.push('/');
+    history.push('/blogs');
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "optionsPage"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: handleLogout
-  }, "Logout"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "Update or Delete Blog"));
+  }, "Logout"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+    to: "/user/blogs"
+  }, "Update or Delete Blog"));
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -1146,20 +1201,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants */ "./src/client/redux/auth/constants.js");
 
+var INITIAL_STATE = {
+  token: null,
+  profile: null,
+  online: false
+};
 
 var authReducer = function authReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
     case _constants__WEBPACK_IMPORTED_MODULE_0__.REGISTER_USER:
-      return action.data.user;
+      return action.data;
 
     case _constants__WEBPACK_IMPORTED_MODULE_0__.LOG_IN_USER:
-      return action.data.user;
+      return action.data;
 
     case _constants__WEBPACK_IMPORTED_MODULE_0__.LOG_OUT_USER:
-      return action.data.user;
+      return action.data;
 
     default:
       return state;
@@ -1180,7 +1240,7 @@ var authReducer = function authReducer() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "addNewBlog": () => (/* binding */ addNewBlog),
-/* harmony export */   "getALlBlogs": () => (/* binding */ getALlBlogs),
+/* harmony export */   "getAllBlogs": () => (/* binding */ getAllBlogs),
 /* harmony export */   "getBlog": () => (/* binding */ getBlog)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
@@ -1194,7 +1254,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var getALlBlogs = function getALlBlogs() {
+var getAllBlogs = function getAllBlogs() {
   return /*#__PURE__*/function () {
     var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(dispatch) {
       var _yield$axios$get, data;
@@ -1227,7 +1287,7 @@ var getALlBlogs = function getALlBlogs() {
     };
   }();
 };
-var addNewBlog = function addNewBlog(blogToAdd) {
+var addNewBlog = function addNewBlog(blogToAdd, token) {
   return /*#__PURE__*/function () {
     var _ref2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(dispatch) {
       var _yield$axios$post, data;
@@ -1237,7 +1297,7 @@ var addNewBlog = function addNewBlog(blogToAdd) {
           switch (_context2.prev = _context2.next) {
             case 0:
               _context2.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_3___default().post('http://localhost:3000/api/blogs', blogToAdd);
+              return axios__WEBPACK_IMPORTED_MODULE_3___default().post("http://localhost:3000/api/blogs/?blogger-token=".concat(token), blogToAdd);
 
             case 2:
               _yield$axios$post = _context2.sent;
@@ -1343,7 +1403,7 @@ var allBlogsReducer = function allBlogsReducer() {
       return action.payload;
 
     case _constants__WEBPACK_IMPORTED_MODULE_1__.ADD_NEW_BLOG:
-      return [].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(state), [action.payload.blog]);
+      return [].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(state), [action.payload]);
 
     default:
       return state;
@@ -1389,6 +1449,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blogs_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./blogs/index */ "./src/client/redux/blogs/index.js");
 /* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./auth */ "./src/client/redux/auth/index.js");
 /* harmony import */ var _users__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./users */ "./src/client/redux/users/index.js");
+/* harmony import */ var _userblogs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./userblogs */ "./src/client/redux/userblogs/index.js");
+
 
 
 
@@ -1423,13 +1485,128 @@ var reducers = (0,redux__WEBPACK_IMPORTED_MODULE_0__.combineReducers)({
   blog: _blogs_index__WEBPACK_IMPORTED_MODULE_5__.singleBlogReducer,
   blogs: _blogs_index__WEBPACK_IMPORTED_MODULE_5__.allBlogsReducer,
   auth: _auth__WEBPACK_IMPORTED_MODULE_6__["default"],
-  users: _users__WEBPACK_IMPORTED_MODULE_7__["default"]
+  users: _users__WEBPACK_IMPORTED_MODULE_7__["default"],
+  userBlogs: _userblogs__WEBPACK_IMPORTED_MODULE_8__["default"]
 });
 var persistedReducer = (0,redux_persist__WEBPACK_IMPORTED_MODULE_2__.persistReducer)(persistConfig, reducers);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
   var initialState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   return (0,redux__WEBPACK_IMPORTED_MODULE_0__.createStore)(persistedReducer, initialState, (0,redux__WEBPACK_IMPORTED_MODULE_0__.applyMiddleware)((redux_thunk__WEBPACK_IMPORTED_MODULE_1___default()), (redux_logger__WEBPACK_IMPORTED_MODULE_3___default())));
 });
+
+/***/ }),
+
+/***/ "./src/client/redux/userblogs/actions.js":
+/*!***********************************************!*\
+  !*** ./src/client/redux/userblogs/actions.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getUserBlogs": () => (/* binding */ getUserBlogs)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "@babel/runtime/helpers/asyncToGenerator");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "axios");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./constants */ "./src/client/redux/userblogs/constants.js");
+
+
+
+
+
+var getUserBlogsAction = function getUserBlogsAction(payload) {
+  return {
+    type: _constants__WEBPACK_IMPORTED_MODULE_3__.GET_USER_BLOGS,
+    payload: payload
+  };
+};
+
+var getUserBlogs = function getUserBlogs(authorId) {
+  return /*#__PURE__*/function () {
+    var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(dispatch) {
+      var _yield$axios$get, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:3000/api/blogs/?authorId=".concat(authorId));
+
+            case 3:
+              _yield$axios$get = _context.sent;
+              data = _yield$axios$get.data;
+              dispatch(getUserBlogsAction(data));
+              _context.next = 11;
+              break;
+
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](0);
+              console.log(_context.t0);
+
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[0, 8]]);
+    }));
+
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+};
+
+/***/ }),
+
+/***/ "./src/client/redux/userblogs/constants.js":
+/*!*************************************************!*\
+  !*** ./src/client/redux/userblogs/constants.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "GET_USER_BLOGS": () => (/* binding */ GET_USER_BLOGS)
+/* harmony export */ });
+var GET_USER_BLOGS = 'GET_USER_BLOGS';
+
+/***/ }),
+
+/***/ "./src/client/redux/userblogs/index.js":
+/*!*********************************************!*\
+  !*** ./src/client/redux/userblogs/index.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ userBlogsReducer)
+/* harmony export */ });
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants */ "./src/client/redux/userblogs/constants.js");
+
+function userBlogsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _constants__WEBPACK_IMPORTED_MODULE_0__.GET_USER_BLOGS:
+      return action.payload;
+
+    default:
+      return state;
+  }
+}
 
 /***/ }),
 
@@ -4170,6 +4347,17 @@ module.exports = require("@babel/runtime/helpers/extends");
 
 /***/ }),
 
+/***/ "@babel/runtime/helpers/objectDestructuringEmpty":
+/*!******************************************************************!*\
+  !*** external "@babel/runtime/helpers/objectDestructuringEmpty" ***!
+  \******************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("@babel/runtime/helpers/objectDestructuringEmpty");
+
+/***/ }),
+
 /***/ "@babel/runtime/helpers/slicedToArray":
 /*!*******************************************************!*\
   !*** external "@babel/runtime/helpers/slicedToArray" ***!
@@ -4548,7 +4736,7 @@ app.use(express__WEBPACK_IMPORTED_MODULE_1___default().urlencoded({
 }));
 app.use(express__WEBPACK_IMPORTED_MODULE_1___default().json());
 app.use(express__WEBPACK_IMPORTED_MODULE_1___default()["static"]('public'));
-(0,mongoose__WEBPACK_IMPORTED_MODULE_6__.connect)(DATABASE_URL, function (err) {
+(0,mongoose__WEBPACK_IMPORTED_MODULE_6__.connect)('mongodb://localhost:27017/bloggerApp', function (err) {
   if (err) {
     debug(err);
   } else {
@@ -4572,7 +4760,7 @@ app.get('*', function (req, res) {
   var store = (0,_server_helpers_createStore__WEBPACK_IMPORTED_MODULE_8__["default"])();
   var promises = (0,react_router_config__WEBPACK_IMPORTED_MODULE_4__.matchRoutes)(_client_Routes__WEBPACK_IMPORTED_MODULE_9__["default"], req.path).map(function (_ref) {
     var route = _ref.route;
-    return route.loadData ? route.loadData(store, req.path.split('/')[2]) : null;
+    return route.loadData ? route.loadData(store, req.path.split('/')[2], req.user ? req.user._id : null) : null;
   }).map(function (promise) {
     if (promise) {
       return new Promise(function (resolve, reject) {

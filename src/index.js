@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 
-connect(DATABASE_URL, (err) => {
+connect('mongodb://localhost:27017/bloggerApp', (err) => {
   if (err) {
     debug(err);
   } else {
@@ -54,7 +54,11 @@ app.get('*', (req, res) => {
   const promises = matchRoutes(Routes, req.path)
     .map(({ route }) => {
       return route.loadData
-        ? route.loadData(store, req.path.split('/')[2])
+        ? route.loadData(
+            store,
+            req.path.split('/')[2],
+            req.user ? req.user._id : null
+          )
         : null;
     })
     .map((promise) => {

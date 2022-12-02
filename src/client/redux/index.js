@@ -7,6 +7,7 @@ import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 import { singleBlogReducer, allBlogsReducer } from './blogs/index';
 import authReducer from './auth';
 import usersReducer from './users';
+import userBlogsReducer from './userblogs';
 
 const createNoopStorage = () => {
   return {
@@ -37,6 +38,7 @@ export const reducers = combineReducers({
   blogs: allBlogsReducer,
   auth: authReducer,
   users: usersReducer,
+  userBlogs: userBlogsReducer,
 });
 
 export const persistedReducer = persistReducer(persistConfig, reducers);

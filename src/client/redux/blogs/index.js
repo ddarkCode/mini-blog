@@ -5,7 +5,7 @@ export const allBlogsReducer = (state = [], action) => {
     case FETCH_ALL_BLOGS:
       return action.payload;
     case ADD_NEW_BLOG:
-      return [...state, action.payload.blog];
+      return [...state, action.payload];
     default:
       return state;
   }

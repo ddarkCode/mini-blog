@@ -1,7 +1,7 @@
 import { FETCH_ALL_BLOGS, ADD_NEW_BLOG, GET_SINGLE_BLOG } from './constants';
 import axios from 'axios';
 
-export const getALlBlogs = () => async (dispatch) => {
+export const getAllBlogs = () => async (dispatch) => {
   const { data } = await axios.get('http://localhost:3000/api/blogs');
   dispatch({
     type: FETCH_ALL_BLOGS,
@@ -9,10 +9,10 @@ export const getALlBlogs = () => async (dispatch) => {
   });
 };
 
-export const addNewBlog = (blogToAdd) => {
+export const addNewBlog = (blogToAdd, token) => {
   return async (dispatch) => {
     const { data } = await axios.post(
-      'http://localhost:3000/api/blogs',
+      `http://localhost:3000/api/blogs/?blogger-token=${token}`,
       blogToAdd
     );
     dispatch({

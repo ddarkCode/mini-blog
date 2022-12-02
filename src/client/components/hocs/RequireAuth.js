@@ -5,8 +5,9 @@ import { Redirect } from 'react-router-dom';
 export default (Component) => {
   const RequireAuth = (props) => {
     const { auth } = useSelector((state) => state);
-    switch (auth) {
-      case null:
+
+    switch (auth.online) {
+      case false:
         return <Redirect to="/login" />;
       default:
         return <Component auth={auth} {...props} />;

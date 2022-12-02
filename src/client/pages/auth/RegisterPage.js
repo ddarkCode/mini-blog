@@ -24,7 +24,7 @@ function RegisterPage({ register, history }) {
   };
   function handleSubmit(e) {
     e.preventDefault();
-    register(formEntries, history);
+    register(formEntries);
     history.push('/blogs');
   }
 
