@@ -1,37 +1,43 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
+import { updateProfile } from '../../redux/auth/actions';
 import InputContainer from '../../components/input/InputContainer';
 import Input from '../../components/input/Input';
-import { register } from '../../redux/auth/actions';
 
-function RegisterPage({ register, history }) {
-  const [formEntries, setFormEntries] = useState({
-    fullname: '',
-    username: '',
-    password: '',
+function UpdateProfilePage() {
+  const { auth } = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const [profile, setProfile] = useState({
+    ...auth.profile,
   });
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
-    setFormEntries((prevState) => {
+    setProfile((prevState) => {
       return {
         ...prevState,
         [name]: value,
       };
     });
   };
+
   function handleSubmit(e) {
+    const { fullname, username, img_url } = profile;
     e.preventDefault();
-    register(formEntries);
-    history.push('/blogs');
+    dispatch(
+      updateProfile({ fullname, username, img_url }, profile._id, auth.token)
+    );
+    history.push('/options');
   }
 
   return (
     <div className="form-container">
       <form className="auth-form-container" onSubmit={handleSubmit}>
-        <h2>Create your account</h2>
+        <h2>Update Profile</h2>
         <InputContainer>
           {/* <label htmlFor="fullname">First Name</label> */}
           <Input
@@ -39,7 +45,7 @@ function RegisterPage({ register, history }) {
             name="fullname"
             id="fullname"
             placeholder="Enter Your Full Name"
-            value={formEntries.fullname}
+            value={profile.fullname}
             onChange={handleFormChange}
           />
         </InputContainer>
@@ -51,34 +57,28 @@ function RegisterPage({ register, history }) {
             name="username"
             id="username"
             placeholder="Enter Your Email"
-            value={formEntries.username}
+            value={profile.username}
             onChange={handleFormChange}
           />
         </InputContainer>
         <InputContainer>
           {/* <label htmlFor="password">Password</label> */}
           <Input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Enter Your Password"
-            value={formEntries.password}
+            type="text"
+            name="img_url"
+            id="img_url"
+            placeholder="Enter Your Image Url"
+            value={profile.img_url}
             onChange={handleFormChange}
           />
         </InputContainer>
-        <button type="submit">Register</button>
-        <span>
-          Already have an account? <Link to={'/login'}>Login</Link>
-        </span>
+
+        <button type="submit">Update</button>
       </form>
     </div>
   );
 }
 
-const mapDispatchTOProps = {
-  register,
-};
-
 export default {
-  component: connect(null, mapDispatchTOProps)(RegisterPage),
+  component: UpdateProfilePage,
 };

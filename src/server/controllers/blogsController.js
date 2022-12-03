@@ -123,6 +123,7 @@ export default (function controller() {
       (async function updateBlog() {
         try {
           const { blog } = req;
+
           if (req.body._id) {
             delete req.body._id;
           }
@@ -160,12 +161,13 @@ export default (function controller() {
             return res.status(200).json({
               message: 'Blog deleted successfully.',
               deletionInfo,
+              deletedBlogId: blog._id,
             });
           } else {
-             return res.status(403).json({
-               message:
-                 'You Do Not Have The Permission To Perform This Operation.',
-             });
+            return res.status(403).json({
+              message:
+                'You Do Not Have The Permission To Perform This Operation.',
+            });
           }
         } catch (err) {
           log(err);

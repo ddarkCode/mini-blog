@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { getBlog } from '../../redux/blogs/actions';
@@ -7,6 +7,8 @@ import { getUsers } from '../../redux/users/actions';
 
 function SingleBlogPage({ getBlog, blog, getUsers, users }) {
   const { blogId } = useParams();
+  const history = useHistory();
+
   useEffect(() => {
     getBlog(blogId);
     getUsers();

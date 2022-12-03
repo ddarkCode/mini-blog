@@ -375,6 +375,7 @@ footer {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+
   margin: 0 auto;
   min-height: 70vh;
   width: calc(100% - 80px);
@@ -411,18 +412,24 @@ footer {
   text-align: center;
 }
 
-.blog-container a {
+.blog-container a,
+button {
   background-color: #f5ba13;
   color: #000;
-  display: block;
-  width: 100px;
-  height: 50px;
+  display: inline;
+  width: 200px;
+  height: 40px;
   padding-top: 15px;
   text-align: center;
   margin-top: 15px;
+  font-weight: 300;
+  font-size: 15px;
+}
+.userBlogButtons:last-child {
+  margin-bottom: 15px;
 }
 
-.blog-container a:hover {
+.blog-container a:hover button:hover {
   background-color: #000;
   color: #f5ba13;
   font-weight: 500;
@@ -483,13 +490,15 @@ footer {
 
 form.create-note {
   position: relative;
-  width: 480px;
+  max-width: 480px;
   margin: 30px auto 20px auto;
   background: #fff;
   padding: 15px;
   border-radius: 7px;
   box-shadow: 0 1px 5px rgb(138, 137, 137);
+
   height: 70vh;
+  font-size: 27px;
 }
 form.create-note input,
 form.create-note textarea {
@@ -530,7 +539,8 @@ form.create-note button {
   justify-content: center;
 }
 
-.optionsPage button {
+.optionsPage button,
+.optionsButton {
   margin: 10px 0;
   width: 40vw;
   height: 70px;
@@ -538,6 +548,44 @@ form.create-note button {
   color: #4d4d4d;
   border: none;
   cursor: pointer;
+  padding: 0;
+}
+.optionsPage .optionsButton {
+  background-color: #fefefe;
+  color: #4d4d4d;
+  /* border: none;
+  cursor: pointer;
+  text-align: center; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*User Blog View*/
+
+.userBlogButtons {
+  display: flex;
+  flex-direction: column;
+}
+.userBlogButtons button {
+  border: none;
+  padding-top: 0;
+  cursor: pointer;
+}
+.userBlogButtons a {
+  margin-right: 10px;
+}
+@media only screen and (max-width: 300px) {
+  .userBlogButtons {
+    display: block;
+  }
+  .userBlogButtons a,
+  button {
+    display: block;
+    width: 150px;
+    height: 40px;
+    margin-right: 0;
+  }
 }
 
 @media only screen and (max-width: 800px) {

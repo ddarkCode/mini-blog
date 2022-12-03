@@ -10,6 +10,7 @@ function AddNewBlogPage({ addNewBlog, history }) {
     title: '',
     content: '',
   });
+
   const [isExpanded, setExpanded] = useState(false);
 
   function expand() {
@@ -51,7 +52,6 @@ function AddNewBlogPage({ addNewBlog, history }) {
           value={blog.content}
           placeholder="Take a note..."
           required
-          rows={isExpanded ? 15 : 1}
         />
 
         <button>Add</button>

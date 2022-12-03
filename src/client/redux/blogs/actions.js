@@ -1,5 +1,6 @@
-import { FETCH_ALL_BLOGS, ADD_NEW_BLOG, GET_SINGLE_BLOG } from './constants';
 import axios from 'axios';
+
+import { FETCH_ALL_BLOGS, ADD_NEW_BLOG, GET_SINGLE_BLOG } from './constants';
 
 export const getAllBlogs = () => async (dispatch) => {
   const { data } = await axios.get('http://localhost:3000/api/blogs');

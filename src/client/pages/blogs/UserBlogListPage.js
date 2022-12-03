@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import BlogList from '../../components/blogs/BlogList';
+import UserBlogList from '../../components/blogs/UserBlogList';
 import { getUserBlogs } from '../../redux/userblogs/actions';
 
 function UserBlogListPage({}) {
-  const { userBlogs, auth } = useSelector((state) => state);
-  console.log('User Blog List Page: ', userBlogs);
+  const { auth } = useSelector((state) => state);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserBlogs(auth.profile._id));
   }, []);
-  return <BlogList blogs={userBlogs} users={auth.profile} />;
+  return <UserBlogList />;
 }
 
 function loadData(store, blogId, userId) {

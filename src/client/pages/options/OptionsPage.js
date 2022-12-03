@@ -15,7 +15,12 @@ function OptionsPage() {
   return (
     <div className="optionsPage">
       <button onClick={handleLogout}>Logout</button>
-      <Link to="/user/blogs">Update or Delete Blog</Link>
+      <Link className="optionsButton" to="/user/blogs">
+        View Your Blogs
+      </Link>
+      <Link className="optionsButton" to="/user/profile">
+        Update Profile
+      </Link>
     </div>
   );
 }
