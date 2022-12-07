@@ -52,7 +52,7 @@ function UpdateBlogPage({ history }) {
           rows={15}
         />
 
-        <button>Update</button>
+        <button>Add</button>
       </form>
     </div>
   );

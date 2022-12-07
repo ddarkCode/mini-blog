@@ -5,12 +5,10 @@ function NotFoundPage({ staticContext = {} }) {
   staticContext.notFound = true;
   console.log(`Not found page: ${JSON.stringify(staticContext)}`);
   return (
-    <div>
+    <div className="notFound">
       <h2>404</h2>
-      <p>
-        Sorry, we can't find that page. You'll find loads to explore on the home
-        page.
-      </p>
+      <p>Sorry, page not found.</p>
+      <p>You'll find loads to explore on the home page.</p>
       <Link to={'/'}>Bloggy Home</Link>
     </div>
   );

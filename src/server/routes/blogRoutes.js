@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import debug from 'debug';
+import passport from 'passport';
 
 import Blog from '../model/Blog';
 import blogsController from '../controllers/blogsController';
-import passport from 'passport';
+import { blogValidator } from '../validators/blogValidator';
 
 const log = debug('app:blogRoutes');
 
@@ -22,7 +23,11 @@ const router = () => {
   blogRoutes
     .route('/')
     .get(getBlogs)
-    .post(passport.authenticate('jwt', { session: false }), postNewBlog)
+    .post(
+      blogValidator,
+      passport.authenticate('jwt', { session: false }),
+      postNewBlog
+    )
     .delete(passport.authenticate('jwt', { session: false }), deleteAllBlogs);
   blogRoutes
     .route('/:blogId')

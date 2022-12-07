@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import passport from 'passport';
 
+import { userInputValidator } from '../validators/userValidator';
 import authController from '../controllers/authController';
 const { register, login, logout } = authController;
 
@@ -8,7 +9,11 @@ const routes = () => {
   const authRoutes = Router();
   authRoutes
     .route('/register')
-    .post(passport.authenticate('register', { session: false }), register);
+    .post(
+      userInputValidator,
+      passport.authenticate('register', { session: false }),
+      register
+    );
   authRoutes.route('/login').post((req, res, next) => {
     return passport.authenticate(
       'login',
