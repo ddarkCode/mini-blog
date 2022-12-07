@@ -6,6 +6,7 @@ import morgan from 'morgan';
 import { matchRoutes } from 'react-router-config';
 import session from 'express-session';
 import { connect } from 'mongoose';
+import rateLimit from 'express-rate-limit';
 
 import renderer from './server/helpers/renderer';
 import createStore from './server/helpers/createStore';
@@ -44,6 +45,16 @@ app.use(
 );
 passportConfig(app);
 
+const limiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: 'Too many requests, please try again later.',
+  statusCode: 429,
+});
+
+app.use('/api', limiter);
 app.use('/api/blogs', blogRoutes());
 app.use('/api/auth', authRoutes());
 app.use('/api/users', userRoutes());
